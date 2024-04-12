@@ -84,7 +84,8 @@ public class ApiSecurityConfig {
                                 "/api/user/file/load/**",
                                 "/api/course/file/load/**",
                                 "/api/course",
-                                "/api/course/search-dto/**")
+                                "/api/course/search-dto/**",
+                                "/api/course/get-dto/**")
                         .permitAll()//Đối với link này thì không cần check thông tin đăng nhập
                         .requestMatchers("/api/role/**")
                         .hasAnyAuthority("ROLE_ADMIN")
