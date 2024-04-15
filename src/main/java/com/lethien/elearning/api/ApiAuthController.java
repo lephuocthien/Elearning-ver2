@@ -67,17 +67,17 @@ public class ApiAuthController {
 		SecretKey decodeKey = convertStringToSecretKeyto(JWT_SECRET);*/
 		SecretKey key = convertStringToSecretKeyto("Test123456789ioqedfhoeifhouwhfowfhowuvboiwbuvgoouhoguhf");
 		final long JWT_EXPIRATION = 864000000L;
-		//Authentication authentication = null;
+		Authentication authentication = null;
 		String email = loginDto.getEmail();
 		String password = loginDto.getPassword();
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String hashedPassword = passwordEncoder.encode(password);
-//        System.out.println(hashedPassword);
+		/*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        System.out.println(hashedPassword);*/
 		try {
 			System.out.println(email + " " + password);
-			/*authentication = authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(email, password));*/
-//			SecurityContextHolder.getContext().setAuthentication(authentication);
+			authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 			Date now = new Date();
 			Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
 			//SecretKey key = Jwts.SIG.HS256.key().build();

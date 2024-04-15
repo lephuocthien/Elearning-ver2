@@ -17,17 +17,17 @@ insert into categories (title, icon) values ('Cooking', 'fa fa-cutlery');
 
 -- Insert data to users
 -- password: 123456
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('admin@gmail.com', 'Lê Phước Thiện', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '', '', 1);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_1@gmail.com', 'Wilone Menary', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '194-528-9732', '55334 Prairie Rose Parkway', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_2@gmail.com', 'Marjy Cornhill', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '338-330-8921', '68 Gerald Place', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_3@gmail.com', 'Natka Hiseman', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '873-178-2150', '184 Monterey Place', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('hyate3@howstuffworks.com', 'Hoebart Yate', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '760-449-4620', '3389 Moulton Alley', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('ckreber4@boston.com', 'Claudio Kreber', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '212-906-7846', '8870 Blue Bill Park Plaza', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('wle5@google.ru', 'Woody Le Merchant', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '288-501-6552', '00602 Anderson Court', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('asousa6@github.com', 'Adelaida Sousa', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '207-886-6028', '19 Stuart Trail', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('rcarek7@skype.com', 'Rosemary Carek', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '177-609-0393', '6956 Summerview Court', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('tferenczi8@nbcnews.com', 'Tedmund Ferenczi', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '694-424-6561', '8 Cody Trail', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('alovelace9@shop-pro.jp', 'Arabele Lovelace', '$2a$10$sGe24ieMWTvF5vmZ.TntoO3k/Iqnl8V5SeLrCu72IgDugI/.zLOEe', '', '700-868-2727', '0 Ruskin Center', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('admin@gmail.com', 'Lê Phước Thiện', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '', '', 1);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_1@gmail.com', 'Wilone Menary', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '194-528-9732', '55334 Prairie Rose Parkway', 2);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_2@gmail.com', 'Marjy Cornhill', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '338-330-8921', '68 Gerald Place', 2);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_3@gmail.com', 'Natka Hiseman', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '873-178-2150', '184 Monterey Place', 2);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('hyate3@howstuffworks.com', 'Hoebart Yate', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '760-449-4620', '3389 Moulton Alley', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('ckreber4@boston.com', 'Claudio Kreber', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '212-906-7846', '8870 Blue Bill Park Plaza', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('wle5@google.ru', 'Woody Le Merchant', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '288-501-6552', '00602 Anderson Court', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('asousa6@github.com', 'Adelaida Sousa', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '207-886-6028', '19 Stuart Trail', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('rcarek7@skype.com', 'Rosemary Carek', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '177-609-0393', '6956 Summerview Court', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('tferenczi8@nbcnews.com', 'Tedmund Ferenczi', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '694-424-6561', '8 Cody Trail', 3);
+insert into users (email, fullname, password, avatar, phone, address, role_id) values ('alovelace9@shop-pro.jp', 'Arabele Lovelace', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '700-868-2727', '0 Ruskin Center', 3);
 
 -- Insert data to courses
 insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Research Nurse', 'course.jpg', 170, 1656950, 18, 1358699, 8);
