@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/layout/default}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<title>Trang chủ</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<div class="row">
+			<div class="col-md-6">
+				<canvas id="myChart" width="400" height="400"></canvas>
+			</div>
+			<div class="col-md-6">
+				<canvas id="myChart2" width="400" height="400"></canvas>
+			</div>
+			<div class="col-md-1"></div>
+			<div sec:authorize="hasRole('USER')">Text visible to user.</div>
+			<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+			<div sec:authorize="isAuthenticated()">
+				Text visible only to authenticated users.
+			</div>
+			Authenticated username:
+			<div sec:authentication="name"></div>
+			Authenticated user roles:
+			<div sec:authentication="principal.authorities"></div>
+		</div>
+	</section>
+</body>
+</html>

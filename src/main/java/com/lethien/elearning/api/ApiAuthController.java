@@ -6,6 +6,7 @@ import java.util.Date;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,12 +34,8 @@ public class ApiAuthController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	private UserService userService;
-
-	public SecretKey convertStringToSecretKeyto(String encodedKey) {
-		byte[] keyBytes = Decoders.BASE64.decode(encodedKey);
-		SecretKey originalKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256");
-		return originalKey;
-	}
+	/*@Value("${app.secretkey}")
+	private String secretKey;*/
 
 	/**
 	 * @param_userService
@@ -47,7 +44,11 @@ public class ApiAuthController {
 		super();
 		this.userService = userService;
 	}
-
+	public SecretKey convertStringToSecretKeyto(String encodedKey) {
+		byte[] keyBytes = Decoders.BASE64.decode(encodedKey);
+		SecretKey originalKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256");
+		return originalKey;
+	}
 	@PostMapping("register")
 	public ResponseEntity<Object> add(@RequestBody UserDto dto) {
 		try {
@@ -63,30 +64,22 @@ public class ApiAuthController {
 
 	@PostMapping("")
 	public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
-		/*final String JWT_SECRET = "ChuoiBiMat";
-		SecretKey decodeKey = convertStringToSecretKeyto(JWT_SECRET);*/
-		SecretKey key = convertStringToSecretKeyto("Test123456789ioqedfhoeifhouwhfowfhowuvboiwbuvgoouhoguhf");
+		SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
 		final long JWT_EXPIRATION = 864000000L;
 		Authentication authentication = null;
 		String email = loginDto.getEmail();
 		String password = loginDto.getPassword();
-		/*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        System.out.println(hashedPassword);*/
 		try {
-			System.out.println(email + " " + password);
+			//System.out.println(email + " " + password);
 			authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			Date now = new Date();
 			Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
-			//SecretKey key = Jwts.SIG.HS256.key().build();
 			// Nếu đăng nhập thành công thì trả về một token
 			String token = Jwts.builder().subject(email).issuedAt(now).expiration(expiryDate)
 					.signWith(key).compact();
-			/*SecretKey decodeKey = convertStringToSecretKeyto(email);
-			String token = Jwts.builder().signWith(decodeKey).compact()*/;
-			System.out.println(token);
+			//System.out.println(token);
 			return new ResponseEntity<Object>(token, HttpStatus.OK);
 
 		} catch (Exception e) {

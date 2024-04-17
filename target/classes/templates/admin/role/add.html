@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="admin/layout/default">
+<head>
+<title>Thêm mới quyền</title>
+</head>
+<body>
+	<section layout:fragment="content">
+		<h3 class="mb-4 text-center">Thêm mới quyền</h3>
+		<form th:action="@{/role/add}" method="post" th:object="${role}">
+			<div class="row">
+				<div class="col-md-6 m-auto">
+					<div class="form-group">
+						<label>Tên quyền</label> <input type="text" th:field="*{name}"
+							class="form-control" placeholder="name" />
+					</div>
+					<div class="form-group">
+						<label>Mô tả</label> <input type="text" th:field="*{description}"
+							class="form-control" placeholder="description" />
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Lưu lại</button>
+						<a class="btn btn-secondary" th:href="@{/role}">Quay lại</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	</section>
+</body>
+
+</html>

@@ -150,14 +150,14 @@ public class ApiUserController {
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Ép kiểu về UserDetails
 			UserDetails userDetails = (UserDetails) principal;
-			System.out.println(principal);
+			//System.out.println(principal);
 			// Lấy ra email
 			String email = userDetails.getUsername();
-			System.out.println(email);
+			//System.out.println(email);
 			// Lấy ra thông tin User để trả về cho client;
 			UserDto dto = userService.getUserDtoByEmail(email);
 			dto.setCourses(courseService.getAllCourseDtoByUserId(dto.getId()));
-			System.out.println(dto.getFullname());
+			//System.out.println(dto.getFullname());
 			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);

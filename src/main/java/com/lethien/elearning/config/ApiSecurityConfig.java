@@ -75,7 +75,7 @@ public class ApiSecurityConfig {
         http.cors(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
         http
-                .securityMatcher("/api/**")//Chỉ những link bắt đầu bằng /api/ thì mới thực hiện phân quyền
+                .securityMatcher("**")//Chỉ những link bắt đầu bằng /api/ thì mới thực hiện phân quyền
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**",
                                 "/api/category",
@@ -84,9 +84,13 @@ public class ApiSecurityConfig {
                                 "/api/course/file/load/**",
                                 "/api/course",
                                 "/api/course/search-dto/**",
-                                "/api/course/get-dto/**")
+                                "/api/course/get-dto/**",
+                                "/admin/login")
                         .permitAll()//Đối với link này thì không cần check thông tin đăng nhập
-                        .requestMatchers("/api/role/**")
+                        .requestMatchers("/api/role/**",
+                                "/admin/home",
+                                "/admin/role",
+                                "/admin/user")
                         .hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/get-user-by-token",
                                 "/api/user/update/**",
@@ -108,13 +112,8 @@ public class ApiSecurityConfig {
     }
 
 
-    /*@Bean
+    @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "configuration/security",
-                "/swagger-ui.html",
-                "webjars/**");
-    }*/
+        return (web) -> web.ignoring().requestMatchers("/assets/**");
+    }
 }

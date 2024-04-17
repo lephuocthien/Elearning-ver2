@@ -11,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class JwtAuthenticateFilter extends BasicAuthenticationFilter{
 	private AuthenticationManager authenticationManager;
 	private UserDetailsService userDetailsService;
+	/*@Value("${app.secretkey}")
+	private String secretKey;*/
 
 	public SecretKey convertStringToSecretKeyto(String encodedKey) {
 		byte[] keyBytes = Decoders.BASE64.decode(encodedKey);
@@ -39,7 +43,7 @@ public class JwtAuthenticateFilter extends BasicAuthenticationFilter{
 		// TODO Auto-generated constructor stub
 	}
 	private Claims getAllClaimsFromToken(String token) {
-		SecretKey key = convertStringToSecretKeyto("Test123456789ioqedfhoeifhouwhfowfhowuvboiwbuvgoouhoguhf");
+		SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
 		return Jwts.parser()
 				.verifyWith(key)
 				.build()
@@ -52,31 +56,30 @@ public class JwtAuthenticateFilter extends BasicAuthenticationFilter{
 		// B1: Lấy token từ request
 		try {
 		String authorization = request.getHeader("Authorization");
-//		System.out.println(authorization);
-//		System.out.println(authorization.startsWith("Bearer"));
-//		 && authorization.startsWith("Bearer")
 		if(authorization!=null && authorization.startsWith("Bearer ")) {
 			// B2: Giải ngược Token => Lấy email đã lưu vào token ở bước đăng nhập
-			
 			String token = authorization.replace("Bearer ","");
-//			String token = authorization;
-//			System.out.println(token);
-			/*String email = Jwts.parser()
-			.setSigningKey("ChuoiBiMat")
-			.parseClaimsJws(token)
-			.getBody()
-			.getSubject();*/
 			String email = getAllClaimsFromToken(token).getSubject();
 			// B3: Truy vấn DB lấy thông tin user (sử dụng email vừa lấy từ token)
 			UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-			
 			// B4: Lưu thông tin user vào SecurityContext (Để phân quyền)
 			SecurityContextHolder
 			.getContext()
 			.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
+		} else {
+			HttpSession session = ((HttpServletRequest) request).getSession();
+			String token = (String) session.getAttribute("TOKEN");
+			if (token != null) {
+				// B2: Giải ngược Token => Lấy email đã lưu vào token ở bước đăng nhập
+				String email = getAllClaimsFromToken(token).getSubject();
+				// B3: Truy vấn DB lấy thông tin user (sử dụng email vừa lấy từ token)
+				UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+				// B4: Lưu thông tin user vào SecurityContext (Để phân quyền)
+				SecurityContextHolder
+						.getContext()
+						.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
+			}
 		}
-		
-//		response.setStatus(401);
 		chain.doFilter(request, response);
 	} catch (Exception e) {
 		response.setStatus(401);

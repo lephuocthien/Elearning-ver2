@@ -18,6 +18,7 @@ public class UserDto {
 	private String address;
 	private int roleId;
 	private String roleName;
+	private String roleDescription;
 	private List<CourseDto> courses;
 	/**
 	 * 
@@ -35,9 +36,24 @@ public class UserDto {
 	 * @param address
 	 * @param roleId
 	 * @param roleName
+	 * @param roleDescription
 	 */
 	public UserDto(int id, String email, String fullname, String password, String avatar, String phone, String address,
-			int roleId, String roleName) {
+			int roleId, String roleName, String roleDescription) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.fullname = fullname;
+		this.password = password;
+		this.avatar = avatar;
+		this.phone = phone;
+		this.address = address;
+		this.roleId = roleId;
+		this.roleName = roleName;
+		this.roleDescription = roleDescription;
+	}
+	public UserDto(int id, String email, String fullname, String password, String avatar, String phone, String address,
+				   int roleId, String roleName) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -163,6 +179,18 @@ public class UserDto {
 	 */
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+	/**
+	 * @return the roleDescription
+	 */
+	public String getRoleDescription() {
+		return roleDescription;
+	}
+	/**
+	 * @param roleDescription the roleDescription to set
+	 */
+	public void setRoleDescription(String roleDescription) {
+		this.roleDescription = roleDescription;
 	}
 	/**
 	 * @return the courses
