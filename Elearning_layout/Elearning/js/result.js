@@ -1,6 +1,8 @@
 
-let search = function () {
-    let key = document.getElementById("key").value;
+let getResult = function () {
+    //urlParams.get("id");
+    let urlParams = new URLSearchParams(window.location.search);
+    let key = urlParams.get("key");
     console.log(key);
     axios({
         url: `http://localhost:8087/api/course/search-dto/${key}`,
@@ -129,3 +131,4 @@ let search = function () {
             console.log(e.response)
         });
 }
+getResult();

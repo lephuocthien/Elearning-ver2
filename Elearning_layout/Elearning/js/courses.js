@@ -11,10 +11,10 @@ document.getElementById("bannerCourseEmail").innerHTML = user.email;
 
 let setCourse = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
-    if (!(!user.avatar)) {
-        let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
-        document.getElementById('imgAvatar').setAttribute("src", imgUrl);
-    }
+    // if (!(!user.avatar)) {
+    //     let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
+    //     document.getElementById('imgAvatar').setAttribute("src", imgUrl);
+    // }
     //Truy xuất đến thẻ body( nơi sẽ chứa giao diện)
     let tbody = document.getElementById("listMyCourse");
     //Thay đổi nội dung thẻ tbody

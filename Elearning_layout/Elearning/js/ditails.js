@@ -122,7 +122,7 @@ let loadDetail = function(){
             });
     }
     else {
-        debugger
+        //debugger
         axios({
             url: `http://localhost:8087/api/user-course/get-course-by-user-id/${user.id}/${courseId}`,
             method: "GET",

@@ -85,7 +85,8 @@ public class ApiSecurityConfig {
                                 "/api/course",
                                 "/api/course/search-dto/**",
                                 "/api/course/get-dto/**",
-                                "/admin/login")
+                                "/admin/login",
+                                "/admin/logout")
                         .permitAll()//Đối với link này thì không cần check thông tin đăng nhập
                         .requestMatchers("/api/role/**",
                                 "/admin/home",

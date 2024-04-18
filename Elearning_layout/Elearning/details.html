@@ -38,38 +38,6 @@
                                     <span class="ml-2">Categories</span>
                                 </a>
                                 <div class="dropdown-menu" id="categoryMenuDropdown">
-                                    <!-- <a class="dropdown-item" href="#">
-                                        <i class="fa fa-laptop mr-1"></i>
-                                        <span>Development</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-camera-retro mr-1"></i>
-                                        <span>Photography</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-bar-chart mr-1"></i>
-                                        <span>Business</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-desktop mr-1"></i>
-                                        <span>IT & Software</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-handshake-o mr-1"></i>
-                                        <span>Marketing</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-music mr-1"></i>
-                                        <span>Music</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-pencil-square-o mr-1"></i>
-                                        <span>Design</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-cutlery mr-1"></i>
-                                        <span>Cooking</span>
-                                    </a> -->
                                 </div>
                             </div>
                         </li>
@@ -77,7 +45,9 @@
                             <form class="input-group nav-search">
                                 <input type="text" class="form-control" placeholder="Search courses">
                                 <div class="input-group-append">
-                                    <button class="btn bg-white text-danger"><i class="fa fa-search"></i></button>
+                                    <button class="btn bg-white text-danger" type="button" onclick="search()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </div>
                             </form>
                         </li>
@@ -87,12 +57,92 @@
                     <i class="fa fa-shopping-basket"></i>
                 </div>
                 <div class="col-md-5 text-right" id="userInforDropdown">
-                    <!-- <button class="btn btn-outline-secondary">Login</button>
-                    <button class="btn btn-danger ml-2">Sign up</button> -->
                 </div>
             </div>
         </nav>
     </header>
+    <!-- The Modal Login -->
+    <div class="modal" id="myModalLogin">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Login</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="loginEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="loginPassword">
+                        </div>
+                        <h6 class="text-danger" id="loginMess"></h6>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-success" onclick="login()" data-dismiss="modal">Login</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- The Modal Register -->
+    <div class="modal" id="myModalRegister">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Register</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label>Fullname</label>
+                            <input type="text" class="form-control" id="regFullname">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="regEmail">
+                        </div>
+                        <!-- <div class="form-group">
+                            <label>Select Role</label>
+                            <div id="selectRole">
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" class="form-control" id="regPassword">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" id="regConfirmPassword">
+                        </div>
+                        <h6 class="text-danger" id="regMess"></h6>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-success" onclick="register()" data-dismiss="modal">Register</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <nav aria-label="breadcrumb">
         <div class="container-fluid">
             <ol class="breadcrumb bg-white mb-0 py-2">
@@ -135,46 +185,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <ul id="detailTargetsLeft" class="course-desc-items">
-                                    <!-- <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Learn to use Python professionally, learning both Python 2 and Python
-                                            3!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Create games with Python, like Tic Tac Toe and Blackjack!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Learn to use Python professionally, learning both Python 2 and Python
-                                            3!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Create games with Python, like Tic Tac Toe and Blackjack!</span>
-                                    </li> -->
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <ul id="detailTargetsRight" class="course-desc-items">
-                                    <!-- <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Learn to use Python professionally, learning both Python 2 and Python
-                                            3!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Create games with Python, like Tic Tac Toe and Blackjack!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Learn to use Python professionally, learning both Python 2 and Python
-                                            3!</span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-check"></i>
-                                        <span>Create games with Python, like Tic Tac Toe and Blackjack!</span>
-                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -194,102 +208,6 @@
                                 <span>40:28:55</span>
                             </a>
                             <ul id="list-content" class="collapse show">
-                                <!-- <li>
-                                    <a href="#" data-toggle="modal" data-target="#myVideoModal" onclick="testVideo()">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Course Introduction
-                                        </span>
-                                        <span>5:32</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Getting the Notebooks and the Course Material
-                                        </span>
-                                        <span>15:30</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Git and Github Overview (Optional)
-                                        </span>
-                                        <span>12:05</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Introduction to Python Data Types
-                                        </span>
-                                        <span>10:35</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Course Introduction
-                                        </span>
-                                        <span>5:32</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Getting the Notebooks and the Course Material
-                                        </span>
-                                        <span>15:30</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Git and Github Overview (Optional)
-                                        </span>
-                                        <span>12:05</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Introduction to Python Data Types
-                                        </span>
-                                        <span>10:35</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Course Introduction
-                                        </span>
-                                        <span>5:32</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Getting the Notebooks and the Course Material
-                                        </span>
-                                        <span>15:30</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Git and Github Overview (Optional)
-                                        </span>
-                                        <span>12:05</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span> <i class="fa fa-play-circle mr-1"></i>
-                                            Introduction to Python Data Types
-                                        </span>
-                                        <span>10:35</span>
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -313,11 +231,6 @@
                                     <div class="embed-responsive embed-responsive-16by9 z-depth-1-half"
                                         style="height:720px ; width: 1280px">
                                         <iframe id="urlVideo" class="embed-responsive-item" src=""></iframe>
-                                        <!-- <video width="1280" height="720" controls>
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/A3PDXmYoF5U"></iframe>
-                                <source src="https://www.youtube.com/embed/A3PDXmYoF5U">
-                                Your browser does not support the video tag.
-                            </video>   -->
                                     </div>
                                 </div>
                             </div>
@@ -392,27 +305,7 @@
                     </div>
                     <!-- END INFO -->
                 </div>
-                <div id="detailBuy"class="col-md-4">
-                    <!-- <div class="course-buy">
-                        <h2 class="mb-4 font-weight-bold">
-                            1.200.000 đ
-                            <small>1.600.000 đ</small>
-                        </h2>
-                        <button class="btn btn-danger w-100">Add to cart</button>
-                        <button class="btn btn-outline-secondary w-100">Buy now</button>
-                        <div class="course-buy-info mt-2">
-                            <span>This course includes</span>
-                            <small><i class="fa fa-play-circle-o"></i> 24 hours on-demand video</small>
-                            <small><i class="fa fa-file-o"></i> 19 articles</small>
-                            <small><i class="fa fa-code"></i> 19 coding exercises</small>
-                            <small><i class="fa fa-empire"></i> Full lifetime access</small>
-                            <small><i class="fa fa-tablet"></i> Access on mobile and TV</small>
-                            <small><i class="fa fa-recycle"></i> Certificate of Completion</small>
-                        </div>
-                        <a class="course-buy-share border-top" href="#">
-                            <i class="fa fa-share"></i> Share
-                        </a>
-                    </div> -->
+                <div id="detailBuy" class="col-md-4">
                 </div>
             </div>
         </div>
@@ -421,10 +314,7 @@
     <footer class="py-4 mt-4 text-center border-top">
         <span>Copyright © 2019 Cybersoft, Inc.</span>
     </footer>
-    
-    <script src="./js/login.js"></script>
-    <script src="./js/userInforDropdown.js"></script>
-    <script src="./js/category.js"></script>
+    <script src="./js/navbar.js"></script>
     <script src="./js/ditails.js"></script>
     <script type="text/javascript">
         $('#myVideoModal').modal({
@@ -432,11 +322,6 @@
         }).on('hidden.bs.modal', function () {
             $("#myVideoModal iframe").attr("src", $("#myVideoModal iframe").attr("src"));
         });
-//         $('.modal').on('hidden.bs.modal', function () {
-//     $('video').each(function() {
-//       this.player.pause();
-//     });
-// })
     </script>
 </body>
 
