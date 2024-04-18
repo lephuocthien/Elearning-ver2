@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="admin/layout/default">
+	  layout:decorate="~{admin/layout/default}">
 
 <head>
 <title>Thêm mới thành viên</title>
@@ -9,40 +9,46 @@
 <body>
 	<section layout:fragment="content">
 		<h3 class="mb-4">Thêm mới thành viên</h3>
-		<form th:action="@{/user/add}" method="post">
+		<form th:action="@{/admin/user/add}" method="post" th:object="${user}">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label>Email</label> <input type="text"
-							class="form-control" placeholder="email" />
+						<label>Email</label>
+						<input type="text" class="form-control" placeholder="email" th:field="*{email}"/>
 					</div>
 					<div class="form-group">
-						<label>Mật khẩu</label> <input type="password"
-							 class="form-control"
-							placeholder="password" />
+						<label>Mật khẩu</label>
+						<input type="password" class="form-control" placeholder="password" th:field="*{password}"/>
 					</div>
 					<div class="form-group">
-						<label>Họ tên</label> <input type="text"
-							class="form-control" placeholder="fullname" />
+						<label>Họ tên</label>
+						<input type="text" class="form-control" placeholder="fullname" th:field="*{fullname}"/>
+					</div>
+					<div class="form-group">
+						<label>Vai trò</label>
+						<select class="form-control" th:field="*{roleId}">
+							<option th:each="role, state: ${roles}" th:value="${role.id}" th:text="${role.description}">
+							</option>
+						</select>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label>Số điện thoại</label> <input type="text"
-							 class="form-control" placeholder="phone" />
+						<label>Số điện thoại</label>
+						<input type="text" class="form-control" placeholder="phone" th:field="*{phone}"/>
 					</div>
 					<div class="form-group">
-						<label>Địa chỉ</label> <input type="text" 
-							class="form-control" placeholder="address" />
+						<label>Địa chỉ</label>
+						<input type="text" class="form-control" placeholder="address" th:field="*{address}"/>
 					</div>
 					<div class="form-group">
-						<label>Avatar</label> <input type="text" 
-							class="form-control" placeholder="avatar" />
+						<label>Avatar</label>
+						<input type="text" class="form-control" placeholder="avatar" th:field="*{avatar}"/>
 					</div>
 				</div>
 				<div class="col-12 mt-3">
 					<button type="submit" class="btn btn-success">Lưu lại</button>
-					<a class="btn btn-secondary" th:href="@{/user}">Quay lại</a>
+					<a class="btn btn-secondary" th:href="@{/admin/user}">Quay lại</a>
 				</div>
 			</div>
 		</form>

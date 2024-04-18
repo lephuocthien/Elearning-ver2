@@ -14,7 +14,7 @@ public class HomeController {
 
     @RequestMapping(value="", method = RequestMethod.GET)
     public String index(ModelMap modelMap, HttpSession session) {
-        modelMap.addAttribute("userName", session.getAttribute("USER_NAME"));
+        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
         return "admin/home/index";
     }
 }

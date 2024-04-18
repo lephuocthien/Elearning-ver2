@@ -28,7 +28,7 @@
 				<tr>
 					<th>STT</th>
 					<th>Tên Quyền</th>
-					<th>Mô Tả</th>
+					<th>Vai trò</th>
 					<th>#</th>
 				</tr>
 			</thead>
@@ -36,11 +36,10 @@
 				<tr th:each="role, state: ${roles}">
 					<td th:text="${state.count}"></td>
 					<td th:text="${role.name}"></td>
-					<td th:textç></td>
-					<td><a th:href="@{/admin/role/edit(id=${role.id})}"
-						class="btn btn-sm btn-primary">Sửa</a> <a
-						th:href="@{/admin/role/delete(id=${role.id})}"
-						class="btn btn-sm btn-danger">Xóa</a></td>
+					<td th:text="${role.description}"></td>
+					<td>
+						<a th:href="@{/admin/role/edit(id=${role.id})}" class="btn btn-sm btn-primary">Sửa</a>
+						<a th:href="@{/admin/role/delete(id=${role.id})}" th:unless="${role.id == 1 OR role.id == 2 OR role.id == 3}" class="btn btn-sm btn-danger del-btn">Xóa</a></td>
 				</tr>
 			</tbody>
 		</table>

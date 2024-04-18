@@ -89,8 +89,8 @@ public class ApiSecurityConfig {
                         .permitAll()//Đối với link này thì không cần check thông tin đăng nhập
                         .requestMatchers("/api/role/**",
                                 "/admin/home",
-                                "/admin/role",
-                                "/admin/user")
+                                "/admin/role/**",
+                                "/admin/user/**")
                         .hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/get-user-by-token",
                                 "/api/user/update/**",

@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="admin/layout/default">
+	  layout:decorate="~{admin/layout/default}">
 <head>
-<title>Thêm mới quyền</title>
+<title>Chỉnh sửa thông tin quyền</title>
 </head>
 <body>
 	<section layout:fragment="content">
-		<h3 class="mb-4 text-center">Thêm mới quyền</h3>
-		<form th:action="@{/role/edit}" method="post" th:object="${role}">
+		<h3 class="mb-4 text-center">Chỉnh sửa thông tin quyền</h3>
+		<form th:action="@{/admin/role/edit}" method="post" th:object="${role}">
 			<input type="hidden" class="form-control" th:field="*{id}" />
 			<div class="row">
 				<div class="col-md-6 m-auto">
 					<div class="form-group">
-						<label>Tên quyền</label> <input type="text" th:field="*{name}"
-							class="form-control" placeholder="name" />
+						<label>Tên quyền</label>
+						<input type="hidden" th:field="*{name}" th:if="${role.id == 1 OR role.id == 2 OR role.id == 3}" class="form-control" placeholder="name"/>
+						<input type="text" th:field="*{name}" th:if="${role.id == 1 OR role.id == 2 OR role.id == 3}" class="form-control" placeholder="name" disabled/>
+						<input type="text" th:field="*{name}" th:unless="${role.id == 1 OR role.id == 2 OR role.id == 3}" class="form-control" placeholder="name" />
 					</div>
 					<div class="form-group">
-						<label>Mô tả</label> <input type="text" th:field="*{description}"
-							class="form-control" placeholder="description" />
+						<label>Mô tả</label>
+						<input type="text" th:field="*{description}" class="form-control" placeholder="description" />
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Lưu lại</button>

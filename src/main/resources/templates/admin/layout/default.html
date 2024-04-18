@@ -5,23 +5,25 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <th:block th:replace ="~{admin/fragments/styles}"/>
+    <!-- CSS -->
+    <th:block th:replace="~{admin/fragments/styles}"/>
 </head>
 
 <body>
-
-    <div class="d-flex justify-content-between">
-        <!-- SIDE BAR -->
-        <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
-        <div id="admin-wrapper">
-            <!-- HEADER -->
-	<div th:replace="~{admin/fragments/navbar :: navbar}"></div>
-	
-            <!-- CONTENT -->
-           <section id="admin-content" class="p-3" layout:fragment="content"></section>
-        </div>
+<div class="d-flex justify-content-between">
+    <!-- SIDE BAR -->
+    <div th:replace="~{admin/fragments/sidebar :: sidebar}"></div>
+    <div id="admin-wrapper">
+        <!-- HEADER -->
+        <div th:replace="~{admin/fragments/navbar :: navbar}"></div>
+        <!-- CONTENT -->
+        <section id="admin-content" class="p-3" layout:fragment="content"></section>
     </div>
-   <th:block th:replace ="~{admin/fragments/scripts}"/>
+</div>
+<!-- MODAL DIALOG -->
+<div th:replace="~{admin/fragments/modal :: delModal}"></div>
+<!-- SCRIPTS -->
+<th:block th:replace="~{admin/fragments/scripts}"/>
 </body>
 
 </html>
