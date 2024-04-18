@@ -34,8 +34,6 @@ public class UserController {
             HttpSession session) {
         List<UserDto> dtos = userService.getAllUserDto();
         modelMap.addAttribute("users", dtos);
-        modelMap.addAttribute("authId", session.getAttribute("AUTH_ID"));
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
         return "admin/user/index";
     }
 
@@ -47,7 +45,6 @@ public class UserController {
         List<RoleDto> roles = roleService.getAll();
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("roles", roles);
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
         return "admin/user/add";
     }
 
@@ -69,7 +66,6 @@ public class UserController {
         List<RoleDto> roles = roleService.getAll();
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("roles", roles);
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
         return "admin/user/edit";
     }
 

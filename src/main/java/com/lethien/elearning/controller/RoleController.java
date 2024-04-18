@@ -27,7 +27,6 @@ public class RoleController {
     public String index(ModelMap modelMap, HttpSession session) {
         List<RoleDto> dtos = roleService.getAll();
         modelMap.addAttribute("roles", dtos);
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
         return "admin/role/index";
     }
     @RequestMapping(value = {"add"}, method = RequestMethod.GET)
@@ -36,7 +35,6 @@ public class RoleController {
 		RoleDto dto = new RoleDto();
 		// Truyền đối tượng vừa tạo qua cho add.html
         modelMap.addAttribute("role", dto);
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
 		return "admin/role/add";
 	}
 
@@ -50,7 +48,6 @@ public class RoleController {
 	public String edit(@RequestParam("id") int id, ModelMap modelMap, HttpSession session) {
 		RoleDto dto = roleService.getById(id);
         modelMap.addAttribute("role", dto);
-        modelMap.addAttribute("authName", session.getAttribute("AUTH_NAME"));
 		return "admin/role/edit";
 	}
 

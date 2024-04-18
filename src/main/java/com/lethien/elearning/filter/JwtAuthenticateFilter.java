@@ -40,7 +40,6 @@ public class JwtAuthenticateFilter extends BasicAuthenticationFilter{
 		super(authenticationManager);
 		this.authenticationManager=authenticationManager;
 		this.userDetailsService = userDetailsService;
-		// TODO Auto-generated constructor stub
 	}
 	private Claims getAllClaimsFromToken(String token) {
 		SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
