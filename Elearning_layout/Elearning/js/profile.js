@@ -9,26 +9,8 @@ let imgName="";
 let uploadFile = document.getElementById("uploadFile");
 uploadFile.addEventListener("change", function (event) {
     let file = event.target.files[0];
-    console.log(file);
-    let formData = new FormData();
-    formData.append("file", file);
-
-    axios({
-        url: `http://localhost:8087/api/user/file/upload/${user.id}`,
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + token
-        },
-        data: formData
-    })
-        .then(function (resp) {
-            imgName = resp.data;
-            let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${imgName}`;
-            document.getElementById('imgAvatar').setAttribute("src", imgUrl);
-        })
-        .catch(function (e) {
-            console.log(e.resp)
-        });
+    let src = URL.createObjectURL(file);
+    document.getElementById('imgAvatar').setAttribute("src", src);
 })
 let setProfile = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
@@ -146,40 +128,61 @@ let updatePassword = function () {
 };
 
 let updateAvatar = function () {
-    if (!(!imgName)) {
-        axios({
-            url: `http://localhost:8087/api/user/update/${user.id}`,
-            method: "PUT",
-            responseType: 'json',
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                avatar: imgName,
-                id: user.id,
-                fullname: user.fullname,
-                email: user.email,
-                address: user.address,
-                phone: user.phone,
-                roleId: user.roleId,
-                password: ""
-            }
+    let file = document.getElementById("uploadFile").files[0];
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("id", user.id);
+
+    axios({
+        url: `http://localhost:8087/api/user/file/upload`,
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        data: formData
+    })
+        .then(function (resp) {
+            imgName = resp.data;
+            if (!(!imgName)) {
+                axios({
+                    url: `http://localhost:8087/api/user/update/${user.id}`,
+                    method: "PUT",
+                    responseType: 'json',
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    data: {
+                        avatar: imgName,
+                        id: user.id,
+                        fullname: user.fullname,
+                        email: user.email,
+                        address: user.address,
+                        phone: user.phone,
+                        roleId: user.roleId,
+                        password: ""
+                    }
+                })
+                    //Xữ lý mã trạng thái bắt đầu bằng số 2
+                    .then(function (response) {
+                        console.log(response.data);
+                        loadUserInfor();
+                        // setProfile();
+                        document.getElementById("updateAvatarMess").className="text-success";
+                        document.getElementById("updateAvatarMess").innerHTML = "Update success !";
+                    })
+                    //Xữ lý mã trạng thái còn lại
+                    .catch(function (e) {
+                        console.log(e.response);
+                        document.getElementById("updateAvatarMess").className="text-danger";
+                        document.getElementById("updateAvatarMess").innerHTML = "Invalid Image !";
+                    });
+            }         
         })
-            //Xữ lý mã trạng thái bắt đầu bằng số 2
-            .then(function (response) {
-                console.log(response.data);
-                loadUserInfor();
-                // setProfile();
-                document.getElementById("updateAvatarMess").className="text-success";
-                document.getElementById("updateAvatarMess").innerHTML = "Update success !";
-            })
-            //Xữ lý mã trạng thái còn lại
-            .catch(function (e) {
-                console.log(e.response);
-                document.getElementById("updateAvatarMess").className="text-danger";
-                document.getElementById("updateAvatarMess").innerHTML = "Invalid Image !";
-            });
-    }
+        .catch(function (e) {
+            console.log(e.resp)
+        });
+
+    
 };
 
 setProfile();

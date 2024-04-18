@@ -164,11 +164,12 @@ public class ApiUserController {
 		}
 	}
 
-	@PostMapping(value = "file/upload/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "file/upload", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Object upload(@PathVariable("id") int id,@RequestParam() MultipartFile file) {
+	public Object upload(@RequestParam(name = "id") int userId, @RequestParam(name = "file") MultipartFile file) {
 		try {
-			UserDto dto = userService.getUserDtoById(id);
+			System.out.println(userId);
+			UserDto dto = userService.getUserDtoById(userId);
 			String pathName = System.getProperty("user.dir");
 			pathName += UPLOAD_FOLDER 
 					+ dto.getRoleName()
