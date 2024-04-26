@@ -53,7 +53,7 @@ public class VideoServiceImpl implements VideoService {
 		dto.setUrl(video.getUrl());
 		dto.setTimeCount(video.getTimeCount());
 		dto.setCourseId(video.getCourseId());
-		return null;
+		return dto;
 	}
 
 	@Override

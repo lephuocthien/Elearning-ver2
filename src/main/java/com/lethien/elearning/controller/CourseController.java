@@ -1,11 +1,9 @@
 package com.lethien.elearning.controller;
 
-import com.lethien.elearning.dto.CategoryDto;
-import com.lethien.elearning.dto.CourseDto;
-import com.lethien.elearning.dto.RoleDto;
-import com.lethien.elearning.dto.UserDto;
+import com.lethien.elearning.dto.*;
 import com.lethien.elearning.service.CategoryService;
 import com.lethien.elearning.service.CourseService;
+import com.lethien.elearning.service.VideoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,10 +20,15 @@ import java.util.List;
 public class CourseController {
     private CourseService courseService;
     private CategoryService categoryService;
+    private VideoService videoService;
 
-    public CourseController (CourseService courseService, CategoryService categoryService){
+    public CourseController (
+            CourseService courseService,
+            CategoryService categoryService,
+            VideoService videoService){
         this.courseService = courseService;
         this.categoryService = categoryService;
+        this.videoService = videoService;
     }
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
@@ -46,7 +49,7 @@ public class CourseController {
         List<CategoryDto> categories = categoryService.getAll();
         modelMap.addAttribute("course", course);
         modelMap.addAttribute("categories", categories);
-        return "admin/course/add/add-layout";
+        return "admin/course/add";
     }
 
     @RequestMapping(value = {"add"}, method = RequestMethod.POST)
@@ -66,9 +69,11 @@ public class CourseController {
             session.setAttribute("TAB_INDEX", 1);
         }
         List<CategoryDto> categories = categoryService.getAll();
-        CourseDto course = courseService.getById(id);
-        modelMap.addAttribute("course", course);
+        CourseDto course = courseService.getDtoById(id);
+        List<VideoDto> videos = course.getVideos();
         modelMap.addAttribute("categories", categories);
+        modelMap.addAttribute("course", course);
+        modelMap.addAttribute("videos", videos);
         return "admin/course/edit/edit-layout";
     }
 
@@ -76,5 +81,30 @@ public class CourseController {
     public String delete(@RequestParam("id") int id) {
         courseService.remove(id);
         return "redirect:/admin/course";
+    }
+
+    @RequestMapping(value = {"video/add"}, method = RequestMethod.GET)
+    public String addVideo(
+            @RequestParam("courseId") int courseId,
+            ModelMap modelMap,
+            HttpSession session) {
+        VideoDto videoDto = new VideoDto();
+        modelMap.addAttribute("video", videoDto);
+        modelMap.addAttribute("courseId", courseId);
+        session.setAttribute("TAB_INDEX", 2);
+        return "admin/course/video/add";
+    }
+
+    @RequestMapping(value = {"video/edit"}, method = RequestMethod.GET)
+    public String editVideo(
+            @RequestParam("id") int id,
+            @RequestParam("courseId") int courseId,
+            ModelMap modelMap,
+            HttpSession session) {
+        VideoDto videoDto = videoService.getById(id);
+        modelMap.addAttribute("video", videoDto);
+        modelMap.addAttribute("courseId", courseId);
+        session.setAttribute("TAB_INDEX", 2);
+        return "admin/course/video/edit";
     }
 }

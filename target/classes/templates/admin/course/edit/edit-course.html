@@ -1,5 +1,6 @@
 <div id="tabCourse" xmlns:th="http://www.thymeleaf.org" th:fragment="tabCourse">
     <form th:action="@{/admin/course/edit}" method="post" th:object="${course}">
+        <input type="hidden" class="form-control" th:field="*{id}" />
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">

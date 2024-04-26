@@ -31,8 +31,7 @@
       <div th:replace="~{admin/course/edit/edit-course :: tabCourse}"></div>
     </div>
     <div id="menu1" class="tab-pane" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
-      <h3>Menu 1</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div th:replace="~{admin/course/edit/edit-video :: tabVideo}"></div>
     </div>
     <div id="menu2" class="tab-pane" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
       <h3>Menu 2</h3>
