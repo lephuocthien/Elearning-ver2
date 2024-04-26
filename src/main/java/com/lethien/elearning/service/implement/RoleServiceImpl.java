@@ -68,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void edit(RoleDto dto) {
-		Role role = roleRepository.findById(dto.getId()).get();
+		Role role = roleRepository.findById(dto.getId()).orElse(null);
 		if(role!=null) {
 			role.setName(dto.getName());
 			role.setDescription(dto.getDescription());

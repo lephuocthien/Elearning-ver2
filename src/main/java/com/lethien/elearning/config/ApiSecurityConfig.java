@@ -91,7 +91,8 @@ public class ApiSecurityConfig {
                         .requestMatchers("/api/role/**",
                                 "/admin/home",
                                 "/admin/role/**",
-                                "/admin/user/**")
+                                "/admin/user/**",
+                                "/admin/course/**")
                         .hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/get-user-by-token",
                                 "/api/user/update/**",

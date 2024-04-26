@@ -142,7 +142,26 @@ public class CourseServiceImpl implements CourseService {
 		course.setDescription(dto.getDescription());
 		course.setContent(dto.getContent());
 		course.setCategoryId(dto.getCategoryId());
+		course.setLastUpdate(dto.getLastUpdate());
 		courseRepository.save(course);
+	}
+
+	@Override
+	public Integer saveGetBackId(CourseDto dto) {
+		Course course = new Course();
+		course.setTitle(dto.getTitle());
+		course.setImage(dto.getImage());
+		course.setLeturesCount(dto.getLeturesCount());
+		course.setHourCount(dto.getHourCount());
+		course.setViewCount(dto.getViewCount());
+		course.setPrice(dto.getPrice());
+		course.setDiscount(dto.getDiscount());
+		course.setPromotionPrice(dto.getPromotionPrice());
+		course.setDescription(dto.getDescription());
+		course.setContent(dto.getContent());
+		course.setCategoryId(dto.getCategoryId());
+		course.setLastUpdate(dto.getLastUpdate());
+		return courseRepository.save(course).getId();
 	}
 
 	@Override

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+
+<head>
+  <title>Thêm mới thành viên</title>
+</head>
+<body>
+<section layout:fragment="content">
+  <h3 class="mb-4">Thêm mới khoá học</h3>
+  <form th:action="@{/admin/course/add}" method="post" th:object="${course}">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
+        </div>
+        <div class="form-group">
+          <label>Phân loại</label>
+          <select class="form-control" th:field="*{categoryId}">
+            <option th:each="category, state: ${categories}" th:value="${category.id}" th:text="${category.title}">
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" class="form-control" placeholder="Description" th:field="*{description}"/>
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <textarea class="form-control" th:field="*{content}"></textarea>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Giá gốc</label>
+          <input type="number" id="coursePrice" class="form-control" placeholder="0" th:field="*{price}"/>
+        </div>
+        <div class="form-group">
+          <label>Chiết khấu (%)</label>
+          <input type="number" id="courseDiscount" class="form-control" placeholder="0" th:field="*{discount}"/>
+        </div>
+        <div class="form-group">
+          <label>Giá cuối cùng</label>
+          <input type="hidden" id="promotionPrice" class="form-control"th:field="*{promotionPrice}"/>
+          <input type="number" id="promotionPriceShow" class="form-control" placeholder="0" disabled/>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-success">Lưu lại</button>
+        <a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
+      </div>
+    </div>
+  </form>
+</section>
+</body>
+
+</html>

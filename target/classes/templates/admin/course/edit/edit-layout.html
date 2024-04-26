@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+
+<head>
+  <title>Thêm mới thành viên</title>
+</head>
+<body>
+<section layout:fragment="content">
+  <h3 class="mb-4">Cập nhật khoá học</h3>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#course" th:classappend="${session.TAB_INDEX == 1} ? active : ''">
+        <h6>Thông tin khoá học</h6>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu1" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+        <h6>Thông tin video</h6>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#menu2" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
+        <h6>Thông tin target</h6>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content" style="margin-top: 20px">
+    <div id="course" class="tab-pane" th:classappend="${session.TAB_INDEX == 1} ? active : ''">
+      <div th:replace="~{admin/course/edit/edit-course :: tabCourse}"></div>
+    </div>
+    <div id="menu1" class="tab-pane" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+  </div>
+</section>
+</body>
+
+</html>

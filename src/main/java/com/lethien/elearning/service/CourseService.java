@@ -17,6 +17,7 @@ public interface CourseService {
 	CourseDto getById(int id);
 	CourseDto getDtoById(int id);
 	void save(CourseDto dto);
+	Integer saveGetBackId(CourseDto dto);
 	void edit(CourseDto dto);
 	void remove(int id);
 }

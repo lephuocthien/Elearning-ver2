@@ -10,16 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -105,8 +96,7 @@ public class Course implements Serializable{
 	 * @param lastUpdate
 	 */
 	public Course(int id, String title, String image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
-			int discount, BigDecimal promotionPrice, String description, String content, int categoryId,
-			Date lastUpdate) {
+			int discount, BigDecimal promotionPrice, String description, String content, int categoryId, Date lastUpdate) {
 		super();
 		this.id = id;
 		this.title = title;
