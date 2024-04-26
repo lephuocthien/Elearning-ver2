@@ -61,7 +61,7 @@ public class VideoServiceImpl implements VideoService {
 		Video video = new Video();
 		video.setTitle(dto.getTitle());
 		video.setUrl(dto.getUrl());
-		video.setTimeCount(dto.getCourseId());
+		video.setTimeCount(dto.getTimeCount());
 		video.setCourseId(dto.getCourseId());
 		videoRepository.save(video);
 
@@ -73,17 +73,19 @@ public class VideoServiceImpl implements VideoService {
 		if (video != null) {
 			video.setTitle(dto.getTitle());
 			video.setUrl(dto.getUrl());
-			video.setTimeCount(dto.getCourseId());
+			video.setTimeCount(dto.getTimeCount());
 			video.setCourseId(dto.getCourseId());
 			videoRepository.save(video);
 		}
 
 	}
-
 	@Override
 	public void remove(int id) {
 		videoRepository.deleteById(id);
-
+	}
+	@Override
+	public List<VideoDto> getAllVideoByCourseId(int courseId) {
+		return videoRepository.getAllVideoByCourseId(courseId);
 	}
 
 }

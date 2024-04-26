@@ -9,8 +9,8 @@
 <body>
 <section layout:fragment="content">
   <h3 class="mb-4">Thêm mới video</h3>
-  <form th:action="@{/admin/course/video/add(id=${courseId})}" method="post" th:object="${video}">
-    <!--<input type="hidden" class="form-control" th:field="${courseId}" />-->
+  <form th:action="@{/admin/course/video/add}" method="post" th:object="${video}">
+    <input type="hidden" class="form-control" th:field="*{courseId}"/>
     <div class="row">
       <div class="col-8">
         <div class="form-group">
@@ -28,7 +28,7 @@
       </div>
       <div class="col-12 mt-3">
         <button type="submit" class="btn btn-success">Lưu lại</button>
-        <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${courseId})}">Quay lại</a>
+        <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${video.courseId})}">Quay lại</a>
       </div>
     </div>
   </form>

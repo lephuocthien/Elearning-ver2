@@ -14,5 +14,6 @@ public interface TargetService {
 	TargetDto getById(int id);
 	void save (TargetDto dto);
 	void edit (TargetDto dto);
-	void remove(int id);
+	void remove (int id);
+	List<TargetDto> getAllTargetByCourseId (int courseId);
 }

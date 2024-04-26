@@ -4,12 +4,12 @@
       layout:decorate="~{admin/layout/default}">
 
 <head>
-    <title>Cập nhật video</title>
+    <title>Thêm mới video</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <h3 class="mb-4">Cập nhật video</h3>
-    <form th:action="@{/admin/course/video/edit}" method="post" th:object="${video}">
+    <h3 class="mb-4">Thêm mới video</h3>
+    <form th:action="@{/admin/course/target/edit}" method="post" th:object="${target}">
         <input type="hidden" class="form-control" th:field="*{id}"/>
         <input type="hidden" class="form-control" th:field="*{courseId}"/>
         <div class="row">
@@ -18,18 +18,10 @@
                     <label>Title</label>
                     <input type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
                 </div>
-                <div class="form-group">
-                    <label>URL</label>
-                    <input type="text" class="form-control" placeholder="URL" th:field="*{url}"/>
-                </div>
-                <div class="form-group">
-                    <label>Time</label>
-                    <input type="number" class="form-control" placeholder="0" th:field="*{timeCount}"/>
-                </div>
             </div>
             <div class="col-12 mt-3">
                 <button type="submit" class="btn btn-success">Lưu lại</button>
-                <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${video.courseId})}">Quay lại</a>
+                <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${target.courseId})}">Quay lại</a>
             </div>
         </div>
     </form>

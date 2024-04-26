@@ -30,10 +30,10 @@
             <td th:text="${video.url}"></td>
             <td th:text="${video.timeCount}"></td>
             <td>
-                <a th:href="@{video/edit(id=${video.id},courseId=${course.id})}" class="btn btn-sm btn-info">
+                <a th:href="@{video/edit(id=${video.id})}" class="btn btn-sm btn-info">
                     <i class="fa fa-pencil-square-o"></i>
                 </a>
-                <a th:href="@{#}" class="btn btn-sm btn-danger del-btn">
+                <a th:href="@{video/delete(id=${video.id},courseId=${course.id})}" class="btn btn-sm btn-danger del-btn">
                     <i class="fa fa-trash-o"></i>
                 </a>
             </td>

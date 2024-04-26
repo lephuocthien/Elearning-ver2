@@ -26,7 +26,6 @@ public class TargetServiceImpl implements TargetService {
 		super();
 		this.targetRepository = targetRepository;
 	}
-
 	@Override
 	public List<TargetDto> getAll() {
 		List<Target> targets = targetRepository.findAll();
@@ -40,7 +39,10 @@ public class TargetServiceImpl implements TargetService {
 		}
 		return dtos;
 	}
-
+	@Override
+	public List<TargetDto> getAllTargetByCourseId (int courseId){
+		return targetRepository.getAllTargetByCourseId(courseId);
+	}
 	@Override
 	public TargetDto getById(int id) {
 		Target target = targetRepository.findById(id).get();
@@ -50,7 +52,6 @@ public class TargetServiceImpl implements TargetService {
 		dto.setCourseId(target.getCourseId());
 		return dto;
 	}
-
 	@Override
 	public void save(TargetDto dto) {
 		Target target = new Target();
@@ -60,7 +61,6 @@ public class TargetServiceImpl implements TargetService {
 		targetRepository.save(target);
 
 	}
-
 	@Override
 	public void edit(TargetDto dto) {
 		Target target = targetRepository.findById(dto.getId()).get();
@@ -71,7 +71,6 @@ public class TargetServiceImpl implements TargetService {
 		}
 
 	}
-
 	@Override
 	public void remove(int id) {
 		targetRepository.deleteById(id);

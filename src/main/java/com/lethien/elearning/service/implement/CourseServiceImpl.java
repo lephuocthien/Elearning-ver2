@@ -179,6 +179,7 @@ public class CourseServiceImpl implements CourseService {
 			course.setDescription(dto.getDescription());
 			course.setContent(dto.getContent());
 			course.setCategoryId(dto.getCategoryId());
+			course.setLastUpdate(dto.getLastUpdate());
 			courseRepository.save(course);
 		}
 
