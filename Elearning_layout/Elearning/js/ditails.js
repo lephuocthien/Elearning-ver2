@@ -12,7 +12,7 @@ let courseId = urlParams.get("id");
 let testVideo = function (urlVideo) {
     document.getElementById("urlVideo").setAttribute("src", urlVideo);
 }
-let loadDetail = function(){
+let loadDetail = function () {
     if (!user) {
         axios({
             url: `http://localhost:8087/api/course/get-dto/${courseId}`,
@@ -28,6 +28,18 @@ let loadDetail = function(){
                 document.getElementById("bannerDetailTitle").innerHTML = course.title;
                 document.getElementById("detailLastUpdate").innerHTML = `Last updated ${da}-${mo}-${ye}`;
                 document.getElementById("detailLetures").innerHTML = course.leturesCount + " lectures";
+                var hours = Math.floor(course.hourCount / 3600);
+                var minute = Math.floor((course.hourCount % 3600) / 60);
+                let time_count;
+                if (hours === 0) {
+                    time_count = ("0" + minute).slice(-2) + " minutes" ;
+                } else if (hours >= 100){
+                    time_count = ("0" + hours).slice(-3) + " hours " + ("0" + minute).slice(-2) + " minutes";
+                } 
+                else {
+                    time_count = ("0" + hours).slice(-2) + " hours " + ("0" + minute).slice(-2) + " minutes";
+                }
+                document.getElementById("detailHours").innerHTML = time_count;
 
                 let targetLeft = document.getElementById("detailTargetsLeft");
                 let targetRight = document.getElementById("detailTargetsRight");
@@ -58,24 +70,38 @@ let loadDetail = function(){
                 targetLeft.innerHTML = contentLeft;
                 targetRight.innerHTML = contentRight;
 
-                // var myNumber = 0;
-                // var formattedNumber = ("0" + myNumber).slice(-2);
-                // console.log(formattedNumber);
+                document.getElementById("lecture-count-course").innerHTML = course.leturesCount + " lectures";
+
+                var hours = Math.floor(course.hourCount / 3600);
+                var minute = Math.floor((course.hourCount % 3600) / 60);
+                var seconds = (course.hourCount % 3600) % 60;
+                if (hours === 0) {
+                    time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                } else if (hours >= 100){
+                    time_count = ("0" + hours).slice(-3) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                } 
+                else {
+                    time_count = ("0" + hours).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                }
+                document.getElementById("hour-count-course").innerHTML = time_count;
 
                 let videoList = document.getElementById("list-content");
                 let contentVideo = '';
                 for (let item of course.videos) {
                     // console.log(item);
-                    var hours = Math.floor(item.timeCount/3600);
+                    var hours = Math.floor(item.timeCount / 3600);
                     // console.log(hours);
-                    var minute =Math.floor((item.timeCount%3600)/60);
-                    var seconds = (item.timeCount%3600)%60;
+                    
+                    var minute = Math.floor((item.timeCount % 3600) / 60);
+                    var seconds = (item.timeCount % 3600) % 60;
                     let time_count;
-                    if(hours===0){     
-                        time_count = ("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                    if (hours === 0) {
+                        time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                         // console.log(time_count);
-                    } else{
-                        time_count = ("0" + hours).slice(-2) + ":" +("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                    } else if (hours >= 100){
+                        time_count = ("0" + hours).slice(-3) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                    } else {
+                        time_count = ("0" + hours).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                         // console.log(time_count);
                     }
                     // console.log(item.title);
@@ -92,9 +118,9 @@ let loadDetail = function(){
                 }
                 // console.log(contentVideo);
                 videoList.innerHTML = contentVideo;
-                let price = String(course.price).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                let promotionPrice = String(course.promotionPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                document.getElementById("detailBuy").innerHTML=`
+                let price = String(course.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                let promotionPrice = String(course.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                document.getElementById("detailBuy").innerHTML = `
                 <div class="course-buy">
                         <h2 class="mb-4 font-weight-bold">
                             ${promotionPrice} đ
@@ -151,7 +177,18 @@ let loadDetail = function(){
                         document.getElementById("bannerDetailTitle").innerHTML = course.title;
                         document.getElementById("detailLastUpdate").innerHTML = `Last updated ${da}-${mo}-${ye}`;
                         document.getElementById("detailLetures").innerHTML = course.leturesCount + " lectures";
-        
+                        var hours = Math.floor(course.hourCount / 3600);
+                        var minute = Math.floor((course.hourCount % 3600) / 60);
+                        let time_count;
+                        if (hours === 0) {
+                            time_count = ("0" + minute).slice(-2) + " minutes" ;
+                        } else if (hours >= 100){
+                            time_count = ("0" + hours).slice(-3) + " hours " + ("0" + minute).slice(-2) + " minutes";
+                        } 
+                        else {
+                            time_count = ("0" + hours).slice(-2) + " hours " + ("0" + minute).slice(-2) + " minutes";
+                        }
+                        document.getElementById("detailHours").innerHTML = time_count;
                         let targetLeft = document.getElementById("detailTargetsLeft");
                         let targetRight = document.getElementById("detailTargetsRight");
                         //Thay đổi nội dung thẻ tbody
@@ -177,28 +214,44 @@ let loadDetail = function(){
                             }
                             check++;
                         }
-        
+
                         targetLeft.innerHTML = contentLeft;
                         targetRight.innerHTML = contentRight;
-        
+
                         // var myNumber = 0;
                         // var formattedNumber = ("0" + myNumber).slice(-2);
                         // console.log(formattedNumber);
-        
+                        document.getElementById("lecture-count-course").innerHTML = course.leturesCount + " lectures";
+
+                        var hours = Math.floor(course.hourCount / 3600);
+                        var minute = Math.floor((course.hourCount % 3600) / 60);
+                        var seconds = (course.hourCount % 3600) % 60;
+                        if (hours === 0) {
+                            time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                        } else if (hours >= 100){
+                            time_count = ("0" + hours).slice(-3) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                        } else {
+                            time_count = ("0" + hours).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                        }
+                        document.getElementById("hour-count-course").innerHTML = time_count;
+
                         let videoList = document.getElementById("list-content");
                         let contentVideo = '';
                         for (let item of course.videos) {
                             // console.log(item);
-                            var hours = Math.floor(item.timeCount/3600);
+                            var hours = Math.floor(item.timeCount / 3600);
                             // console.log(hours);
-                            var minute =Math.floor((item.timeCount%3600)/60);
-                            var seconds = (item.timeCount%3600)%60;
+                        
+                            var minute = Math.floor((item.timeCount % 3600) / 60);
+                            var seconds = (item.timeCount % 3600) % 60;
                             let time_count;
-                            if(hours===0){     
-                                time_count = ("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                            if (hours === 0) {
+                                time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                                 // console.log(time_count);
-                            } else{
-                                time_count = ("0" + hours).slice(-2) + ":" +("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                            } else if (hours >= 100){
+                                time_count = ("0" + hours).slice(-3) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
+                            } else {
+                                time_count = ("0" + hours).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                                 // console.log(time_count);
                             }
                             // console.log(item.title);
@@ -215,7 +268,7 @@ let loadDetail = function(){
                         }
                         // console.log(contentVideo);
                         videoList.innerHTML = contentVideo;
-                        document.getElementById("detailBuy").innerHTML=``;
+                        document.getElementById("detailBuy").innerHTML = ``;
                     })
                     .catch(function (e) {
                         console.log(e.resp)
@@ -241,7 +294,7 @@ let loadDetail = function(){
                         document.getElementById("bannerDetailTitle").innerHTML = course.title;
                         document.getElementById("detailLastUpdate").innerHTML = `Last updated ${da}-${mo}-${ye}`;
                         document.getElementById("detailLetures").innerHTML = course.leturesCount + " lectures";
-        
+
                         let targetLeft = document.getElementById("detailTargetsLeft");
                         let targetRight = document.getElementById("detailTargetsRight");
                         //Thay đổi nội dung thẻ tbody
@@ -267,28 +320,28 @@ let loadDetail = function(){
                             }
                             check++;
                         }
-        
+
                         targetLeft.innerHTML = contentLeft;
                         targetRight.innerHTML = contentRight;
-        
+
                         // var myNumber = 0;
                         // var formattedNumber = ("0" + myNumber).slice(-2);
                         // console.log(formattedNumber);
-        
+
                         let videoList = document.getElementById("list-content");
                         let contentVideo = '';
                         for (let item of course.videos) {
                             // console.log(item);
-                            var hours = Math.floor(item.timeCount/3600);
+                            var hours = Math.floor(item.timeCount / 3600);
                             // console.log(hours);
-                            var minute =Math.floor((item.timeCount%3600)/60);
-                            var seconds = (item.timeCount%3600)%60;
+                            var minute = Math.floor((item.timeCount % 3600) / 60);
+                            var seconds = (item.timeCount % 3600) % 60;
                             let time_count;
-                            if(hours===0){     
-                                time_count = ("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                            if (hours === 0) {
+                                time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                                 // console.log(time_count);
-                            } else{
-                                time_count = ("0" + hours).slice(-2) + ":" +("0" + minute).slice(-2) + ":" +("0" + seconds).slice(-2);
+                            } else {
+                                time_count = ("0" + hours).slice(-2) + ":" + ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
                                 // console.log(time_count);
                             }
                             // console.log(item.title);
@@ -305,9 +358,9 @@ let loadDetail = function(){
                         }
                         // console.log(contentVideo);
                         videoList.innerHTML = contentVideo;
-                        let price = String(course.price).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                        let promotionPrice = String(course.promotionPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
-                        document.getElementById("detailBuy").innerHTML=`
+                        let price = String(course.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                        let promotionPrice = String(course.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                        document.getElementById("detailBuy").innerHTML = `
                         <div class="course-buy">
                                 <h2 class="mb-4 font-weight-bold">
                                     ${promotionPrice} đ
@@ -335,31 +388,31 @@ let loadDetail = function(){
                     });
             });
     }
-       
-}
-    let buy = function(){
-        axios({
-            url: "http://localhost:8087/api/user-course/add",
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                courseId: courseId,
-                userId: user.id,
-                roleId: user.roleId
-            }
 
+}
+let buy = function () {
+    axios({
+        url: "http://localhost:8087/api/user-course/add",
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        data: {
+            courseId: courseId,
+            userId: user.id,
+            roleId: user.roleId
+        }
+
+    })
+        //Xữ lý mã trạng thái bắt đầu bằng số 2
+        .then(function (response) {
+            //Truy xuất đến thẻ body( nơi sẽ chứa giao diện)
+            loadUserInfor();
+            loadDetail();
         })
-            //Xữ lý mã trạng thái bắt đầu bằng số 2
-            .then(function (response) {
-                //Truy xuất đến thẻ body( nơi sẽ chứa giao diện)
-                loadUserInfor();
-                loadDetail();
-            })
-            //Xữ lý mã trạng thái còn lại
-            .catch(function (e) {
-                console.log(e.response)
-            });
-    }
-    loadDetail();
+        //Xữ lý mã trạng thái còn lại
+        .catch(function (e) {
+            console.log(e.response)
+        });
+}
+loadDetail();

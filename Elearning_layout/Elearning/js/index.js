@@ -41,7 +41,7 @@ let getAllCourse = function () {
                             ${item.title}
                             </h6>
                             <div class="course-author">
-                                <b>Lê Quang Song</b>
+                                <b>Lê Thiện</b>
                                 <span class="mx-1"> | </span>
                                 <b>${item.categoryTitle}</b>
                             </div>
@@ -83,7 +83,7 @@ let getAllCourse = function () {
                                 ${item.title}
                                 </h6>
                                 <div class="course-author">
-                                    <b>Lê Quang Song</b>
+                                    <b>Lê Thiện</b>
                                     <span class="mx-1"> | </span>
                                     <b>${item.categoryTitle}</b>
                                 </div>

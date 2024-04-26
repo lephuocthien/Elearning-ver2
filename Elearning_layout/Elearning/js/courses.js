@@ -34,7 +34,7 @@ let setCourse = function () {
         </div>
         <div class="my-course-author">
             <h6>
-                <small>Lê Quang Song</small>
+                <small>Lê Thiện</small>
                 <small>Start course</small>
             </h6>
         </div>
