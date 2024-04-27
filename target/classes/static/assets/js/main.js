@@ -35,4 +35,8 @@ $('document').ready(function(){
                 }
             }
         });
+
+        $("#iconClass").change(function(){
+            $("#iconPreview").addClass($("#iconClass").val());
+        });
     })
