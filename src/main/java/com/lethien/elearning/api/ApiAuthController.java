@@ -67,7 +67,7 @@ public class ApiAuthController {
 		SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
 		final long JWT_EXPIRATION = 864000000L;
 		Authentication authentication = null;
-		String email = loginDto.getEmail();
+		String email = loginDto.getUsername();
 		String password = loginDto.getPassword();
 		try {
 			//System.out.println(email + " " + password);

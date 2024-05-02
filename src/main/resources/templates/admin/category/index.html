@@ -11,7 +11,8 @@
 		<h3 class="mb-3">Danh sách danh mục</h3>
 		<div class="row">
 			<div class="col-md-8">
-				<a th:href="@{/admin/category/add}" class="btn btn-primary">Thêm mới</a>
+				<a class="btn btn-secondary" th:href="@{/admin/home}">Quay lại</a>
+				<a th:href="@{/admin/category/add}" class="btn btn-primary">Thêm mới +</a>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
@@ -33,8 +34,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="category, state: ${categories}">
-					<td th:text="${state.count}"></td>
+				<tr th:each="category, state: ${categories.content}">
+					<td th:text="${categories.size*(categories.number)+state.count}"></td>
 					<td th:text="${category.title}"></td>
 					<td><i th:class="${category.icon}"></i></td>
 					<td>
@@ -43,6 +44,30 @@
 				</tr>
 			</tbody>
 		</table>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center pagination-sm">
+				<li class="page-item"
+					th:classappend="${categories.number==0} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/category(page=${categories.number})}"
+					>Previous</a>
+				</li>
+				<li  th:if="${categories.totalPages > 0}" class="page-item"
+					 th:each="pageNumber : ${pageNumbers}"
+					 th:classappend="${pageNumber==categories.number + 1} ? active">
+					<a th:href="@{/admin/category(page=${pageNumber})}"
+					   th:text=${pageNumber}
+					   class="page-link"
+					></a>
+				</li>
+				<li class="page-item"
+					th:classappend="${categories.number+1==categories.totalPages} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/category(page=${categories.number+2})}"
+					>Next</a>
+				</li>
+			</ul>
+		</nav>
 	</section>
 </body>
 </html>

@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -133,7 +134,7 @@ public class ApiUserController {
 		if (pageIndex < 1 || pageSize < 1)
 			return new ResponseEntity<>("Invalid parameters.", HttpStatus.BAD_REQUEST);
 
-		Page<UserDto> results = userService.getUserRolePaging(pageIndex - 1, pageSize);
+		Page<UserDto> results = userService.getUserDtoPaging(PageRequest.of(pageIndex - 1, pageSize));
 
 		if (results.getSize() > 0)
 			return new ResponseEntity<>(results, HttpStatus.OK);

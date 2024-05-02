@@ -46,7 +46,7 @@ let login = function () {
         url: `http://localhost:8087/api/auth`,
         method: "POST",
         data: {
-            email: email,
+            username: email,
             password: password
         }
     })
@@ -79,12 +79,10 @@ let login = function () {
                         location.reload();
                         //setInforDropDown();
                     }
-
                 })
                 .catch(function (e) {
                     console.log(e.resp)
                 });
-
         })
         .catch(function (err) {
             console.log(err.response);
@@ -145,10 +143,8 @@ let register = function () {
                 });
             });
     }
-
 }
 let loadUserInfor = function () {
-    //console.log(token);
     if (token != null){
         if (token != ""){
         axios({

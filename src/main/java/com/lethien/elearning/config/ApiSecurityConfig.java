@@ -26,6 +26,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 
@@ -72,10 +74,10 @@ public class ApiSecurityConfig {
         // TODO Auto-generated method stub
         //http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         //http.cors(AbstractHttpConfigurer::disable);
-        http.cors(Customizer.withDefaults());
+        http.cors(withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);
         http
-                .securityMatcher("**")//Chỉ những link bắt đầu bằng /api/ thì mới thực hiện phân quyền
+                .securityMatcher("**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**",
                                 "/api/category",
@@ -86,6 +88,7 @@ public class ApiSecurityConfig {
                                 "/api/course/search-dto/**",
                                 "/api/course/get-dto/**",
                                 "/admin/login",
+                                "/admin/perform_login",
                                 "/admin/logout")
                         .permitAll()//Đối với link này thì không cần check thông tin đăng nhập
                         .requestMatchers("/api/role/**",
@@ -103,14 +106,27 @@ public class ApiSecurityConfig {
                         .hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
                         .requestMatchers("/api/user/**")
                         .hasAnyAuthority("ROLE_ADMIN")
-                        .anyRequest()// Các link còn lại bắt buộc phải đăng nhập trước mới có thể  truy cập (cần phải có token)
+                        .anyRequest()
                         .authenticated()
+                );
+        http
+                .formLogin(form -> form
+                        .loginPage("/admin/login")
+                        .permitAll()
+                );
+        http
+                .logout(logout -> logout
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutUrl("/admin/logout")
+                        .logoutSuccessUrl("/admin/login")
+                        .permitAll()
                 );
         http.addFilter(new JwtAuthenticateFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userDetailsService));
 
-        http.sessionManagement(session -> session
+        /*http.sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+        );*/
         return http.build();
     }
 

@@ -49,7 +49,7 @@ public class LoginController {
         return "admin/login/index";
     }
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/perform_login"}, method = RequestMethod.POST)
     public String login(
             @ModelAttribute("loginDto") LoginDto loginDto,
             HttpSession session,
@@ -58,7 +58,7 @@ public class LoginController {
         SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
         final long JWT_EXPIRATION = 864000000L;
         Authentication authentication = null;
-        String email = loginDto.getEmail();
+        String email = loginDto.getUsername();
         String password = loginDto.getPassword();
         try {
             authentication = authenticationManager

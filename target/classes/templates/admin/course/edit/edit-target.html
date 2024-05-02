@@ -1,7 +1,8 @@
 <div id="tabTarget" xmlns:th="http://www.thymeleaf.org" th:fragment="tabTarget">
     <div class="row">
         <div class="col-md-8">
-            <a th:href="@{/admin/course/target/add(courseId=${course.id})}" class="btn btn-primary">Thêm mới</a>
+            <a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
+            <a th:href="@{/admin/course/target/add(courseId=${course.id})}" class="btn btn-primary">Thêm mới +</a>
         </div>
         <div class="col-md-4">
             <div class="input-group">
@@ -22,8 +23,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="target, state: ${targets}">
-            <td th:text="${state.count}"></td>
+        <tr th:each="target, state: ${targets.content}">
+            <td th:text="${targets.size*(targets.number)+state.count}"></td>
             <td th:text="${target.title}"></td>
             <td>
                 <a th:href="@{target/edit(id=${target.id})}" class="btn btn-sm btn-info">
@@ -36,4 +37,28 @@
         </tr>
         </tbody>
     </table>
+    <nav>
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${targets.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(id=${course.id},pageOfTarget=${targets.number})}"
+                >Previous</a>
+            </li>
+            <li  th:if="${targets.totalPages > 0}" class="page-item"
+                 th:each="pageNumber : ${pageNumbersOfTarget}"
+                 th:classappend="${pageNumber==targets.number + 1} ? active">
+                <a th:href="@{/admin/course/edit(id=${course.id},pageOfTarget=${pageNumber})}"
+                   th:text=${pageNumber}
+                   class="page-link"
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${targets.number+1==targets.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(id=${course.id},pageOfTarget=${targets.number+2})}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>

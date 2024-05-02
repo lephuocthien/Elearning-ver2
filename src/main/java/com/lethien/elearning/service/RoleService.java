@@ -8,6 +8,8 @@ package com.lethien.elearning.service;
 import java.util.List;
 
 import com.lethien.elearning.dto.RoleDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RoleService {
 	List<RoleDto> getAll();
@@ -16,4 +18,5 @@ public interface RoleService {
 	void save(RoleDto dto);
 	void edit(RoleDto dto);
 	void remove(int id);
+	Page<RoleDto> getRoleDtoPaging(Pageable pageable);
 }

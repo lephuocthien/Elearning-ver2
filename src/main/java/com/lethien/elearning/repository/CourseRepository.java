@@ -7,6 +7,8 @@ package com.lethien.elearning.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -98,6 +100,21 @@ public interface CourseRepository extends JpaRepository<Course, Integer>{
 			+ "ON c.categoryId = ca.id "
 			+ "WHERE c.id = :id")
 	CourseDto findDtoCourseById(@Param("id") int id);
-	
-	
+
+	@Query("SELECT new com.lethien.elearning.dto.CourseDto"
+			+ "(c.id, "
+			+ "c.title, "
+			+ "c.image, "
+			+ "c.leturesCount, "
+			+ "c.hourCount, "
+			+ "c.viewCount, "
+			+ "c.price, "
+			+ "c.discount, "
+			+ "c.promotionPrice, "
+			+ "c.description, "
+			+ "c.content, "
+			+ "c.categoryId, "
+			+ "c.lastUpdate) "
+			+ "FROM Course c")
+	Page<CourseDto> getCourseDtoPaging(Pageable pageable);
 }

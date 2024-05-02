@@ -8,6 +8,8 @@ package com.lethien.elearning.service;
 import java.util.List;
 
 import com.lethien.elearning.dto.CourseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CourseService {
 	List<CourseDto> getAll();
@@ -20,4 +22,5 @@ public interface CourseService {
 	Integer saveGetBackId(CourseDto dto);
 	void edit(CourseDto dto);
 	void remove(int id);
+	Page<CourseDto> getCourseDtoPaging(Pageable pageable);
 }

@@ -6,8 +6,13 @@
 package com.lethien.elearning.service.implement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lethien.elearning.dto.CategoryDto;
@@ -78,4 +83,17 @@ public class CategoryServiceImpl implements CategoryService {
 
 	}
 
+	@Override
+	public Page<CategoryDto> getCategoryDtoPaging(Pageable pageable) {
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<CategoryDto> categoryDtoPage;
+		if (categoryRepository.count() < startItem) {
+			categoryDtoPage = new PageImpl<CategoryDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),categoryRepository.count());
+		} else {
+			categoryDtoPage = categoryRepository.getCategoryDtoPaging(PageRequest.of(currentPage, pageSize));
+		}
+		return categoryDtoPage;
+	}
 }

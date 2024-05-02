@@ -73,7 +73,6 @@ public class JwtAuthenticateFilter extends BasicAuthenticationFilter{
 				String email = getAllClaimsFromToken(token).getSubject();
 				// B3: Truy vấn DB lấy thông tin user (sử dụng email vừa lấy từ token)
 				UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
 				// B4: Lưu thông tin user vào SecurityContext (Để phân quyền)
 				SecurityContextHolder
 						.getContext()

@@ -11,7 +11,8 @@
     <h3 class="mb-3">Danh sách khoá học</h3>
     <div class="row">
         <div class="col-md-8">
-            <a th:href="@{/admin/course/add}" class="btn btn-primary">Thêm mới</a>
+            <a class="btn btn-secondary" th:href="@{/admin/home}">Quay lại</a>
+            <a th:href="@{/admin/course/add}" class="btn btn-primary">Thêm mới +</a>
         </div>
         <div class="col-md-4">
             <div class="input-group">
@@ -36,8 +37,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course, state: ${courses}">
-            <td th:text="${state.count}"></td>
+        <tr th:each="course, state: ${courses.content}">
+            <td th:text="${courses.size*(courses.number)+state.count}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.leturesCount}"></td>
             <td th:text="${#numbers.formatDecimal(course.price, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
@@ -54,6 +55,30 @@
         </tr>
         </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${courses.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course(page=${courses.number})}"
+                >Previous</a>
+            </li>
+            <li  th:if="${courses.totalPages > 0}" class="page-item"
+                 th:each="pageNumber : ${pageNumbers}"
+                 th:classappend="${pageNumber==courses.number + 1} ? active">
+                <a th:href="@{/admin/course(page=${pageNumber})}"
+                   th:text=${pageNumber}
+                   class="page-link"
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${courses.number+1==courses.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course(page=${courses.number+2})}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
 </section>
 </body>
 </html>

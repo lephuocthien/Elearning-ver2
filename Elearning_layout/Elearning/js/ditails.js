@@ -242,4 +242,5 @@ let buy = function () {
             console.log(e.response)
         });
 }
+
 loadDetail();

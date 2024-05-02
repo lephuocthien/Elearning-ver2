@@ -1,9 +1,13 @@
 package com.lethien.elearning.controller;
 
 import com.lethien.elearning.dto.CategoryDto;
+import com.lethien.elearning.dto.CourseDto;
 import com.lethien.elearning.dto.RoleDto;
 import com.lethien.elearning.service.CategoryService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,18 +16,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("admin/category")
 public class CategoryController {
     private CategoryService categoryService;
+    @Value("${app.data.page-size}")
+    private int pageSize;
     public  CategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
     }
     @RequestMapping(value="", method = RequestMethod.GET)
-    public String index(ModelMap modelMap, HttpSession session) {
-        List<CategoryDto> categories = categoryService.getAll();
-        modelMap.addAttribute("categories", categories);
+    public String index(
+            ModelMap modelMap,
+            @RequestParam("page") Optional<Integer> page) {
+        int currentPage = page.orElse(1);
+        Page<CategoryDto> categoryDtoPage = categoryService.getCategoryDtoPaging(PageRequest.of(currentPage - 1, pageSize));
+        modelMap.addAttribute("categories", categoryDtoPage);
+        int totalPages = categoryDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
+        //List<CategoryDto> categories = categoryService.getAll();
+        //modelMap.addAttribute("categories", categories);
         return "admin/category/index";
     }
 

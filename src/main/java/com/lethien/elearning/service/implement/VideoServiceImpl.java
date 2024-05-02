@@ -6,8 +6,13 @@
 package com.lethien.elearning.service.implement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lethien.elearning.dto.VideoDto;
@@ -87,5 +92,17 @@ public class VideoServiceImpl implements VideoService {
 	public List<VideoDto> getAllVideoByCourseId(int courseId) {
 		return videoRepository.getAllVideoByCourseId(courseId);
 	}
-
+	@Override
+	public Page<VideoDto> getVideoDtoPagingByCourseId(Pageable pageable, int courseId){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<VideoDto> videoDtoPage;
+		if (videoRepository.count() < startItem) {
+			videoDtoPage = new PageImpl<VideoDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),videoRepository.count());
+		} else {
+			videoDtoPage = videoRepository.getVideoDtoPagingByCourseId(PageRequest.of(currentPage, pageSize), courseId);
+		}
+		return videoDtoPage;
+	}
 }

@@ -6,8 +6,13 @@
 package com.lethien.elearning.service.implement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lethien.elearning.dto.RoleDto;
@@ -82,5 +87,17 @@ public class RoleServiceImpl implements RoleService {
 		// TODO Auto-generated method stub
 		roleRepository.deleteById(id);
 	}
-
+	@Override
+	public Page<RoleDto> getRoleDtoPaging(Pageable pageable){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<RoleDto> roleDtoPage;
+		if (roleRepository.count() < startItem) {
+			roleDtoPage = new PageImpl<RoleDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),roleRepository.count());
+		} else {
+			roleDtoPage = roleRepository.getRoleDtoPaging(PageRequest.of(currentPage, pageSize));
+		}
+		return roleDtoPage;
+	}
 }

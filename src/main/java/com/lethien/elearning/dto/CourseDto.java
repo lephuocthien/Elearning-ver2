@@ -71,6 +71,39 @@ public class CourseDto {
 		this.lastUpdate = lastUpdate;
 		this.categoryTitle = categoryTitle;
 	}
+	/**
+	 * @param id
+	 * @param title
+	 * @param image
+	 * @param leturesCount
+	 * @param hourCount
+	 * @param viewCount
+	 * @param price
+	 * @param discount
+	 * @param promotionPrice
+	 * @param description
+	 * @param content
+	 * @param categoryId
+	 * @param lastUpdate
+	 */
+	public CourseDto(int id, String title, String image, int leturesCount, int hourCount, int viewCount,
+					 BigDecimal price, int discount, BigDecimal promotionPrice, String description, String content,
+					 int categoryId, Date lastUpdate) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.image = image;
+		this.leturesCount = leturesCount;
+		this.hourCount = hourCount;
+		this.viewCount = viewCount;
+		this.price = price;
+		this.discount = discount;
+		this.promotionPrice = promotionPrice;
+		this.description = description;
+		this.content = content;
+		this.categoryId = categoryId;
+		this.lastUpdate = lastUpdate;
+	}
 
 	/**
 	 * @return the id

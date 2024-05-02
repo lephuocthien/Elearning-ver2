@@ -17,12 +17,10 @@ let setProfile = function () {
     console.log(user)
     document.getElementById("bannerProFullname").innerHTML = user.fullname;
     document.getElementById("bannerProEmail").innerHTML = user.email;
-
     document.getElementById("fmFullname").value = user.fullname;
     document.getElementById("fmEmail").value = user.email;
     document.getElementById("fmAddress").value = user.address;
     document.getElementById("fmPhone").value = user.phone;
-
     document.getElementById("securityEmail").value = user.email;
     if (!(!user.avatar)) {
         let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
@@ -77,6 +75,7 @@ let updateProfile = function () {
             document.getElementById("updateMess").innerHTML = "Invalid email !";
         });
 };
+
 let updatePassword = function () {
     let password = document.getElementById("securityPassword").value;
     let confirmPassword = document.getElementById("securityConfirmPassword").value;
@@ -181,8 +180,6 @@ let updateAvatar = function () {
         .catch(function (e) {
             console.log(e.resp)
         });
-
-    
 };
 
 setProfile();

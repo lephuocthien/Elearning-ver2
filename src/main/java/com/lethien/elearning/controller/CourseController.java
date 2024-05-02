@@ -1,12 +1,14 @@
 package com.lethien.elearning.controller;
 
 import com.lethien.elearning.dto.*;
-import com.lethien.elearning.entity.Video;
 import com.lethien.elearning.service.CategoryService;
 import com.lethien.elearning.service.CourseService;
 import com.lethien.elearning.service.TargetService;
 import com.lethien.elearning.service.VideoService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("admin/course")
@@ -24,6 +29,8 @@ public class CourseController {
     private CategoryService categoryService;
     private VideoService videoService;
     private TargetService targetService;
+    @Value("${app.data.page-size}")
+    private int pageSize;
 
     public CourseController(
             CourseService courseService,
@@ -38,10 +45,19 @@ public class CourseController {
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String index(
+            @RequestParam("page") Optional<Integer> page,
             ModelMap modelMap,
             HttpSession session) {
-        List<CourseDto> courses = courseService.getAll();
-        modelMap.addAttribute("courses", courses);
+        int currentPage = page.orElse(1);
+        Page<CourseDto> courseDtoPage = courseService.getCourseDtoPaging(PageRequest.of(currentPage - 1, pageSize));
+        modelMap.addAttribute("courses", courseDtoPage);
+        int totalPages = courseDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
         session.removeAttribute("TAB_INDEX");
         return "admin/course/index";
     }
@@ -69,18 +85,52 @@ public class CourseController {
     }
 
     @RequestMapping(value = {"edit"}, method = RequestMethod.GET)
-    public String edit(@RequestParam("id") int id, ModelMap modelMap, HttpSession session) {
+    public String edit(
+            @RequestParam("id") int courseId,
+            @RequestParam("pageOfVideo") Optional<Integer> pageOfVideo,
+            @RequestParam("pageOfTarget") Optional<Integer> pageOfTarget,
+            ModelMap modelMap,
+            HttpSession session) {
+        int currentPageOfVideo = pageOfVideo.orElse(1);
+        int currentPageOfTarget = pageOfTarget.orElse(1);
         if (session.getAttribute("TAB_INDEX") == null) {
             session.setAttribute("TAB_INDEX", 1);
+        } else if (pageOfVideo.isPresent()) {
+            session.setAttribute("TAB_INDEX", 2);
+        } else if (pageOfTarget.isPresent()) {
+            session.setAttribute("TAB_INDEX", 3);
         }
         List<CategoryDto> categories = categoryService.getAll();
-        CourseDto course = courseService.getDtoById(id);
-        List<VideoDto> videos = course.getVideos();
-        List<TargetDto> targets = course.getTargets();
+        CourseDto course = courseService.getById(courseId);
+        //Paging Video
+        Page<VideoDto> videoDtoPage = videoService
+                .getVideoDtoPagingByCourseId(
+                        PageRequest.of(currentPageOfVideo - 1, pageSize),
+                        courseId);
+        int totalPages = videoDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbersOfVideo", pageNumbers);
+        }
+        //Paging Target
+        Page<TargetDto> targetDtoPage = targetService
+                .getTargetDtoPagingByCourseId(
+                        PageRequest.of(currentPageOfTarget - 1, pageSize),
+                        courseId);
+        totalPages = targetDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbersOfTarget", pageNumbers);
+        }
+        //Set modelMap
         modelMap.addAttribute("categories", categories);
         modelMap.addAttribute("course", course);
-        modelMap.addAttribute("videos", videos);
-        modelMap.addAttribute("targets", targets);
+        modelMap.addAttribute("videos", videoDtoPage);
+        modelMap.addAttribute("targets", targetDtoPage);
         return "admin/course/edit/edit-layout";
     }
 

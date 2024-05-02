@@ -6,8 +6,13 @@
 package com.lethien.elearning.service.implement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.lethien.elearning.dto.TargetDto;
 import com.lethien.elearning.entity.Target;
@@ -59,7 +64,6 @@ public class TargetServiceImpl implements TargetService {
 		target.setTitle(dto.getTitle());
 		target.setCourseId(dto.getCourseId());
 		targetRepository.save(target);
-
 	}
 	@Override
 	public void edit(TargetDto dto) {
@@ -69,12 +73,22 @@ public class TargetServiceImpl implements TargetService {
 			target.setCourseId(dto.getCourseId());
 			targetRepository.save(target);
 		}
-
 	}
 	@Override
 	public void remove(int id) {
 		targetRepository.deleteById(id);
-
 	}
-
+	@Override
+	public Page<TargetDto> getTargetDtoPagingByCourseId(Pageable pageable, int courseId){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<TargetDto> targetDtoPage;
+		if (targetRepository.count() < startItem) {
+			targetDtoPage = new PageImpl<TargetDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),targetRepository.count());
+		} else {
+			targetDtoPage = targetRepository.getTargetDtoPagingByCourseId(PageRequest.of(currentPage, pageSize), courseId);
+		}
+		return targetDtoPage;
+	}
 }

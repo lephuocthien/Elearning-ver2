@@ -6,10 +6,13 @@
 package com.lethien.elearning.service.implement;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -126,15 +129,21 @@ public class UserServiceImpl implements UserService {
 	public Page<User> getUserPaging(int pageIndex, int pageSize) {
 		// TODO: get user paging
 		PageRequest paging = PageRequest.of(pageIndex, pageSize);
-
 		return userRepository.findAll(paging);
 	}
 
 	@Override
-	public Page<UserDto> getUserRolePaging(int pageIndex, int pageSize) {
-		// TODO:
-		PageRequest paging = PageRequest.of(pageIndex, pageSize);
-		return userRepository.findAllUserRole(paging);
+	public Page<UserDto> getUserDtoPaging(Pageable pageable) {
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<UserDto> userDtoPage;
+		if (userRepository.count() < startItem) {
+			userDtoPage = new PageImpl<UserDto>(Collections.emptyList(),PageRequest.of(currentPage, pageSize),userRepository.count());
+		} else {
+			userDtoPage = userRepository.getUserDtoPaging(PageRequest.of(currentPage, pageSize));
+		}
+		return userDtoPage;
 	}
 
 	@Override
