@@ -5,7 +5,7 @@ let getResult = function () {
     let key = urlParams.get("key");
     console.log(key);
     axios({
-        url: `http://localhost:8087/api/course/search-dto/${key}`,
+        url: URL + `api/course/search-dto/${key}`,
         method: "GET"
     })
         //Xữ lý mã trạng thái bắt đầu bằng số 2
@@ -33,7 +33,7 @@ let getResult = function () {
                     let price = String(item.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
                     let promotionPrice = String(item.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
                     if (!(!item.image))
-                        imgUrl = `http://localhost:8087/api/course/file/load/${item.image}`;
+                        imgUrl = URL + `api/course/file/load/${item.image}`;
                     contentSearch += `
                 <div class="col-md-3">
                 <div class="course">
@@ -78,7 +78,7 @@ let getResult = function () {
                 } else {
                     let promotionPrice = String(item.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
                     if (!(!item.image))
-                        imgUrl = `http://localhost:8087/api/course/file/load/${item.image}`;
+                        imgUrl = URL + `api/course/file/load/${item.image}`;
                     contentSearch += `
                 <div class="col-md-2">
                     <div class="course">

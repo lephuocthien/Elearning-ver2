@@ -11,7 +11,7 @@ document.getElementById("bannerCourseEmail").innerHTML = user.email;
 let setCourse = function () {
     user = JSON.parse(localStorage.getItem('USER_INFOR'));
     // if (!(!user.avatar)) {
-    //     let imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
+    //     let imgUrl = URL + `api/user/file/load/${user.id}/${user.avatar}`;
     //     document.getElementById('imgAvatar').setAttribute("src", imgUrl);
     // }
     let tbody = document.getElementById("listMyCourse");
@@ -20,7 +20,7 @@ let setCourse = function () {
     let content = '';
     for (let item of user.courses) {
         if (!(!item.image))
-            imgUrl = `http://localhost:8087/api/course/file/load/${item.image}`;
+            imgUrl = URL + `api/course/file/load/${item.image}`;
         content += `
             <div class="col-md-3">
                 <a href="details.html?id=${item.id}" class="my-course-item">

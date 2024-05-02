@@ -1,7 +1,9 @@
 
+//const URL = "http://localhost:8087/";
+const URL = "http://221.132.33.168:8087/";
 let getAllCategory = function(){
     axios({
-        url: "http://localhost:8087/api/category",
+        url: URL + "api/category",
         method: "GET"
     })
         .then(function (response) {
@@ -43,7 +45,7 @@ let login = function () {
     let email = document.getElementById("loginEmail").value;
     let password = document.getElementById("loginPassword").value;
     axios({
-        url: `http://localhost:8087/api/auth`,
+        url: URL + `api/auth`,
         method: "POST",
         data: {
             username: email,
@@ -55,7 +57,7 @@ let login = function () {
             console.log(resp.data);
             // loadUserInfor();
             axios({
-                url: `http://localhost:8087/api/user/get-user-by-token`,
+                url: URL + `api/user/get-user-by-token`,
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -119,7 +121,7 @@ let register = function () {
     }
     else {
         axios({
-            url: `http://localhost:8087/api/auth/register`,
+            url: URL + `api/auth/register`,
             method: "POST",
             data: {
                 fullname: fullname,
@@ -148,7 +150,7 @@ let loadUserInfor = function () {
     if (token != null){
         if (token != ""){
         axios({
-            url: `http://localhost:8087/api/user/get-user-by-token`,
+            url: URL + `api/user/get-user-by-token`,
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -177,7 +179,7 @@ let setInforDropDown = function () {
     `
     if (!(!user)) {
         if (!(!user.avatar))
-            imgUrl = `http://localhost:8087/api/user/file/load/${user.id}/${user.avatar}`;
+            imgUrl = URL + `api/user/file/load/${user.id}/${user.avatar}`;
         content = '';
         content += `
     <div class="collapse navbar-collapse" id="collapsibleNavId">
