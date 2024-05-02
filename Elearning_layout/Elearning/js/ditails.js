@@ -160,7 +160,7 @@ let loadDetail = function () {
     //Trường hợp chưa login
     if (!user) {
         axios({
-            url: URL + `api/course/get-dto/${courseId}`,
+            url: Url +  `api/course/get-dto/${courseId}`,
             method: "GET"
         })
             .then(function (resp) {
@@ -174,7 +174,7 @@ let loadDetail = function () {
     //Trường hợp đã login
     else {
         axios({
-            url: URL + `api/user-course/get-course-by-user-id/${user.id}/${courseId}`,
+            url: Url +  `api/user-course/get-course-by-user-id/${user.id}/${courseId}`,
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -183,7 +183,7 @@ let loadDetail = function () {
         //Trường hợp đã mua khoá học
             .then(function (response) {
                 axios({
-                    url: URL + `api/course/get-dto/${courseId}`,
+                    url: Url +  `api/course/get-dto/${courseId}`,
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -203,7 +203,7 @@ let loadDetail = function () {
             .catch(function (e) {
                 console.log(e.response)
                 axios({
-                    url: URL + `api/course/get-dto/${courseId}`,
+                    url: Url +  `api/course/get-dto/${courseId}`,
                     method: "GET",
                     headers: {
                         "Authorization": "Bearer " + token
@@ -222,7 +222,7 @@ let loadDetail = function () {
 
 let buy = function () {
     axios({
-        url: URL + "api/user-course/add",
+        url: Url +  "api/user-course/add",
         method: "POST",
         headers: {
             "Authorization": "Bearer " + token

@@ -1,9 +1,9 @@
 
-//const URL = "http://localhost:8087/";
-const URL = "http://221.132.33.168:8087/";
+//const Url = "http://localhost:8087/";
+const Url = "http://221.132.33.168:8087/";
 let getAllCategory = function(){
     axios({
-        url: URL + "api/category",
+        url: Url +  "api/category",
         method: "GET"
     })
         .then(function (response) {
@@ -45,7 +45,7 @@ let login = function () {
     let email = document.getElementById("loginEmail").value;
     let password = document.getElementById("loginPassword").value;
     axios({
-        url: URL + `api/auth`,
+        url: Url +  `api/auth`,
         method: "POST",
         data: {
             username: email,
@@ -57,7 +57,7 @@ let login = function () {
             console.log(resp.data);
             // loadUserInfor();
             axios({
-                url: URL + `api/user/get-user-by-token`,
+                url: Url +  `api/user/get-user-by-token`,
                 method: "GET",
                 headers: {
                     "Authorization": "Bearer " + token
@@ -121,7 +121,7 @@ let register = function () {
     }
     else {
         axios({
-            url: URL + `api/auth/register`,
+            url: Url +  `api/auth/register`,
             method: "POST",
             data: {
                 fullname: fullname,
@@ -150,7 +150,7 @@ let loadUserInfor = function () {
     if (token != null){
         if (token != ""){
         axios({
-            url: URL + `api/user/get-user-by-token`,
+            url: Url +  `api/user/get-user-by-token`,
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + token
@@ -179,7 +179,7 @@ let setInforDropDown = function () {
     `
     if (!(!user)) {
         if (!(!user.avatar))
-            imgUrl = URL + `api/user/file/load/${user.id}/${user.avatar}`;
+            imgUrl = Url +  `api/user/file/load/${user.id}/${user.avatar}`;
         content = '';
         content += `
     <div class="collapse navbar-collapse" id="collapsibleNavId">

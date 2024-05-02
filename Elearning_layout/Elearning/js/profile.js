@@ -23,7 +23,7 @@ let setProfile = function () {
     document.getElementById("fmPhone").value = user.phone;
     document.getElementById("securityEmail").value = user.email;
     if (!(!user.avatar)) {
-        let imgUrl = URL + `api/user/file/load/${user.id}/${user.avatar}`;
+        let imgUrl = Url +  `api/user/file/load/${user.id}/${user.avatar}`;
         document.getElementById('imgAvatar').setAttribute("src", imgUrl);
     }
 
@@ -38,7 +38,7 @@ let updateProfile = function () {
         imgName=user.avatar;
     }
     axios({
-        url: URL + `api/user/update/${user.id}`,
+        url: Url +  `api/user/update/${user.id}`,
         method: "PUT",
         responseType: 'json',
         headers: {
@@ -92,7 +92,7 @@ let updatePassword = function () {
         });
     } else {
         axios({
-            url: URL + `api/user/update/${user.id}`,
+            url: Url +  `api/user/update/${user.id}`,
             method: "PUT",
             responseType: 'json',
             headers: {
@@ -133,7 +133,7 @@ let updateAvatar = function () {
     formData.append("id", user.id);
 
     axios({
-        url: URL + `api/user/file/upload`,
+        url: Url +  `api/user/file/upload`,
         method: "POST",
         headers: {
             "Authorization": "Bearer " + token
@@ -144,7 +144,7 @@ let updateAvatar = function () {
             imgName = resp.data;
             if (!(!imgName)) {
                 axios({
-                    url: URL + `api/user/update/${user.id}`,
+                    url: Url +  `api/user/update/${user.id}`,
                     method: "PUT",
                     responseType: 'json',
                     headers: {

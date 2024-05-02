@@ -28,7 +28,7 @@ let converTimeOfCourse = function(timeCount, type){
 }
 let getAllCourse = function () {
     axios({
-        url: URL + "api/course",
+        url: Url +  "api/course",
         method: "GET"
     })
         //Xữ lý mã trạng thái bắt đầu bằng số 2
@@ -48,7 +48,7 @@ let getAllCourse = function () {
                 if (item.discount > 0) {
                     let price = String(item.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
                     if (!(!item.image))
-                        imgUrl = URL + `api/course/file/load/${item.image}`;
+                        imgUrl = Url +  `api/course/file/load/${item.image}`;
                     contentSale += `
                         <div class="col-md-3">
                             <div class="course">
@@ -92,7 +92,7 @@ let getAllCourse = function () {
                     `;
                 }
                 if (!(!item.image))
-                    imgUrl = URL + `api/course/file/load/${item.image}`;
+                    imgUrl = Url +  `api/course/file/load/${item.image}`;
                 contentPopular += `
                     <div class="col-md-2">
                         <div class="course">
