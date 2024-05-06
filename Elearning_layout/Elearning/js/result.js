@@ -5,7 +5,7 @@ let getResult = function () {
     let key = urlParams.get("key");
     console.log(key);
     axios({
-        url: Url +  `api/course/search-dto/${key}`,
+        url: Url + `api/course/search-dto/${key}`,
         method: "GET"
     })
         //Xữ lý mã trạng thái bắt đầu bằng số 2
