@@ -108,15 +108,17 @@ public class UserController {
             @RequestParam("id") int id,
             @RequestParam("image") MultipartFile file,
             HttpSession session) throws IOException {
-        UserDto auth = (UserDto) session.getAttribute("AUTH");
-        UserDto user = userService.getUserDtoById(id);
-        user.setAvatar(file.getBytes());
-        user.setPassword("");
-        userService.edit(user);
-        if (auth.getId() == user.getId()){
-            session.setAttribute("AUTH", user);
+        if (!file.isEmpty()){
+            UserDto auth = (UserDto) session.getAttribute("AUTH");
+            UserDto user = userService.getUserDtoById(id);
+            user.setAvatar(file.getBytes());
+            user.setPassword("");
+            userService.edit(user);
+            if (auth.getId() == user.getId()){
+                session.setAttribute("AUTH", user);
+            }
         }
-        return "redirect:/admin/user/edit?id="+user.getId();
+        return "redirect:/admin/user/edit?id="+id;
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)

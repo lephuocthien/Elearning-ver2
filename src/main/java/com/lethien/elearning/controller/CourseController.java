@@ -152,10 +152,12 @@ public class CourseController {
     public String editAvatar(
             @RequestParam("id") int id,
             @RequestParam("image") MultipartFile file) throws IOException {
-        CourseDto course = courseService.getById(id);
-        course.setImage(file.getBytes());
-        courseService.edit(course);
-        return "redirect:/admin/course/edit?id=" + course.getId();
+        if (!file.isEmpty()){
+            CourseDto course = courseService.getById(id);
+            course.setImage(file.getBytes());
+            courseService.edit(course);
+        }
+        return "redirect:/admin/course/edit?id=" + id;
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
