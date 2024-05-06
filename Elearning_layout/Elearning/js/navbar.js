@@ -1,6 +1,6 @@
 
-const Url = "http://localhost:8087/";
-//const Url = "http://221.132.33.168:8087/";
+//const Url = "http://localhost:8087/";
+const Url = "http://221.132.33.168:8087/";
 let getAllCategory = function(){
     axios({
         url: Url +  "api/category",
