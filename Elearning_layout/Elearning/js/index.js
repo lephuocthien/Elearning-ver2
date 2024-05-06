@@ -1,11 +1,11 @@
 //type = 1 => xx hours xx minutes
 //type = 2 => hh:mm:ss
-let converTimeOfCourse = function(timeCount, type){
+let converTimeOfCourse = function (timeCount, type) {
     let time_count;
     var hours = Math.floor(timeCount / 3600);
     var minute = Math.floor((timeCount % 3600) / 60);
     var seconds = (timeCount % 3600) % 60;
-    if(type===1){
+    if (type === 1) {
         if (hours === 0) {
             time_count = ("0" + minute).slice(-2) + " minutes";
         } else if (hours >= 100) {
@@ -14,7 +14,7 @@ let converTimeOfCourse = function(timeCount, type){
         else {
             time_count = ("0" + hours).slice(-2) + " hours " + ("0" + minute).slice(-2) + " minutes";
         }
-    } else if ( type === 2){
+    } else if (type === 2) {
         if (hours === 0) {
             time_count = ("0" + minute).slice(-2) + ":" + ("0" + seconds).slice(-2);
         } else if (hours >= 100) {
@@ -28,7 +28,7 @@ let converTimeOfCourse = function(timeCount, type){
 }
 let getAllCourse = function () {
     axios({
-        url: Url +  "api/course",
+        url: Url + "api/course",
         method: "GET"
     })
         //Xữ lý mã trạng thái bắt đầu bằng số 2
@@ -44,11 +44,14 @@ let getAllCourse = function () {
 
             for (let item of response.data) {
                 let promotionPrice = String(item.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
-                    let time_count = converTimeOfCourse(item.hourCount,1);
+                let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
+                let time_count = converTimeOfCourse(item.hourCount, 1);
                 if (item.discount > 0) {
                     let price = String(item.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                    //let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
                     if (!(!item.image))
-                        imgUrl = Url +  `api/course/file/load/${item.image}`;
+                        imgUrl = "data:image/png;base64," + item.image;
+                    //imgUrl = Url +  `api/course/file/load/${item.image}`;
                     contentSale += `
                         <div class="col-md-3">
                             <div class="course">
@@ -92,7 +95,7 @@ let getAllCourse = function () {
                     `;
                 }
                 if (!(!item.image))
-                    imgUrl = Url +  `api/course/file/load/${item.image}`;
+                    imgUrl = "data:image/png;base64," + item.image;
                 contentPopular += `
                     <div class="col-md-2">
                         <div class="course">

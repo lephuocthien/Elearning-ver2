@@ -17,39 +17,39 @@ insert into categories (title, icon) values ('Cooking', 'fa fa-cutlery');
 
 -- Insert data to users
 -- password: 123456
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('admin@gmail.com', 'Lê Phước Thiện', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '', '', 1);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_1@gmail.com', 'Wilone Menary', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '194-528-9732', '55334 Prairie Rose Parkway', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_2@gmail.com', 'Marjy Cornhill', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '338-330-8921', '68 Gerald Place', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('teacher_3@gmail.com', 'Natka Hiseman', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '873-178-2150', '184 Monterey Place', 2);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('hyate3@howstuffworks.com', 'Hoebart Yate', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '760-449-4620', '3389 Moulton Alley', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('ckreber4@boston.com', 'Claudio Kreber', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '212-906-7846', '8870 Blue Bill Park Plaza', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('wle5@google.ru', 'Woody Le Merchant', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '288-501-6552', '00602 Anderson Court', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('asousa6@github.com', 'Adelaida Sousa', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '207-886-6028', '19 Stuart Trail', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('rcarek7@skype.com', 'Rosemary Carek', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '177-609-0393', '6956 Summerview Court', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('tferenczi8@nbcnews.com', 'Tedmund Ferenczi', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '694-424-6561', '8 Cody Trail', 3);
-insert into users (email, fullname, password, avatar, phone, address, role_id) values ('alovelace9@shop-pro.jp', 'Arabele Lovelace', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '700-868-2727', '0 Ruskin Center', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('admin@gmail.com', 'Lê Phước Thiện', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '', '', 1);
+insert into users (email, fullname, password, phone, address, role_id) values ('teacher_1@gmail.com', 'Wilone Menary', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '194-528-9732', '55334 Prairie Rose Parkway', 2);
+insert into users (email, fullname, password, phone, address, role_id) values ('teacher_2@gmail.com', 'Marjy Cornhill', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '338-330-8921', '68 Gerald Place', 2);
+insert into users (email, fullname, password, phone, address, role_id) values ('teacher_3@gmail.com', 'Natka Hiseman', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '873-178-2150', '184 Monterey Place', 2);
+insert into users (email, fullname, password, phone, address, role_id) values ('hyate3@howstuffworks.com', 'Hoebart Yate', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '760-449-4620', '3389 Moulton Alley', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('ckreber4@boston.com', 'Claudio Kreber', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '212-906-7846', '8870 Blue Bill Park Plaza', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('wle5@google.ru', 'Woody Le Merchant', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '288-501-6552', '00602 Anderson Court', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('asousa6@github.com', 'Adelaida Sousa', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '207-886-6028', '19 Stuart Trail', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('rcarek7@skype.com', 'Rosemary Carek', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '177-609-0393', '6956 Summerview Court', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('tferenczi8@nbcnews.com', 'Tedmund Ferenczi', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '694-424-6561', '8 Cody Trail', 3);
+insert into users (email, fullname, password, phone, address, role_id) values ('alovelace9@shop-pro.jp', 'Arabele Lovelace', '$2a$10$/owwqZ6SWn5AAQr02xO3uOTIEMxzAxtEJsH4IlEl8IOIMVJLubT3C', '700-868-2727', '0 Ruskin Center', 3);
 
 -- Insert data to courses
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Research Nurse', 'course.jpg', 170, 1656950, 18, 1358699, 8);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('VP Quality Control', 'html-css.jpg', 166, 4163578, 37, 2623054, 2);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Recruiting Manager', 'course.jpg', 67, 2497644, 11, 2222903, 6);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Computer Systems Analyst III', 'course.jpg', 155, 4270208, 21, 3373464, 5);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Nurse', 'html-css.jpg', 130, 3207728, 46, 1732173, 2);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Engineer IV', 'html-css.jpg', 169, 3281677, 43, 1870555, 4);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Design Engineer', 'course.jpg', 72, 2422213, 50, 1211106, 8);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Actuary', 'html-css.jpg', 177, 1801798, 46, 972970, 6);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Chief Design Engineer', 'html-css.jpg', 55, 3825880, 39, 2333786, 1);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Marketing Manager', 'course.jpg', 60, 3924780, 14, 3375310, 3);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Project Manager', 'course.jpg', 131, 1080629, 20, 864503, 7);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Dental Hygienist', 'html-css.jpg', 76, 3754751, 19, 3041348, 3);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Sales Associate', 'html-css.jpg', 107, 3013255, 37, 1898350, 3);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('General Manager', 'html-css.jpg', 96, 4663539, 22, 3637560, 1);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Structural Engineer', 'html-css.jpg', 179, 3236091, 47, 1715128, 6);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Dental Hygienist', 'html-css.jpg', 176, 1106048, 14, 951201, 2);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('VP Sales', 'html-css.jpg', 143, 3693672, 36, 2363950, 2);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Health Coach I', 'html-css.jpg', 52, 2397930, 12, 2110178, 1);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Marketing Manager', 'course.jpg', 69, 3438504, 35, 2235027, 7);
-insert into courses (title, image, letures_count, price, discount, promotion_price, category_id) values ('Junior Executive', 'html-css.jpg', 94, 1628043, 20, 1302434, 4);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Research Nurse', 170, 1656950, 18, 1358699, 8);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('VP Quality Control', 166, 4163578, 37, 2623054, 2);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Recruiting Manager', 67, 2497644, 11, 2222903, 6);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Computer Systems Analyst III', 155, 4270208, 21, 3373464, 5);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Nurse', 130, 3207728, 46, 1732173, 2);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Engineer IV', 169, 3281677, 43, 1870555, 4);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Design Engineer', 72, 2422213, 50, 1211106, 8);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Actuary', 177, 1801798, 46, 972970, 6);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Chief Design Engineer', 55, 3825880, 39, 2333786, 1);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Marketing Manager', 60, 3924780, 14, 3375310, 3);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Project Manager', 131, 1080629, 20, 864503, 7);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Dental Hygienist', 76, 3754751, 19, 3041348, 3);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Sales Associate', 107, 3013255, 37, 1898350, 3);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('General Manager', 96, 4663539, 22, 3637560, 1);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Structural Engineer', 179, 3236091, 47, 1715128, 6);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Dental Hygienist', 176, 1106048, 14, 951201, 2);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('VP Sales', 143, 3693672, 36, 2363950, 2);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Health Coach I', 52, 2397930, 12, 2110178, 1);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Marketing Manager', 69, 3438504, 35, 2235027, 7);
+insert into courses (title, letures_count, price, discount, promotion_price, category_id) values ('Junior Executive', 94, 1628043, 20, 1302434, 4);
 
 -- Inser data to user_courses
 -- teacher

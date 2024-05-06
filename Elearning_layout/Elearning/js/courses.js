@@ -1,10 +1,10 @@
+//loadUserInfor();
 var user = JSON.parse(localStorage.getItem('USER_INFOR'));
 let token = localStorage.getItem("USER_TOKEN");
 if (!user) {
     //Nếu token null hoặc rỗng (chưa đăng nhập)
     window.location.href = "index.html";
 }
-loadUserInfor();
 document.getElementById("bannerCourseFullname").innerHTML = user.fullname + "'s Course";
 document.getElementById("bannerCourseEmail").innerHTML = user.email;
 
@@ -19,8 +19,9 @@ let setCourse = function () {
     //let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
     let content = '';
     for (let item of user.courses) {
+        let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
         if (!(!item.image))
-            imgUrl = Url +  `api/course/file/load/${item.image}`;
+            imgUrl = "data:image/png;base64," + item.image;
         content += `
             <div class="col-md-3">
                 <a href="details.html?id=${item.id}" class="my-course-item">

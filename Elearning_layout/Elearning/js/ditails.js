@@ -1,3 +1,4 @@
+//loadUserInfor();
 var user = JSON.parse(localStorage.getItem('USER_INFOR'));
 let token = localStorage.getItem("USER_TOKEN");
 // console.log(user);
@@ -5,7 +6,6 @@ let token = localStorage.getItem("USER_TOKEN");
 //if (!user) {  
 //    window.location.href = "index.html";
 //}
-loadUserInfor();
 let urlParams = new URLSearchParams(window.location.search);
 let courseId = urlParams.get("id");
 

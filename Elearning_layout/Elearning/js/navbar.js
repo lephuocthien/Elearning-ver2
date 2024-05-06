@@ -1,6 +1,6 @@
 
-//const Url = "http://localhost:8087/";
-const Url = "http://221.132.33.168:8087/";
+const Url = "http://localhost:8087/";
+//const Url = "http://221.132.33.168:8087/";
 let getAllCategory = function(){
     axios({
         url: Url +  "api/category",
@@ -147,6 +147,7 @@ let register = function () {
     }
 }
 let loadUserInfor = function () {
+    let token = localStorage.getItem("USER_TOKEN");
     if (token != null){
         if (token != ""){
         axios({
@@ -179,7 +180,7 @@ let setInforDropDown = function () {
     `
     if (!(!user)) {
         if (!(!user.avatar))
-            imgUrl = Url +  `api/user/file/load/${user.id}/${user.avatar}`;
+            imgUrl = "data:image/png;base64," + user.avatar
         content = '';
         content += `
     <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -203,3 +204,4 @@ let setInforDropDown = function () {
 }
 getAllCategory();
 setInforDropDown();
+loadUserInfor();

@@ -4,11 +4,11 @@
       layout:decorate="~{admin/layout/default}">
 
 <head>
-    <title>Thêm mới video</title>
+    <title>Thêm mới target</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <h3 class="mb-4">Thêm mới video</h3>
+    <h3 class="mb-4">Thêm mới target</h3>
     <form th:action="@{/admin/course/target/edit}" method="post" th:object="${target}">
         <input type="hidden" class="form-control" th:field="*{id}"/>
         <input type="hidden" class="form-control" th:field="*{courseId}"/>

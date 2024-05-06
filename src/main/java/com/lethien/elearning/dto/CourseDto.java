@@ -15,7 +15,7 @@ public class CourseDto {
 
 	private int id;
 	private String title;
-	private String image;
+	private byte[] image;
 	private int leturesCount;
 	private int hourCount;
 	private int viewCount;
@@ -52,7 +52,7 @@ public class CourseDto {
 	 * @param lastUpdate
 	 * @param categoryTitle
 	 */
-	public CourseDto(int id, String title, String image, int leturesCount, int hourCount, int viewCount,
+	public CourseDto(int id, String title, byte[] image, int leturesCount, int hourCount, int viewCount,
 			BigDecimal price, int discount, BigDecimal promotionPrice, String description, String content,
 			 int categoryId, Date lastUpdate, String categoryTitle) {
 		super();
@@ -86,7 +86,7 @@ public class CourseDto {
 	 * @param categoryId
 	 * @param lastUpdate
 	 */
-	public CourseDto(int id, String title, String image, int leturesCount, int hourCount, int viewCount,
+	public CourseDto(int id, String title, byte[] image, int leturesCount, int hourCount, int viewCount,
 					 BigDecimal price, int discount, BigDecimal promotionPrice, String description, String content,
 					 int categoryId, Date lastUpdate) {
 		super();
@@ -136,14 +136,14 @@ public class CourseDto {
 	/**
 	 * @return the image
 	 */
-	public String getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
 	/**
 	 * @param image the image to set
 	 */
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 

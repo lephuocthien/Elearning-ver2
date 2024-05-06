@@ -31,8 +31,9 @@ public class Course implements Serializable{
 	@Column(name = "title")
 	private String title;
 
+	@Lob
 	@Column(name = "image")
-	private String image;
+	private byte[] image;
 
 	@Column(name = "letures_count")
 	private int leturesCount;
@@ -95,7 +96,7 @@ public class Course implements Serializable{
 	 * @param categoryId
 	 * @param lastUpdate
 	 */
-	public Course(int id, String title, String image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
+	public Course(int id, String title, byte[] image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
 			int discount, BigDecimal promotionPrice, String description, String content, int categoryId, Date lastUpdate) {
 		super();
 		this.id = id;
@@ -144,14 +145,14 @@ public class Course implements Serializable{
 	/**
 	 * @return the image
 	 */
-	public String getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
 	/**
 	 * @param image the image to set
 	 */
-	public void setImage(String image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 

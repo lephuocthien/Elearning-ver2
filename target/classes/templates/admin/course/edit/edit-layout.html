@@ -4,7 +4,7 @@
       layout:decorate="~{admin/layout/default}">
 
 <head>
-  <title>Thêm mới thành viên</title>
+  <title>Cập nhật khoá học</title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -16,12 +16,17 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu1" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+      <a class="nav-link" data-toggle="tab" href="#image" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+        <h6>Ảnh khoá học</h6>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#video" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
         <h6>Thông tin video</h6>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu2" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
+      <a class="nav-link" data-toggle="tab" href="#target" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
         <h6>Thông tin target</h6>
       </a>
     </li>
@@ -30,10 +35,13 @@
     <div id="course" class="tab-pane" th:classappend="${session.TAB_INDEX == 1} ? active : ''">
       <div th:replace="~{admin/course/edit/edit-course :: tabCourse}"></div>
     </div>
-    <div id="menu1" class="tab-pane" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+    <div id="image" class="tab-pane" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
+      <div th:replace="~{admin/course/edit/edit-img :: tabImg}"></div>
+    </div>
+    <div id="video" class="tab-pane" th:classappend="${session.TAB_INDEX == 2} ? active : ''">
       <div th:replace="~{admin/course/edit/edit-video :: tabVideo}"></div>
     </div>
-    <div id="menu2" class="tab-pane" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
+    <div id="target" class="tab-pane" th:classappend="${session.TAB_INDEX == 3} ? active : ''">
       <div th:replace="~{admin/course/edit/edit-target :: tabTarget}"></div>
     </div>
   </div>

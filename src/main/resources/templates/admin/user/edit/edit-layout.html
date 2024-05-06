@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+
+<head>
+  <title>Cập nhật thông tin thành viên</title>
+</head>
+<body>
+<section layout:fragment="content">
+  <h3 class="mb-4">Cập nhật thông tin thành viên</h3>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#information">
+        <h6>Thông tin cơ bản</h6>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#avatar" >
+        <h6>Avatar</h6>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content" style="margin-top: 20px">
+    <div id="information" class="tab-pane active" >
+      <div th:replace="~{admin/user/edit/edit-information :: tabInformation}"></div>
+    </div>
+    <div id="avatar" class="tab-pane" >
+      <div th:replace="~{admin/user/edit/edit-avatar :: tabAvatar}"></div>
+    </div>
+  </div>
+</section>
+</body>
+
+</html>

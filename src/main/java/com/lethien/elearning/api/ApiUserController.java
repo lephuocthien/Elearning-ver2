@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import jakarta.servlet.ServletException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -105,7 +106,9 @@ public class ApiUserController {
 
 	// Cập nhật
 	@PutMapping("update/{id}")
-	public ResponseEntity<Object> edit(@PathVariable("id") int id, @RequestBody UserDto dto) {
+	public ResponseEntity<Object> edit(
+			@PathVariable("id") int id,
+			@RequestBody UserDto dto) throws IOException, ServletException {
 		try {
 			if (userService.getById(id) == null)
 				return new ResponseEntity<Object>("Id " + id + " không tồn tại", HttpStatus.BAD_REQUEST);
@@ -130,17 +133,13 @@ public class ApiUserController {
 	@GetMapping("/paging/{pageIndex}/{pageSize}")
 	public ResponseEntity<Object> getUserPaging(@PathVariable("pageIndex") int pageIndex,
 			@PathVariable("pageSize") int pageSize) {
-
 		if (pageIndex < 1 || pageSize < 1)
 			return new ResponseEntity<>("Invalid parameters.", HttpStatus.BAD_REQUEST);
-
 		Page<UserDto> results = userService.getUserDtoPaging(PageRequest.of(pageIndex - 1, pageSize));
-
 		if (results.getSize() > 0)
 			return new ResponseEntity<>(results, HttpStatus.OK);
 		else
 			return new ResponseEntity<>("No user was found.", HttpStatus.BAD_REQUEST);
-
 	}
 
 	@GetMapping("get-user-by-token")
@@ -165,51 +164,28 @@ public class ApiUserController {
 		}
 	}
 
-	@PostMapping(value = "file/upload", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "file/upload/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Object upload(@RequestParam(name = "id") int userId, @RequestParam(name = "file") MultipartFile file) {
+	public ResponseEntity<Object> upload(
+			@PathVariable("id") int userId,
+			@RequestParam(name = "file") MultipartFile file) {
 		try {
 			System.out.println(userId);
 			UserDto dto = userService.getUserDtoById(userId);
-			String pathName = System.getProperty("user.dir");
-			pathName += UPLOAD_FOLDER 
-					+ dto.getRoleName()
-					+ "/"
-					+ dto.getEmail()
-					+"/";
-			File dir = new File(pathName);
-			if (!dir.exists())
-				dir.mkdirs();
-
-			String pathSource = pathName + file.getOriginalFilename();
-			File serverFile = new File(pathSource);
-			FileOutputStream stream;
-			try {
-				stream = new FileOutputStream(serverFile);
-				stream.write(file.getBytes());
-				stream.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return new ResponseEntity<Object>(file.getOriginalFilename(), HttpStatus.CREATED);
+			dto.setAvatar(file.getBytes());
+			dto.setPassword("");
+			userService.edit(dto);
+			return new ResponseEntity<Object>("Cập nhật thành công!", HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}	
 	}
-	@GetMapping(value = "file/load/{id}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "file/load/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
-	public FileSystemResource getFile(@PathVariable("id") int id,@PathVariable("fileName") String fileName) throws IOException {
+	public ResponseEntity<Object> getFile(@PathVariable("id") int id) throws IOException {
 		UserDto dto = userService.getUserDtoById(id);
-		String pathName = System.getProperty("user.dir");
-		pathName += UPLOAD_FOLDER 
-				+ dto.getRoleName()
-				+ "/"
-				+ dto.getEmail()
-				+"/"
-				+fileName;
-		return new FileSystemResource(pathName);
+		return new ResponseEntity<Object>(dto.getAvatar(), HttpStatus.CREATED);
+		//return new FileSystemResource(pathName);
 	}
 
 }

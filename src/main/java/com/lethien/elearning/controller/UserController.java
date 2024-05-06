@@ -4,7 +4,9 @@ import com.lethien.elearning.dto.RoleDto;
 import com.lethien.elearning.dto.UserDto;
 import com.lethien.elearning.service.RoleService;
 import com.lethien.elearning.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,7 +88,7 @@ public class UserController {
         List<RoleDto> roles = roleService.getAll();
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("roles", roles);
-        return "admin/user/edit";
+        return "admin/user/edit/edit-layout";
     }
 
     @RequestMapping(value = {"edit"}, method = RequestMethod.POST)
@@ -91,7 +97,17 @@ public class UserController {
             ModelMap modelMap,
             HttpSession session) {
         userService.edit(user);
-        return "redirect:/admin/user";
+        return "redirect:/admin/user/edit?id="+user.getId();
+    }
+    @RequestMapping(value = {"edit-avatar"}, method = RequestMethod.POST)
+    public String editAvatar(
+            @RequestParam("id") int id,
+            @RequestParam("image") MultipartFile file) throws IOException {
+        UserDto user = userService.getUserDtoById(id);
+        user.setAvatar(file.getBytes());
+        user.setPassword("");
+        userService.edit(user);
+        return "redirect:/admin/user/edit?id="+user.getId();
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
@@ -99,5 +115,16 @@ public class UserController {
             @RequestParam("id") int id) {
         userService.remove(id);
         return "redirect:/admin/user";
+    }
+
+    @RequestMapping(value = {"image"}, method = RequestMethod.GET)
+    public void showProductImage(
+            @RequestParam("id") int id,
+            HttpServletResponse response
+    ) throws IOException {
+        response.setContentType("image/png");
+        UserDto user = userService.getById(id);
+        InputStream is = new ByteArrayInputStream(user.getAvatar());
+        IOUtils.copy(is, response.getOutputStream());
     }
 }

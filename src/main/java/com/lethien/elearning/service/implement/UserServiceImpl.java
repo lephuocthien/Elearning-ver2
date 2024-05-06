@@ -111,12 +111,12 @@ public class UserServiceImpl implements UserService {
 			user.setFullname(dto.getFullname());
 			user.setPhone(dto.getPhone());
 			user.setAddress(dto.getAddress());
-			if(!dto.getAvatar().equals(""))
+			if(dto.getAvatar()!= null) {
 				user.setAvatar(dto.getAvatar());
+			}
 			user.setRoleId(dto.getRoleId());
 			userRepository.save(user);
 		}
-
 	}
 
 	@Override

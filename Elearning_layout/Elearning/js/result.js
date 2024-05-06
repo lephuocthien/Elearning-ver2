@@ -1,4 +1,4 @@
-
+//loadUserInfor();
 let getResult = function () {
     //urlParams.get("id");
     let urlParams = new URLSearchParams(window.location.search);
@@ -26,14 +26,15 @@ let getResult = function () {
             <div class="row" >
             `;
             //Thay đổi nội dung thẻ tbody
-            let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
+            //let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
 
             for (let item of response.data) {
                 if (item.discount > 0) {
                     let price = String(item.price).replace(/(.)(?=(\d{3})+$)/g, '$1,');
                     let promotionPrice = String(item.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                    let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
                     if (!(!item.image))
-                        imgUrl = Url +  `api/course/file/load/${item.image}`;
+                        imgUrl = "data:image/png;base64," + item.image;
                     contentSearch += `
                 <div class="col-md-3">
                 <div class="course">
@@ -77,8 +78,9 @@ let getResult = function () {
            `;
                 } else {
                     let promotionPrice = String(item.promotionPrice).replace(/(.)(?=(\d{3})+$)/g, '$1,');
+                    let imgUrl = `https://i.udemycdn.com/user/200_H/anonymous_3.png`;
                     if (!(!item.image))
-                        imgUrl = Url +  `api/course/file/load/${item.image}`;
+                        imgUrl = "data:image/png;base64," + item.image;
                     contentSearch += `
                 <div class="col-md-2">
                     <div class="course">

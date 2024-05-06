@@ -8,16 +8,7 @@ package com.lethien.elearning.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -45,8 +36,9 @@ public class User implements Serializable{
 	private String password;
 	
 	@Column(name = "avatar")
-	private String avatar;
-	
+	@Lob
+	private byte[] avatar;
+
 	@Column(name = "phone")
 	private String phone;
 	
@@ -81,10 +73,9 @@ public class User implements Serializable{
 	 * @param avatar
 	 * @param phone
 	 * @param address
-	 * @param role_id
-	 * @param role
+	 * @param roleId
 	 */
-	public User(int id, String email, String fullname, String password, String avatar, String phone, String address,
+	public User(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
 			int roleId) {
 		super();
 		this.id = id;
@@ -157,17 +148,16 @@ public class User implements Serializable{
 	/**
 	 * @return the avatar
 	 */
-	public String getAvatar() {
+	public byte[] getAvatar() {
 		return avatar;
 	}
 
 	/**
 	 * @param avatar the avatar to set
 	 */
-	public void setAvatar(String avatar) {
+	public void setAvatar(byte[] avatar) {
 		this.avatar = avatar;
 	}
-
 	/**
 	 * @return the phone
 	 */
@@ -197,14 +187,14 @@ public class User implements Serializable{
 	}
 
 	/**
-	 * @return the role_id
+	 * @return the roleId
 	 */
 	public int getRoleId() {
 		return roleId;
 	}
 
 	/**
-	 * @param role_id the role_id to set
+	 * @param roleId the roleId to set
 	 */
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
@@ -237,8 +227,4 @@ public class User implements Serializable{
 	public void setUserCourses(List<UserCourse> userCourses) {
 		this.userCourses = userCourses;
 	}
-	
-	
-	
-	
 }

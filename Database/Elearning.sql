@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(100) NOT NULL UNIQUE,
     fullname VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
-    avatar VARCHAR(255),
+    avatar MEDIUMBLOB,
     phone VARCHAR(20),
     address VARCHAR(255),
     role_id INT(11) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS courses (
     id INT(11) NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
-    image VARCHAR(255) NOT NULL,
+    image MEDIUMBLOB,
     letures_count INT(11) NOT NULL,
     hour_count INT(11) DEFAULT '0',
     view_count INT(11) DEFAULT '0',

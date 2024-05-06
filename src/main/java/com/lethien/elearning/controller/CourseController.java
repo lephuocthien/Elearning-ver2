@@ -5,7 +5,9 @@ import com.lethien.elearning.service.CategoryService;
 import com.lethien.elearning.service.CourseService;
 import com.lethien.elearning.service.TargetService;
 import com.lethien.elearning.service.VideoService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -78,7 +84,7 @@ public class CourseController {
             @ModelAttribute("course") CourseDto course,
             ModelMap modelMap,
             HttpSession session) {
-        course.setImage("course.jpg");
+        //course.setImage("course.jpg");
         course.setLastUpdate(new java.util.Date());
         int id = courseService.saveGetBackId(course);
         return "redirect:/admin/course/edit?id=" + id;
@@ -136,8 +142,18 @@ public class CourseController {
 
     @RequestMapping(value = {"edit"}, method = RequestMethod.POST)
     public String edit(@ModelAttribute("course") CourseDto course) {
-        course.setImage("course.jpg");
+        //course.setImage("course.jpg");
         course.setLastUpdate(new java.util.Date());
+        courseService.edit(course);
+        return "redirect:/admin/course/edit?id=" + course.getId();
+    }
+
+    @RequestMapping(value = {"edit-img"}, method = RequestMethod.POST)
+    public String editAvatar(
+            @RequestParam("id") int id,
+            @RequestParam("image") MultipartFile file) throws IOException {
+        CourseDto course = courseService.getById(id);
+        course.setImage(file.getBytes());
         courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + course.getId();
     }
@@ -259,5 +275,16 @@ public class CourseController {
             @RequestParam("courseId") int courseId) {
         targetService.remove(id);
         return "redirect:/admin/course/edit?id=" + courseId;
+    }
+
+    @RequestMapping(value = {"image"}, method = RequestMethod.GET)
+    public void showProductImage(
+            @RequestParam("id") int id,
+            HttpServletResponse response
+    ) throws IOException {
+        response.setContentType("image/png");
+        CourseDto courseDto = courseService.getById(id);
+        InputStream is = new ByteArrayInputStream(courseDto.getImage());
+        IOUtils.copy(is, response.getOutputStream());
     }
 }

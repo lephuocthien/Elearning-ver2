@@ -13,7 +13,7 @@ public class UserDto {
 	private String email;
 	private String fullname;
 	private String password;
-	private String avatar;
+	private byte[] avatar;
 	private String phone;
 	private String address;
 	private int roleId;
@@ -38,7 +38,7 @@ public class UserDto {
 	 * @param roleName
 	 * @param roleDescription
 	 */
-	public UserDto(int id, String email, String fullname, String password, String avatar, String phone, String address,
+	public UserDto(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
 			int roleId, String roleName, String roleDescription) {
 		super();
 		this.id = id;
@@ -52,7 +52,7 @@ public class UserDto {
 		this.roleName = roleName;
 		this.roleDescription = roleDescription;
 	}
-	public UserDto(int id, String email, String fullname, String password, String avatar, String phone, String address,
+	public UserDto(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
 				   int roleId, String roleName) {
 		super();
 		this.id = id;
@@ -65,7 +65,18 @@ public class UserDto {
 		this.roleId = roleId;
 		this.roleName = roleName;
 	}
-	
+	public UserDto(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
+				   int roleId) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.fullname = fullname;
+		this.password = password;
+		this.avatar = avatar;
+		this.phone = phone;
+		this.address = address;
+		this.roleId = roleId;
+	}
 	public UserDto(String email, String password, String roleName) {
 		super();
 		this.email = email;
@@ -123,13 +134,13 @@ public class UserDto {
 	/**
 	 * @return the avatar
 	 */
-	public String getAvatar() {
+	public byte[] getAvatar() {
 		return avatar;
 	}
 	/**
 	 * @param avatar the avatar to set
 	 */
-	public void setAvatar(String avatar) {
+	public void setAvatar(byte[] avatar) {
 		this.avatar = avatar;
 	}
 	/**

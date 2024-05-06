@@ -1,0 +1,26 @@
+<section id="tabAvatar" xmlns:th="http://www.thymeleaf.org" th:fragment="tabAvatar">
+	<!--<h3 class="mb-4">Chỉnh sửa thông tin thành viên</h3>-->
+	<form th:action="@{/admin/user/edit-avatar}" method="post" enctype="multipart/form-data">
+		<input type="hidden" class="form-control" name="id" th:value="${user.id}" />
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Avatar</label>
+					<input type="file" name="image" id="uploadFile" accept="image/*" class="form-control-file">
+				</div>
+			</div>
+			<div class="col-md-6 picture">
+				<div class="picture-wapper">
+					<div class="picture-img">
+						<img style="width:60%" id="imgItem"
+							 th:src="${user.avatar != null ? '/admin/user/image?id='+user.id : '/assets/img/anonymous.png'}" alt="">
+					</div>
+				</div>
+			</div>
+			<div class="col-12 mt-3">
+				<button type="submit" class="btn btn-success">Lưu lại</button>
+				<a class="btn btn-secondary" th:href="@{/admin/user}">Quay lại</a>
+			</div>
+		</div>
+	</form>
+</section>
