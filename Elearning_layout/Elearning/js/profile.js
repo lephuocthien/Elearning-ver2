@@ -138,7 +138,7 @@ let updatePassword = async function () {
 };
 
 let updateAvatar = async function () {
-    debugger
+    
     let formData = new FormData();
     let file = document.getElementById("uploadFile").files[0];
     formData.append("file", file);
@@ -161,7 +161,7 @@ let updateAvatar = async function () {
         })
         //Xữ lý mã trạng thái còn lại
         .catch(function (e) {
-            debugger
+            
             console.log(e.response);
             document.getElementById("updateAvatarMess").className = "text-danger";
             document.getElementById("updateAvatarMess").innerHTML = "Invalid Image !";

@@ -37,7 +37,7 @@ let getAllCategory = function(){
 let search = function () {
     //event.preventDefault();
     let key = document.getElementById("key").value;
-    //debugger
+    //
     window.location.href = "result.html?key="+key;
     //window.location.href = `result.html?key=${key}`;
 }
