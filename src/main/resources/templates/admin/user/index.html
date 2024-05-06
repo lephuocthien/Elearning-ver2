@@ -46,7 +46,7 @@
 						<a th:href="@{user/edit(id=${user.id})}" class="btn btn-sm btn-info">
 							<i class="fa fa-pencil-square-o"></i>
 						</a>
-						<a th:href="@{user/delete(id=${user.id})}" th:unless="${user.id == session.AUTH_ID}" class="btn btn-sm btn-danger del-btn">
+						<a th:href="@{user/delete(id=${user.id})}" th:unless="${user.id == session.AUTH.id}" class="btn btn-sm btn-danger del-btn">
 							<i class="fa fa-trash-o"></i>
 						</a>
 					</td>

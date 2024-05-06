@@ -96,17 +96,26 @@ public class UserController {
             @ModelAttribute("user") UserDto user,
             ModelMap modelMap,
             HttpSession session) {
+        UserDto auth = (UserDto) session.getAttribute("AUTH");
         userService.edit(user);
+        if (auth.getId() == user.getId()){
+            session.setAttribute("AUTH", user);
+        }
         return "redirect:/admin/user/edit?id="+user.getId();
     }
     @RequestMapping(value = {"edit-avatar"}, method = RequestMethod.POST)
     public String editAvatar(
             @RequestParam("id") int id,
-            @RequestParam("image") MultipartFile file) throws IOException {
+            @RequestParam("image") MultipartFile file,
+            HttpSession session) throws IOException {
+        UserDto auth = (UserDto) session.getAttribute("AUTH");
         UserDto user = userService.getUserDtoById(id);
         user.setAvatar(file.getBytes());
         user.setPassword("");
         userService.edit(user);
+        if (auth.getId() == user.getId()){
+            session.setAttribute("AUTH", user);
+        }
         return "redirect:/admin/user/edit?id="+user.getId();
     }
 

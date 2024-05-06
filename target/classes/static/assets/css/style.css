@@ -134,3 +134,9 @@ header .nav-cart i{
     width: 70%;
 }
 /* END BANNER */
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }

@@ -70,8 +70,7 @@ public class LoginController {
             String token = Jwts.builder().subject(email).issuedAt(now).expiration(expiryDate)
                     .signWith(key).compact();
             UserDto dto = userService.getUserDtoByEmail(email);
-            session.setAttribute("AUTH_NAME", dto.getFullname());
-            session.setAttribute("AUTH_ID", dto.getId());
+            session.setAttribute("AUTH", dto);
             session.setAttribute("TOKEN", token);
             return "redirect:/admin/home";
 
@@ -84,8 +83,7 @@ public class LoginController {
     }
     @RequestMapping(value = "/logout")
     public String logout( HttpSession session) {
-        session.removeAttribute("AUTH_NAME");
-        session.removeAttribute("AUTH_ID");
+        session.removeAttribute("AUTH");
         session.removeAttribute("TOKEN");
         return "redirect:/admin/login";
     }
