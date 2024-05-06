@@ -178,7 +178,9 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findById(dto.getId()).get();
         if (course != null) {
             course.setTitle(dto.getTitle());
-            course.setImage(dto.getImage());
+            if (dto.getImage() != null){
+                course.setImage(dto.getImage());
+            }
             List<VideoDto> videos = videoRepository.getAllVideoByCourseId(dto.getId());
             int hourCount = 0;
             for (VideoDto video : videos) {

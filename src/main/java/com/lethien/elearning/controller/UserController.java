@@ -99,7 +99,8 @@ public class UserController {
         UserDto auth = (UserDto) session.getAttribute("AUTH");
         userService.edit(user);
         if (auth.getId() == user.getId()){
-            session.setAttribute("AUTH", user);
+            UserDto dto = userService.getUserDtoById(user.getId());
+            session.setAttribute("AUTH", dto);
         }
         return "redirect:/admin/user/edit?id="+user.getId();
     }
