@@ -1,0 +1,68 @@
+<div id="tabCourse"
+     xmlns:th="http://www.thymeleaf.org"
+     th:fragment="tabCourse">
+    <table class="table table-bordered table-hover mt-3">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Title</th>
+            <th>Letures</th>
+            <th>Time (second)</th>
+            <th>Member</th>
+            <th>Date of purchase</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course, state: ${courses.content}">
+            <td th:text="${courses.size*(courses.number)+state.count}"></td>
+            <td th:text="${course.title}"></td>
+            <td th:text="${course.leturesCount}"></td>
+            <td th:text="${course.hourCount}"></td>
+            <td th:text="${course.viewCount}"></td>
+            <td th:text="${course.dateCreateUser}"></td>
+            <td>
+                <a class="btn btn-sm btn-danger del-btn"
+                   th:href="@{delete-user-course(
+                   courseId=${course.id},
+                   userId=${user.id})}">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${courses.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/user/edit(
+                   id=${user.id},
+                   pageOfCourse=${courses.number},
+                   tabIndex=3)}"
+                >Previous</a>
+            </li>
+            <li  th:if="${courses.totalPages > 0}" class="page-item"
+                 th:each="pageNumber : ${pageNumbers}"
+                 th:classappend="${pageNumber==courses.number + 1} ? active">
+                <a class="page-link"
+                   th:href="@{/admin/user/edit(
+                    id=${user.id},
+                    pageOfCourse=${pageNumber},
+                    tabIndex=3)}"
+                   th:text=${pageNumber}
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${courses.number+1==courses.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/user/edit(
+                   id=${user.id},
+                   pageOfCourse=${courses.number+2},
+                   tabIndex=3)}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -24,4 +24,5 @@ public interface CourseService {
 	void remove(int id);
 	Page<CourseDto> getCourseDtoPaging(Pageable pageable);
 	Page<CourseDto> getCourseDtoResultPaging(Pageable pageable, String key);
+	Page<CourseDto> getCourseDtoPagingByUserId(Pageable pageable, int userId);
 }

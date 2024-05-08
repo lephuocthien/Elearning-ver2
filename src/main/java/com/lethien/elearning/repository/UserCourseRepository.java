@@ -25,4 +25,12 @@ public interface UserCourseRepository extends JpaRepository<UserCourse, UserCour
 			@Param("courseId") int courseId,
 			@Param("roleId") int roleId
 	);
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete from user_courses where user_id = :userId and course_id = :courseId", nativeQuery = true)
+	void deleteUserCourses(
+			@Param("userId") int userId,
+			@Param("courseId") int courseId
+	);
 }

@@ -275,4 +275,25 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDtoPage;
     }
+
+    @Override
+    public Page<CourseDto> getCourseDtoPagingByUserId(Pageable pageable, int userId){
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        Page<CourseDto> courseDtoPage;
+        if (courseRepository.getCourseDtoCountByUserId(userId) < startItem) {
+            courseDtoPage = new PageImpl<CourseDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    courseRepository.getCourseDtoCountByUserId(userId)
+            );
+        } else {
+            courseDtoPage = courseRepository.getCourseDtoPagingByUserId(
+                    PageRequest.of(currentPage, pageSize),
+                    userId
+            );
+        }
+        return courseDtoPage;
+    }
 }

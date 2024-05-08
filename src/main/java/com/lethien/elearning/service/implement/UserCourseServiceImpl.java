@@ -54,4 +54,12 @@ public class UserCourseServiceImpl implements UserCourseService {
 				dto.getRoleId()
 		);
 	}
+
+	@Override
+	public void remove(int userId, int courseId) {
+		userCourseRepository.deleteUserCourses(
+				userId,
+				courseId
+		);
+	}
 }

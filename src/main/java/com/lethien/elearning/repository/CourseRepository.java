@@ -144,4 +144,25 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
             "FROM Course " +
             "WHERE title LIKE :key")
     int getCourseDtoResultCount(@Param("key") String key);
+
+    @Query("SELECT new com.lethien.elearning.dto.CourseDto" +
+            "(c.id, " +
+            "c.title, " +
+            "c.leturesCount, " +
+            "c.hourCount, " +
+            "c.viewCount, " +
+            "uc.dateCreate) " +
+            "FROM Course c " +
+            "JOIN UserCourse uc " +
+            "ON c.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId")
+    Page<CourseDto> getCourseDtoPagingByUserId(
+            Pageable pageable,
+            @Param("userId") int userId);
+    @Query("SELECT COUNT(*)" +
+            "FROM Course c " +
+            "JOIN UserCourse uc " +
+            "ON c.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId")
+    int getCourseDtoCountByUserId(@Param("userId") int userId);
 }

@@ -27,4 +27,5 @@ public interface UserService {
 	Page<User> getUserPaging(int pageIndex, int pageSize);
 	Page<UserDto> getUserDtoPaging(Pageable pageable);
 	Page<UserDto> getUserDtoResultPaging(Pageable pageable, String key);
+	Page<UserDto> getUserDtoPagingByCourseId(Pageable pageable, int countId);
 }

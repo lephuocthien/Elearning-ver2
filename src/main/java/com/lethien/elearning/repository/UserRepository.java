@@ -131,4 +131,28 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "WHERE uc.userCourseId.courseId = :courseId " +
             "AND uc.roleId = 3")
     List<UserDto> findUserDtoOfCourseByTeacher(@Param("courseId") int courseId);
+
+    @Query("SELECT new com.lethien.elearning.dto.UserDto" +
+            "(u.id, " +
+            "u.email, " +
+            "u.fullname, " +
+            "u.phone, " +
+            "uc.dateCreate) " +
+            "FROM User u " +
+            "JOIN UserCourse uc " +
+            "ON u.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId")
+    Page<UserDto> getUserDtoPagingByCourseId(
+            Pageable pageable,
+            @Param("courseId") int courseId
+    );
+
+    @Query("SELECT COUNT(*) " +
+            "FROM User u " +
+            "JOIN UserCourse uc " +
+            "ON u.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId")
+    int getUserDtoCountByCourseId(
+            @Param("courseId") int courseId
+    );
 }

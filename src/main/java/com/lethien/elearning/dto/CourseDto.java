@@ -28,7 +28,7 @@ public class CourseDto {
 	private String categoryTitle;
 	private List<TargetDto> targets;
 	private List<VideoDto> videos;
-
+	private Date dateCreateUser;
 	/**
 	 * 
 	 */
@@ -102,6 +102,24 @@ public class CourseDto {
 		this.content = content;
 		this.categoryId = categoryId;
 		this.lastUpdate = lastUpdate;
+	}
+
+	/**
+	 * @param id
+	 * @param title
+	 * @param leturesCount
+	 * @param hourCount
+	 * @param viewCount
+	 * @param dateCreateUser
+	 */
+	public CourseDto(int id, String title, int leturesCount, int hourCount, int viewCount, Date dateCreateUser) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.leturesCount = leturesCount;
+		this.hourCount = hourCount;
+		this.viewCount = viewCount;
+		this.dateCreateUser = dateCreateUser;
 	}
 
 	/**
@@ -326,5 +344,19 @@ public class CourseDto {
 	 */
 	public void setVideos(List<VideoDto> videos) {
 		this.videos = videos;
+	}
+
+	/**
+	 * @return the dateCreateUser
+	 */
+	public Date getDateCreateUser() {
+		return dateCreateUser;
+	}
+
+	/**
+	 * @param dateCreateUser the dateCreateUser to set
+	 */
+	public void setDateCreateUser(Date dateCreateUser) {
+		this.dateCreateUser = dateCreateUser;
 	}
 }

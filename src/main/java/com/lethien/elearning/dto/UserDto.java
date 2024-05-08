@@ -6,6 +6,7 @@
  */
 package com.lethien.elearning.dto;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserDto {
@@ -20,6 +21,7 @@ public class UserDto {
     private String roleName;
     private String roleDescription;
     private List<CourseDto> courses;
+    private Date dateCreateCourse;
 
     /**
      *
@@ -55,6 +57,18 @@ public class UserDto {
         this.roleDescription = roleDescription;
     }
 
+    /**
+     *
+     * @param id
+     * @param email
+     * @param fullname
+     * @param password
+     * @param avatar
+     * @param phone
+     * @param address
+     * @param roleId
+     * @param roleName
+     */
     public UserDto(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
                    int roleId, String roleName) {
         super();
@@ -69,6 +83,17 @@ public class UserDto {
         this.roleName = roleName;
     }
 
+    /**
+     *
+     * @param id
+     * @param email
+     * @param fullname
+     * @param password
+     * @param avatar
+     * @param phone
+     * @param address
+     * @param roleId
+     */
     public UserDto(int id, String email, String fullname, String password, byte[] avatar, String phone, String address,
                    int roleId) {
         super();
@@ -82,6 +107,28 @@ public class UserDto {
         this.roleId = roleId;
     }
 
+    /**
+     * @param id
+     * @param email
+     * @param fullname
+     * @param phone
+     * @param dateCreateCourse
+     */
+    public UserDto(int id, String email, String fullname, String phone, Date dateCreateCourse) {
+        super();
+        this.id = id;
+        this.email = email;
+        this.fullname = fullname;
+        this.phone = phone;
+        this.dateCreateCourse = dateCreateCourse;
+    }
+
+    /**
+     *
+     * @param email
+     * @param password
+     * @param roleName
+     */
     public UserDto(String email, String password, String roleName) {
         super();
         this.email = email;
@@ -241,5 +288,19 @@ public class UserDto {
      */
     public void setCourses(List<CourseDto> courses) {
         this.courses = courses;
+    }
+
+    /**
+     * @return the dateCreateCourse
+     */
+    public Date getDateCreateCourse() {
+        return dateCreateCourse;
+    }
+
+    /**
+     * @param dateCreateCourse the dateCreateCourse to set
+     */
+    public void setDateCreateCourse(Date dateCreateCourse) {
+        this.dateCreateCourse = dateCreateCourse;
     }
 }

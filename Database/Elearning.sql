@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS user_courses(
     user_id INT(11) NOT NULL,
     course_id INT(11) NOT NULL,
     role_id INT(11) NOT NULL,
+    date_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT pk_account_course PRIMARY KEY (user_id, course_id),
     CONSTRAINT fk_user_course_user FOREIGN KEY (user_id) REFERENCES users(id)  ON DELETE CASCADE,
     CONSTRAINT fk_user_course_course FOREIGN KEY (course_id) REFERENCES courses(id)  ON DELETE CASCADE

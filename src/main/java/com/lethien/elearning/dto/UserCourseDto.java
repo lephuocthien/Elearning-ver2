@@ -6,6 +6,8 @@
  */
 package com.lethien.elearning.dto;
 
+import java.util.Date;
+
 public class UserCourseDto {
     private int userId;
     private String userName;
@@ -13,6 +15,7 @@ public class UserCourseDto {
     private String courseTitle;
     private int roleId;
     private String roleName;
+    private Date dateCreate;
 
     /**
      *
@@ -28,8 +31,17 @@ public class UserCourseDto {
      * @param courseTitle
      * @param roleId
      * @param roleName
+     * @param dateCreate
      */
-    public UserCourseDto(int userId, String userName, int courseId, String courseTitle, int roleId, String roleName) {
+    public UserCourseDto(
+            int userId,
+            String userName,
+            int courseId,
+            String courseTitle,
+            int roleId,
+            String roleName,
+            Date dateCreate
+    ) {
         super();
         this.userId = userId;
         this.userName = userName;
@@ -37,6 +49,7 @@ public class UserCourseDto {
         this.courseTitle = courseTitle;
         this.roleId = roleId;
         this.roleName = roleName;
+        this.dateCreate = dateCreate;
     }
 
     /**

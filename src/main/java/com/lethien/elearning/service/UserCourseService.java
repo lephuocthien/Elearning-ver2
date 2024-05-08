@@ -14,4 +14,5 @@ public interface UserCourseService {
 	List<UserCourseDto> getAll();
 	UserCourseDto getById(UserCourseId userCourseId);
 	void save(UserCourseDto dto);
+	void remove(int userId, int courseId);
 }

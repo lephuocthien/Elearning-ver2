@@ -8,7 +8,7 @@
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Update course</h3>
+  <h3 class="mb-4" th:text="${'Update ' + course.title}"></h3>
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#course" th:classappend="${tabIndex == 1} ? active : ''">
@@ -30,6 +30,11 @@
         <h6>Targets</h6>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#member" th:classappend="${tabIndex == 5} ? active : ''">
+        <h6>Member</h6>
+      </a>
+    </li>
   </ul>
   <div class="tab-content" style="margin-top: 20px">
     <div id="course" class="tab-pane" th:classappend="${tabIndex == 1} ? active : ''">
@@ -45,6 +50,9 @@
     <div id="target" class="tab-pane" th:classappend="${tabIndex == 4} ? active : ''">
       <div th:replace="~{admin/course/edit/edit-target :: tabTarget}"></div>
       <div th:replace="~{admin/course/edit/edit-target-result :: tabTargetResult}"></div>
+    </div>
+    <div id="member" class="tab-pane" th:classappend="${tabIndex == 5} ? active : ''">
+      <div th:replace="~{admin/course/edit/edit-member :: tabMember}"></div>
     </div>
   </div>
 </section>

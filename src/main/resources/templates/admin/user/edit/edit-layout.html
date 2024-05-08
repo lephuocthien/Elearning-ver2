@@ -8,25 +8,39 @@
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Update user profile</h3>
+  <h3 class="mb-4" th:text="${'Update profile of '+ user.fullname}"></h3>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#information">
+      <a class="nav-link" data-toggle="tab" href="#information"
+         th:classappend="${tabIndex == 1} ? active : ''">
         <h6>Information</h6>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#avatar" >
+      <a class="nav-link" data-toggle="tab" href="#avatar"
+         th:classappend="${tabIndex == 2} ? active : ''">
         <h6>Avatar</h6>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#course"
+         th:classappend="${tabIndex == 3} ? active : ''">
+        <h6>Course</h6>
       </a>
     </li>
   </ul>
   <div class="tab-content" style="margin-top: 20px">
-    <div id="information" class="tab-pane active" >
+    <div id="information" class="tab-pane"
+         th:classappend="${tabIndex == 1} ? active : ''">
       <div th:replace="~{admin/user/edit/edit-information :: tabInformation}"></div>
     </div>
-    <div id="avatar" class="tab-pane" >
+    <div id="avatar" class="tab-pane"
+         th:classappend="${tabIndex == 2} ? active : ''">
       <div th:replace="~{admin/user/edit/edit-avatar :: tabAvatar}"></div>
+    </div>
+    <div id="course" class="tab-pane"
+         th:classappend="${tabIndex == 3} ? active : ''">
+      <div th:replace="~{admin/user/edit/edit-course :: tabCourse}"></div>
     </div>
   </div>
 </section>

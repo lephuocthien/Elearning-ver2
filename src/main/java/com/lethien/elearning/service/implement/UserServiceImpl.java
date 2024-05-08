@@ -175,6 +175,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Page<UserDto> getUserDtoPagingByCourseId(Pageable pageable, int courseId) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        Page<UserDto> userDtoPage;
+        if (userRepository.getUserDtoCountByCourseId(courseId) < startItem) {
+            userDtoPage = new PageImpl<UserDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    userRepository.getUserDtoCountByCourseId(courseId));
+        } else {
+            userDtoPage = userRepository.getUserDtoPagingByCourseId(
+                    PageRequest.of(currentPage, pageSize),
+                    courseId);
+        }
+        return userDtoPage;
+    }
+
+    @Override
     public List<UserDto> getAllUserDtoOfCourseByTeacher(int courseId) {
         return userRepository.findUserDtoOfCourseByTeacher(courseId);
     }

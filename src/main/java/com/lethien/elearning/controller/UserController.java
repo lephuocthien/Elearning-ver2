@@ -1,9 +1,12 @@
 package com.lethien.elearning.controller;
 
 import com.lethien.elearning.common.Common;
+import com.lethien.elearning.dto.CourseDto;
 import com.lethien.elearning.dto.RoleDto;
 import com.lethien.elearning.dto.UserDto;
+import com.lethien.elearning.service.CourseService;
 import com.lethien.elearning.service.RoleService;
+import com.lethien.elearning.service.UserCourseService;
 import com.lethien.elearning.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -32,18 +35,26 @@ import java.util.stream.IntStream;
 public class UserController {
     private final UserService userService;
     private final RoleService roleService;
+    private final CourseService courseService;
+    private final UserCourseService userCourseService;
 
     public UserController(
             UserService userService,
-            RoleService roleService) {
+            RoleService roleService,
+            CourseService courseService,
+            UserCourseService userCourseService
+    ) {
         this.userService = userService;
         this.roleService = roleService;
+        this.courseService = courseService;
+        this.userCourseService = userCourseService;
     }
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String index(
             ModelMap modelMap,
-            @RequestParam("page") Optional<Integer> page) {
+            @RequestParam("page") Optional<Integer> page
+    ) {
         int currentPage = page.orElse(1);
         Page<UserDto> userDtoPage = userService.getUserDtoPaging(
                 PageRequest.of(currentPage - 1, Common.PAGE_SIZE)
@@ -82,10 +93,27 @@ public class UserController {
     @RequestMapping(value = {"edit"}, method = RequestMethod.GET)
     public String edit(
             @RequestParam("id") int id,
-            ModelMap modelMap,
-            HttpSession session) {
+            @RequestParam("tabIndex") Optional<Integer> tabIndex,
+            @RequestParam("pageOfCourse") Optional<Integer> pageOfCourse,
+            ModelMap modelMap
+    ) {
+        int currentTabIndex = tabIndex.orElse(1);
+        int currentPageOfCourse = pageOfCourse.orElse(1);
+        Page<CourseDto> courseDtoPage = courseService.getCourseDtoPagingByUserId(
+                PageRequest.of(currentPageOfCourse - 1, Common.PAGE_SIZE),
+                id
+        );
+        modelMap.addAttribute("courses", courseDtoPage);
+        int totalPages = courseDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
         UserDto user = userService.getById(id);
         List<RoleDto> roles = roleService.getAll();
+        modelMap.addAttribute("tabIndex", currentTabIndex);
         modelMap.addAttribute("user", user);
         modelMap.addAttribute("roles", roles);
         return "admin/user/edit/edit-layout";
@@ -120,7 +148,7 @@ public class UserController {
                 session.setAttribute("AUTH", user);
             }
         }
-        return "redirect:/admin/user/edit?id=" + id;
+        return "redirect:/admin/user/edit?id=" + id + "&tabIndex=3";
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
@@ -164,5 +192,14 @@ public class UserController {
             return "admin/user/result";
         }
         return "redirect:/admin/user";
+    }
+
+    @RequestMapping(value = {"delete-user-course"}, method = RequestMethod.GET)
+    public String deleteCourseByUserId(
+            @RequestParam("userId") int userId,
+            @RequestParam("courseId") int courseId
+    ) {
+        userCourseService.remove(userId, courseId);
+        return "redirect:/admin/user/edit?id=" + userId + "&tabIndex=3";
     }
 }

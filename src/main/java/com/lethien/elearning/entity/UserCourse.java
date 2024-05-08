@@ -7,6 +7,7 @@
 package com.lethien.elearning.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,6 +52,9 @@ public class UserCourse implements Serializable {
     @Column(name = "role_id")
     private int roleId;
 
+    @Column(name = "date_create")
+    private Date dateCreate;
+
     /**
      *
      */
@@ -62,10 +66,11 @@ public class UserCourse implements Serializable {
      * @param userCourseId
      * @param roleId
      */
-    public UserCourse(UserCourseId userCourseId, int roleId) {
+    public UserCourse(UserCourseId userCourseId, int roleId, Date dateCreate) {
         super();
         this.userCourseId = userCourseId;
         this.roleId = roleId;
+        this.dateCreate = dateCreate;
     }
 
     /**
@@ -95,7 +100,19 @@ public class UserCourse implements Serializable {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+    /**
+     * @return the dateCreate
+     */
+    public Date getDateCreate() {
+        return dateCreate;
+    }
 
+    /**
+     * @param dateCreate the dateCreate to set
+     */
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
     /**
      * @return the user
      */

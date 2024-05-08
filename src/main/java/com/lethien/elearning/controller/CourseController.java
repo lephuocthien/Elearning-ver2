@@ -2,10 +2,7 @@ package com.lethien.elearning.controller;
 
 import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.*;
-import com.lethien.elearning.service.CategoryService;
-import com.lethien.elearning.service.CourseService;
-import com.lethien.elearning.service.TargetService;
-import com.lethien.elearning.service.VideoService;
+import com.lethien.elearning.service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
@@ -36,17 +33,23 @@ public class CourseController {
     private final CategoryService categoryService;
     private final VideoService videoService;
     private final TargetService targetService;
+    private final UserService userService;
+    private final UserCourseService userCourseService;
 
     public CourseController(
             CourseService courseService,
             CategoryService categoryService,
             VideoService videoService,
-            TargetService targetService
+            TargetService targetService,
+            UserService userService,
+            UserCourseService userCourseService
     ) {
         this.courseService = courseService;
         this.categoryService = categoryService;
         this.videoService = videoService;
         this.targetService = targetService;
+        this.userService = userService;
+        this.userCourseService = userCourseService;
     }
 
     @RequestMapping(value = {""}, method = RequestMethod.GET)
@@ -92,6 +95,7 @@ public class CourseController {
             @RequestParam("tabIndex") Optional<Integer> tabIndex,
             @RequestParam("pageOfVideo") Optional<Integer> pageOfVideo,
             @RequestParam("pageOfTarget") Optional<Integer> pageOfTarget,
+            @RequestParam("pageOfMember") Optional<Integer> pageOfMember,
             @RequestParam("keyOfVideo") Optional<String> keyOfVideo,
             @RequestParam("keyOfTarget") Optional<String> keyOfTarget,
             ModelMap modelMap,
@@ -100,15 +104,9 @@ public class CourseController {
         int currentTabIndex = tabIndex.orElse(1);
         int currentPageOfVideo = pageOfVideo.orElse(1);
         int currentPageOfTarget = pageOfTarget.orElse(1);
+        int currentPageOfMember = pageOfMember.orElse(1);
         String currentKeyOfVideo = keyOfVideo.orElse("");
         String currentKeyOfTarget = keyOfTarget.orElse("");
-        /*if (session.getAttribute("TAB_INDEX") == null) {
-            session.setAttribute("TAB_INDEX", 1);
-        } else if (pageOfVideo.isPresent()) {
-            session.setAttribute("TAB_INDEX", 2);
-        } else if (pageOfTarget.isPresent()) {
-            session.setAttribute("TAB_INDEX", 3);
-        }*/
         List<CategoryDto> categories = categoryService.getAll();
         CourseDto course = courseService.getById(courseId);
         //Paging Video
@@ -174,6 +172,19 @@ public class CourseController {
                 modelMap.addAttribute("pageNumbersOfTarget", pageNumbers);
             }
             modelMap.addAttribute("targets", targetDtoPage);
+        }
+        //Paging member
+        Page<UserDto> userDtoPage = userService.getUserDtoPagingByCourseId(
+                PageRequest.of(currentPageOfMember - 1, Common.PAGE_SIZE),
+                courseId
+        );
+        modelMap.addAttribute("users", userDtoPage);
+        int totalPages = userDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbersOfMember", pageNumbers);
         }
         //Set modelMap
         modelMap.addAttribute("tabIndex", currentTabIndex);
@@ -359,5 +370,14 @@ public class CourseController {
             return "admin/course/result";
         }
         return "redirect:/admin/course";
+    }
+
+    @RequestMapping(value = {"delete-user-course"}, method = RequestMethod.GET)
+    public String deleteCourseByUserId(
+            @RequestParam("userId") int userId,
+            @RequestParam("courseId") int courseId
+    ) {
+        userCourseService.remove(userId, courseId);
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=5";
     }
 }
