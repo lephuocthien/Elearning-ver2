@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/layout/default}">
+<head>
+<title>Kết quả tìm kiếm</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<h3 class="mb-3" th:text="${'Kết quả tìm kiếm '+key}">Kết quả tìm kiếm</h3>
+		<div class="row">
+			<div class="col-md-8">
+				<a class="btn btn-secondary" th:href="@{/admin/role}">Quay lại</a>
+				<a th:href="@{/admin/user/add}" class="btn btn-primary">Thêm mới +</a>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<form class="input-group" th:action="@{/admin/role/search}" method="get">
+						<input type="text" class="form-control" name="key" placeholder="Search by name...">
+						<div class="input-group-append">
+							<button class="input-group-text" id="basic-addon2" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover mt-3">
+			<thead>
+			<tr>
+				<th>STT</th>
+				<th>Tên Quyền</th>
+				<th>Vai trò</th>
+				<th>#</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="role, state: ${roles.content}">
+				<td th:text="${roles.size*(roles.number)+state.count}"></td>
+				<td th:text="${role.name}"></td>
+				<td th:text="${role.description}"></td>
+				<td>
+					<a th:href="@{/admin/role/edit(id=${role.id})}"
+					   class="btn btn-sm btn-info">
+						<i class="fa fa-pencil-square-o"></i>
+					</a>
+					<a th:href="@{/admin/role/delete(id=${role.id})}"
+					   th:unless="${role.id == 1 OR role.id == 2 OR role.id == 3}"
+					   class="btn btn-sm btn-danger del-btn">
+						<i class="fa fa-trash-o"></i>
+					</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center pagination-sm">
+				<li class="page-item"
+					th:classappend="${roles.number==0} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/role/search(page=${roles.number}, key=${key})}"
+					>Previous</a>
+				</li>
+				<li  th:if="${roles.totalPages > 0}" class="page-item"
+					 th:each="pageNumber : ${pageNumbers}"
+					 th:classappend="${pageNumber==roles.number + 1} ? active">
+					<a th:href="@{/admin/role/search(page=${pageNumber}, key=${key})}"
+					   th:text=${pageNumber}
+					   class="page-link"
+					></a>
+				</li>
+				<li class="page-item"
+					th:classappend="${roles.number+1==roles.totalPages} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/role/search(page=${roles.number+2}, key=${key})}"
+					>Next</a>
+				</li>
+			</ul>
+		</nav>
+	</section>
+</body>
+</html>

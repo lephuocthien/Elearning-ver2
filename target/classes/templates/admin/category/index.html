@@ -16,11 +16,14 @@
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Tìm kiếm...">
-					<div class="input-group-append">
-						<span class="input-group-text" id="basic-addon2"><i
-							class="fa fa-search"></i></span>
-					</div>
+					<form class="input-group" th:action="@{/admin/category/search}" method="get">
+						<input type="text" class="form-control" name="key" placeholder="Search by title...">
+						<div class="input-group-append">
+							<button class="input-group-text" id="basic-addon2" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -39,8 +42,15 @@
 					<td th:text="${category.title}"></td>
 					<td><i th:class="${category.icon}"></i></td>
 					<td>
-						<a th:href="@{/admin/category/edit(id=${category.id})}" class="btn btn-sm btn-primary">Sửa</a>
-						<a th:href="@{/admin/category/delete(id=${category.id})}" class="btn btn-sm btn-danger del-btn">Xóa</a></td>
+						<a th:href="@{/admin/category/edit(id=${category.id})}"
+						   class="btn btn-sm btn-info">
+							<i class="fa fa-pencil-square-o"></i>
+						</a>
+						<a th:href="@{/admin/category/delete(id=${category.id})}"
+						   class="btn btn-sm btn-danger del-btn">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

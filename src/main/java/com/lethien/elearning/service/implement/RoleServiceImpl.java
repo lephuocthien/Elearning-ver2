@@ -22,9 +22,7 @@ import com.lethien.elearning.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-
 	private RoleRepository roleRepository;
-	
 	/**
 	 * @param roleRepository
 	 */
@@ -32,7 +30,6 @@ public class RoleServiceImpl implements RoleService {
 		super();
 		this.roleRepository = roleRepository;
 	}
-
 	@Override
 	public List<RoleDto> getAll() {
 		List<Role> roles = roleRepository.findAll();
@@ -46,13 +43,10 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return dtos;
 	}
-	
 	@Override
 	public List<RoleDto> getNotAdmin() {
-		// TODO Auto-generated method stub
 		return roleRepository.findAllNotAdmin();
 	}
-	
 	@Override
 	public RoleDto getById(int id) {
 		Role role = roleRepository.findById(id).get();
@@ -62,7 +56,6 @@ public class RoleServiceImpl implements RoleService {
 		dto.setDescription(role.getDescription());
 		return dto;
 	}
-
 	@Override
 	public void save(RoleDto dto) {
 		Role role = new Role();
@@ -70,7 +63,6 @@ public class RoleServiceImpl implements RoleService {
 		role.setDescription(dto.getDescription());
 		roleRepository.save(role);	
 	}
-
 	@Override
 	public void edit(RoleDto dto) {
 		Role role = roleRepository.findById(dto.getId()).orElse(null);
@@ -79,12 +71,9 @@ public class RoleServiceImpl implements RoleService {
 			role.setDescription(dto.getDescription());
 			roleRepository.save(role);	
 		}
-		
 	}
-
 	@Override
 	public void remove(int id) {
-		// TODO Auto-generated method stub
 		roleRepository.deleteById(id);
 	}
 	@Override
@@ -94,9 +83,38 @@ public class RoleServiceImpl implements RoleService {
 		int startItem = currentPage * pageSize;
 		Page<RoleDto> roleDtoPage;
 		if (roleRepository.count() < startItem) {
-			roleDtoPage = new PageImpl<RoleDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),roleRepository.count());
+			roleDtoPage = new PageImpl<RoleDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					roleRepository.count()
+			);
 		} else {
-			roleDtoPage = roleRepository.getRoleDtoPaging(PageRequest.of(currentPage, pageSize));
+			roleDtoPage = roleRepository.getRoleDtoPaging(
+					PageRequest.of(currentPage, pageSize)
+			);
+		}
+		return roleDtoPage;
+	}
+	@Override
+	public Page<RoleDto> getRoleDtoResultPaging(
+			Pageable pageable,
+			String key
+	){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<RoleDto> roleDtoPage;
+		if (roleRepository.getRoleDtoResultCount(key) < startItem) {
+			roleDtoPage = new PageImpl<RoleDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					roleRepository.getRoleDtoResultCount(key)
+			);
+		} else {
+			roleDtoPage = roleRepository.getRoleDtoResultPaging(
+					PageRequest.of(currentPage, pageSize),
+					key
+			);
 		}
 		return roleDtoPage;
 	}

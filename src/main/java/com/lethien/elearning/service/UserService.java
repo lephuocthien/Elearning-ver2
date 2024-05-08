@@ -16,24 +16,15 @@ import com.lethien.elearning.entity.User;
 
 public interface UserService {
 	List<UserDto> getAll();
-
 	List<UserDto> getAllUserDto();
-	
 	List<UserDto> getAllUserDtoOfCourseByTeacher(int courseId);
-	
 	UserDto getById(int id);
-	
 	UserDto getUserDtoById(int id);
-	
 	UserDto getUserDtoByEmail(String email);
-	
 	void save(UserDto dto);
-
 	void edit(UserDto dto);
-
 	void remove(int id);
-
 	Page<User> getUserPaging(int pageIndex, int pageSize);
-
 	Page<UserDto> getUserDtoPaging(Pageable pageable);
+	Page<UserDto> getUserDtoResultPaging(Pageable pageable, String key);
 }

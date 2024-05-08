@@ -1,0 +1,94 @@
+<div id="tabVideoResult"
+     xmlns:th="http://www.thymeleaf.org"
+     th:fragment="tabVideoResult"
+     th:unless="${keyOfVideo == null}">
+    <h3 class="mb-3" th:text="${'Kết quả tìm kiếm ' + keyOfVideo}">Kết quả tìm kiếm</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <a class="btn btn-secondary"
+               th:href="@{/admin/course/edit(
+                id=${course.id},
+                tabIndex=3)}"
+            >Quay lại</a>
+            <a th:href="@{/admin/course/video/add(courseId=${course.id})}" class="btn btn-primary">Thêm mới +</a>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <form class="input-group" th:action="@{/admin/course/edit}" method="get">
+                    <input type="hidden" class="form-control" name="id" th:value="${course.id}"/>
+                    <input type="hidden" class="form-control" name="tabIndex" value="3"/>
+                    <input type="text" class="form-control" name="keyOfVideo" placeholder="Search by title...">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover mt-3">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Title</th>
+            <th>URL</th>
+            <th>Time (second)</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="video, state: ${videos.content}">
+            <td th:text="${videos.size*(videos.number)+state.count}"></td>
+            <td th:text="${video.title}"></td>
+            <td th:text="${video.url}"></td>
+            <td th:text="${video.timeCount}"></td>
+            <td>
+                <a th:href="@{video/edit(id=${video.id})}" class="btn btn-sm btn-info">
+                    <i class="fa fa-pencil-square-o"></i>
+                </a>
+                <a th:href="@{video/delete(id=${video.id},courseId=${course.id})}"
+                   class="btn btn-sm btn-danger del-btn">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${videos.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+				   id=${course.id},
+				   pageOfVideo=${videos.number},
+				   keyOfVideo=${keyOfVideo},
+				   tabIndex=3)}"
+                >Previous</a>
+            </li>
+            <li th:if="${videos.totalPages > 0}" class="page-item"
+                th:each="pageNumber : ${pageNumbersOfVideo}"
+                th:classappend="${pageNumber==videos.number + 1} ? active">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+				    id=${course.id},
+				    pageOfVideo=${pageNumber},
+				    keyOfVideo=${keyOfVideo},
+				    tabIndex=3)}"
+                   th:text=${pageNumber}
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${videos.number+1==videos.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfVideo=${videos.number+2},
+                   keyOfVideo=${keyOfVideo},
+                   tabIndex=3)}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -19,4 +19,5 @@ public interface TargetService {
 	void remove (int id);
 	List<TargetDto> getAllTargetByCourseId (int courseId);
 	Page<TargetDto> getTargetDtoPagingByCourseId(Pageable pageable, int courseId);
+	Page<TargetDto> getTargetDtoResultPagingByCourseId(Pageable pageable, int courseId, String keys);
 }

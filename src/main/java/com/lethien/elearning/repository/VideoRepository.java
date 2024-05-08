@@ -1,6 +1,7 @@
 /**
  * Dec 15, 2020
  * 10:20:05 PM
+ *
  * @author LeThien
  */
 package com.lethien.elearning.repository;
@@ -16,30 +17,61 @@ import org.springframework.stereotype.Repository;
 
 import com.lethien.elearning.dto.VideoDto;
 import com.lethien.elearning.entity.Video;
+
 @Repository
-public interface VideoRepository extends JpaRepository<Video, Integer>{
+public interface VideoRepository extends JpaRepository<Video, Integer> {
 
-	@Query("SELECT new com.lethien.elearning.dto.VideoDto"
-			+ "(v.id, "
-			+ "v.title, "
-			+ "v.url, "
-			+ "v.timeCount, "
-			+ "v.courseId, "
-			+ "c.title) "
-			+ "FROM Course c JOIN Video v "
-			+ "ON c.id = v.courseId "
-			+ "WHERE v.courseId = :courseId")
-	List<VideoDto> getAllVideoByCourseId(@Param("courseId") int courseId);
+    @Query("SELECT new com.lethien.elearning.dto.VideoDto" +
+            "(v.id, " +
+            "v.title, " +
+            "v.url, " +
+            "v.timeCount, " +
+            "v.courseId, " +
+            "c.title) " +
+            "FROM Course c JOIN Video v " +
+            "ON c.id = v.courseId " +
+            "WHERE v.courseId = :courseId")
+    List<VideoDto> getAllVideoByCourseId(@Param("courseId") int courseId);
 
-	@Query("SELECT new com.lethien.elearning.dto.VideoDto"
-			+ "(v.id, "
-			+ "v.title, "
-			+ "v.url, "
-			+ "v.timeCount, "
-			+ "v.courseId, "
-			+ "c.title) "
-			+ "FROM Course c JOIN Video v "
-			+ "ON c.id = v.courseId "
-			+ "WHERE v.courseId = :courseId")
-	Page<VideoDto> getVideoDtoPagingByCourseId(Pageable pageable, @Param("courseId") int courseId);
+    @Query("SELECT new com.lethien.elearning.dto.VideoDto" +
+            "(v.id, " +
+            "v.title, " +
+            "v.url, " +
+            "v.timeCount, " +
+            "v.courseId, " +
+            "c.title) " +
+            "FROM Course c JOIN Video v " +
+            "ON c.id = v.courseId " +
+            "WHERE v.courseId = :courseId")
+    Page<VideoDto> getVideoDtoPagingByCourseId(
+            Pageable pageable,
+            @Param("courseId") int courseId
+    );
+
+    @Query("SELECT new com.lethien.elearning.dto.VideoDto" +
+            "(v.id, " +
+            "v.title, " +
+            "v.url, " +
+            "v.timeCount, " +
+            "v.courseId, " +
+            "c.title) " +
+            "FROM Course c JOIN Video v " +
+            "ON c.id = v.courseId " +
+            "WHERE v.courseId = :courseId " +
+            "AND v.title LIKE :key")
+    Page<VideoDto> getVideoDtoResultPagingByCourseId(
+            Pageable pageable,
+            @Param("courseId") int courseId,
+            @Param("key") String key
+    );
+
+    @Query("SELECT COUNT(*) " +
+            "FROM Course c JOIN Video v " +
+            "ON c.id = v.courseId " +
+            "WHERE v.courseId = :courseId " +
+            "AND v.title LIKE :key")
+    int getVideoDtoResultCountByCourseId(
+            @Param("courseId") int courseId,
+            @Param("key") String key
+    );
 }

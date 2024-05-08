@@ -19,4 +19,5 @@ public interface VideoService {
 	void remove(int id);
 	List<VideoDto> getAllVideoByCourseId(int courseId);
 	Page<VideoDto> getVideoDtoPagingByCourseId(Pageable pageable, int courseId);
+	Page<VideoDto> getVideoDtoResultPagingByCourseId(Pageable pageable, int courseId, String key);
 }

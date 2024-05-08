@@ -27,12 +27,10 @@ import com.lethien.elearning.service.CourseService;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-
     private CourseRepository courseRepository;
     private VideoRepository videoRepository;
     private TargetRepository targetRepository;
     private CategoryRepository categoryRepository;
-
 
     /**
      * @param courseRepository
@@ -40,15 +38,18 @@ public class CourseServiceImpl implements CourseService {
      * @param targetRepository
      * @param categoryRepository
      */
-    public CourseServiceImpl(CourseRepository courseRepository, VideoRepository videoRepository,
-                             TargetRepository targetRepository, CategoryRepository categoryRepository) {
+    public CourseServiceImpl(
+            CourseRepository courseRepository,
+            VideoRepository videoRepository,
+            TargetRepository targetRepository,
+            CategoryRepository categoryRepository
+    ) {
         super();
         this.courseRepository = courseRepository;
         this.videoRepository = videoRepository;
         this.targetRepository = targetRepository;
         this.categoryRepository = categoryRepository;
     }
-
     @Override
     public List<CourseDto> getAll() {
         List<Course> courses = courseRepository.findAll();
@@ -70,45 +71,65 @@ public class CourseServiceImpl implements CourseService {
             dto.setLastUpdate(course.getLastUpdate());
             dto.setCategoryTitle(
                     categoryRepository
-                            .findById(course
-                                    .getCategoryId())
+                            .findById(course.getCategoryId())
                             .get()
-                            .getTitle());
+                            .getTitle()
+            );
             dtos.add(dto);
         }
         return dtos;
     }
-
     @Override
     public List<CourseDto> getAllCourseDto() {
         List<CourseDto> dtos = courseRepository.findAllDtoCourse();
         for (int i = 0; i < dtos.size(); i++) {
-            dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
-            dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+            dtos.get(i).setVideos(
+                    videoRepository.getAllVideoByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
+            dtos.get(i).setTargets(
+                    targetRepository.getAllTargetByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
         }
         return dtos;
     }
-
     @Override
     public List<CourseDto> getAllCourseDtoByUserId(int userId) {
         List<CourseDto> dtos = courseRepository.findAllDtoCourseByUserId(userId);
         for (int i = 0; i < dtos.size(); i++) {
-            dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
-            dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+            dtos.get(i).setVideos(
+                    videoRepository.getAllVideoByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
+            dtos.get(i).setTargets(
+                    targetRepository.getAllTargetByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
         }
         return dtos;
     }
-
     @Override
     public List<CourseDto> getAllCourseDtoByTitle(String key) {
         List<CourseDto> dtos = courseRepository.findAllDtoCourseByTitle(key);
         for (int i = 0; i < dtos.size(); i++) {
-            dtos.get(i).setVideos(videoRepository.getAllVideoByCourseId(dtos.get(i).getId()));
-            dtos.get(i).setTargets(targetRepository.getAllTargetByCourseId(dtos.get(i).getId()));
+            dtos.get(i).setVideos(
+                    videoRepository.getAllVideoByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
+            dtos.get(i).setTargets(
+                    targetRepository.getAllTargetByCourseId(
+                            dtos.get(i).getId()
+                    )
+            );
         }
         return dtos;
     }
-
     @Override
     public CourseDto getById(int id) {
         Course course = courseRepository.findById(id).get();
@@ -128,7 +149,6 @@ public class CourseServiceImpl implements CourseService {
         dto.setLastUpdate(course.getLastUpdate());
         return dto;
     }
-
     @Override
     public CourseDto getDtoById(int id) {
         CourseDto dto = courseRepository.findDtoCourseById(id);
@@ -136,7 +156,6 @@ public class CourseServiceImpl implements CourseService {
         dto.setTargets(targetRepository.getAllTargetByCourseId(dto.getId()));
         return dto;
     }
-
     @Override
     public void save(CourseDto dto) {
         Course course = new Course();
@@ -154,7 +173,6 @@ public class CourseServiceImpl implements CourseService {
         course.setLastUpdate(dto.getLastUpdate());
         courseRepository.save(course);
     }
-
     @Override
     public Integer saveGetBackId(CourseDto dto) {
         Course course = new Course();
@@ -172,13 +190,12 @@ public class CourseServiceImpl implements CourseService {
         course.setLastUpdate(dto.getLastUpdate());
         return courseRepository.save(course).getId();
     }
-
     @Override
     public void edit(CourseDto dto) {
         Course course = courseRepository.findById(dto.getId()).get();
         if (course != null) {
             course.setTitle(dto.getTitle());
-            if (dto.getImage() != null){
+            if (dto.getImage() != null) {
                 course.setImage(dto.getImage());
             }
             List<VideoDto> videos = videoRepository.getAllVideoByCourseId(dto.getId());
@@ -199,14 +216,11 @@ public class CourseServiceImpl implements CourseService {
             course.setLastUpdate(dto.getLastUpdate());
             courseRepository.save(course);
         }
-
     }
-
     @Override
     public void remove(int id) {
         courseRepository.deleteById(id);
     }
-
     @Override
     public Page<CourseDto> getCourseDtoPaging(Pageable pageable) {
         int pageSize = pageable.getPageSize();
@@ -214,9 +228,33 @@ public class CourseServiceImpl implements CourseService {
         int startItem = currentPage * pageSize;
         Page<CourseDto> courseDtoPage;
         if (courseRepository.count() < startItem) {
-            courseDtoPage = new PageImpl<CourseDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize), courseRepository.count());
+            courseDtoPage = new PageImpl<CourseDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    courseRepository.count()
+            );
         } else {
             courseDtoPage = courseRepository.getCourseDtoPaging(PageRequest.of(currentPage, pageSize));
+        }
+        return courseDtoPage;
+    }
+    @Override
+    public Page<CourseDto> getCourseDtoResultPaging(Pageable pageable, String key) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        Page<CourseDto> courseDtoPage;
+        if (courseRepository.getCourseDtoResultCount(key) < startItem) {
+            courseDtoPage = new PageImpl<CourseDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    courseRepository.getCourseDtoResultCount(key)
+            );
+        } else {
+            courseDtoPage = courseRepository.getCourseDtoResultPaging(
+                    PageRequest.of(currentPage, pageSize),
+                    key
+            );
         }
         return courseDtoPage;
     }

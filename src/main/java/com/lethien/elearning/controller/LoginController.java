@@ -1,5 +1,6 @@
 package com.lethien.elearning.controller;
 
+import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.LoginDto;
 import com.lethien.elearning.dto.UserDto;
 import com.lethien.elearning.service.UserService;
@@ -28,22 +29,26 @@ import java.util.Date;
 @Controller
 @RequestMapping("admin")
 public class LoginController {
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
     private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService  userService;
+    private UserService userService;
+
+    public LoginController(
+            AuthenticationManager authenticationManager,
+            UserService userService
+    ) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+    }
 
     public SecretKey convertStringToSecretKeyto(String encodedKey) {
         byte[] keyBytes = Decoders.BASE64.decode(encodedKey);
-        SecretKey originalKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256");
+        SecretKey originalKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, Common.ALGORITHM);
         return originalKey;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String index( ModelMap modelMap,
-                         HttpSession session) {
+    public String index(ModelMap modelMap,
+                        HttpSession session) {
         LoginDto loginDto = new LoginDto();
         modelMap.addAttribute("loginDto", loginDto);
         return "admin/login/index";
@@ -54,9 +59,9 @@ public class LoginController {
             @ModelAttribute("loginDto") LoginDto loginDto,
             HttpSession session,
             RedirectAttributes redirectAttributes,
-            ModelMap modelMap) throws IOException {
-        SecretKey key = convertStringToSecretKeyto("Test123456789lephuocthien31101999ABCDXYZTest123456789lephuocthien31101999ABCDXYZ");
-        final long JWT_EXPIRATION = 864000000L;
+            ModelMap modelMap
+    ) throws IOException {
+        SecretKey key = convertStringToSecretKeyto(Common.SECRECT_KEY);
         Authentication authentication = null;
         String email = loginDto.getUsername();
         String password = loginDto.getPassword();
@@ -65,7 +70,7 @@ public class LoginController {
                     .authenticate(new UsernamePasswordAuthenticationToken(email, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             Date now = new Date();
-            Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
+            Date expiryDate = new Date(now.getTime() + Common.JWT_EXPIRATION);
             // Nếu đăng nhập thành công thì trả về một token
             String token = Jwts.builder().subject(email).issuedAt(now).expiration(expiryDate)
                     .signWith(key).compact();
@@ -73,7 +78,6 @@ public class LoginController {
             session.setAttribute("AUTH", dto);
             session.setAttribute("TOKEN", token);
             return "redirect:/admin/home";
-
         } catch (Exception e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message", "Failed");
@@ -81,8 +85,9 @@ public class LoginController {
             return "redirect:/admin/login";
         }
     }
+
     @RequestMapping(value = "/logout")
-    public String logout( HttpSession session) {
+    public String logout(HttpSession session) {
         session.removeAttribute("AUTH");
         session.removeAttribute("TOKEN");
         return "redirect:/admin/login";

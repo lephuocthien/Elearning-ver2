@@ -24,20 +24,20 @@ import com.lethien.elearning.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 	private UserRepository userRepository;
 	private CourseRepository courseRepository;
-
 	/**
 	 * @param userRepository
 	 * @param courseRepository
 	 */
-	public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository) {
+	public UserServiceImpl(
+			UserRepository userRepository,
+			CourseRepository courseRepository
+	) {
 		super();
 		this.userRepository = userRepository;
 		this.courseRepository = courseRepository;
 	}
-
 	@Override
 	public List<UserDto> getAll() {
 		List<User> users = userRepository.findAll();
@@ -56,22 +56,18 @@ public class UserServiceImpl implements UserService {
 		}
 		return dtos;
 	}
-
 	@Override
 	public List<UserDto> getAllUserDto() {
 		return userRepository.findAllUserDto();
 	}
-	
 	@Override
 	public UserDto getUserDtoById(int id) {
 		return userRepository.findUserDtoById(id);
 	}
-	
 	@Override
 	public UserDto getUserDtoByEmail(String email) {
 		return userRepository.findUserDtoByEmail(email);
 	}
-
 	@Override
 	public UserDto getById(int id) {
 		UserDto dto = new UserDto();
@@ -86,12 +82,13 @@ public class UserServiceImpl implements UserService {
 		dto.setRoleId(user.getRoleId());
 		return dto;
 	}
-
 	@Override
 	public void save(UserDto dto) {
 		User user = new User();
 		user.setEmail(dto.getEmail());
-		user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
+		user.setPassword(
+				new BCryptPasswordEncoder()
+						.encode(dto.getPassword()));
 		user.setFullname(dto.getFullname());
 		user.setPhone(dto.getPhone());
 		user.setAddress(dto.getAddress());
@@ -100,14 +97,15 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 
 	}
-
 	@Override
 	public void edit(UserDto dto) {
-		User user = userRepository.findById(dto.getId()).get();
+		User user = userRepository.findById(dto.getId()).orElse(null);
 		if (user != null) {
 			user.setEmail(dto.getEmail());
-			if (!dto.getPassword().equals(""))
-				user.setPassword(new BCryptPasswordEncoder().encode(dto.getPassword()));
+			if (!dto.getPassword().isEmpty())
+				user.setPassword(
+						new BCryptPasswordEncoder()
+								.encode(dto.getPassword()));
 			user.setFullname(dto.getFullname());
 			user.setPhone(dto.getPhone());
 			user.setAddress(dto.getAddress());
@@ -118,20 +116,18 @@ public class UserServiceImpl implements UserService {
 			userRepository.save(user);
 		}
 	}
-
 	@Override
 	public void remove(int id) {
-		// TODO Auto-generated method stub
 		userRepository.deleteById(id);
 	}
-
 	@Override
-	public Page<User> getUserPaging(int pageIndex, int pageSize) {
-		// TODO: get user paging
+	public Page<User> getUserPaging(
+			int pageIndex,
+			int pageSize
+	) {
 		PageRequest paging = PageRequest.of(pageIndex, pageSize);
 		return userRepository.findAll(paging);
 	}
-
 	@Override
 	public Page<UserDto> getUserDtoPaging(Pageable pageable) {
 		int pageSize = pageable.getPageSize();
@@ -139,16 +135,37 @@ public class UserServiceImpl implements UserService {
 		int startItem = currentPage * pageSize;
 		Page<UserDto> userDtoPage;
 		if (userRepository.count() < startItem) {
-			userDtoPage = new PageImpl<UserDto>(Collections.emptyList(),PageRequest.of(currentPage, pageSize),userRepository.count());
+			userDtoPage = new PageImpl<UserDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					userRepository.count());
 		} else {
-			userDtoPage = userRepository.getUserDtoPaging(PageRequest.of(currentPage, pageSize));
+			userDtoPage = userRepository.getUserDtoPaging(
+					PageRequest.of(currentPage, pageSize)
+			);
 		}
 		return userDtoPage;
 	}
-
+	@Override
+	public Page<UserDto> getUserDtoResultPaging(Pageable pageable, String key) {
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<UserDto> userDtoPage;
+		if (userRepository.getUserDtoResultCount(key) < startItem) {
+			userDtoPage = new PageImpl<UserDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					userRepository.getUserDtoResultCount(key));
+		} else {
+			userDtoPage = userRepository.getUserDtoResultPaging(
+					PageRequest.of(currentPage, pageSize),
+					key);
+		}
+		return userDtoPage;
+	}
 	@Override
 	public List<UserDto> getAllUserDtoOfCourseByTeacher(int courseId) {
-		// TODO Auto-generated method stub
 		return userRepository.findUserDtoOfCourseByTeacher(courseId);
 	}
 }

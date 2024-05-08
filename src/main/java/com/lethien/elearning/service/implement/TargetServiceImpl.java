@@ -21,9 +21,7 @@ import com.lethien.elearning.service.TargetService;
 
 @Service
 public class TargetServiceImpl implements TargetService {
-
 	private TargetRepository targetRepository;
-
 	/**
 	 * @param targetRepository
 	 */
@@ -79,15 +77,50 @@ public class TargetServiceImpl implements TargetService {
 		targetRepository.deleteById(id);
 	}
 	@Override
-	public Page<TargetDto> getTargetDtoPagingByCourseId(Pageable pageable, int courseId){
+	public Page<TargetDto> getTargetDtoPagingByCourseId(
+			Pageable pageable,
+			int courseId
+	){
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();
 		int startItem = currentPage * pageSize;
 		Page<TargetDto> targetDtoPage;
 		if (targetRepository.count() < startItem) {
-			targetDtoPage = new PageImpl<TargetDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),targetRepository.count());
+			targetDtoPage = new PageImpl<TargetDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					targetRepository.count()
+			);
 		} else {
-			targetDtoPage = targetRepository.getTargetDtoPagingByCourseId(PageRequest.of(currentPage, pageSize), courseId);
+			targetDtoPage = targetRepository.getTargetDtoPagingByCourseId(
+					PageRequest.of(currentPage, pageSize),
+					courseId
+			);
+		}
+		return targetDtoPage;
+	}
+	@Override
+	public Page<TargetDto> getTargetDtoResultPagingByCourseId(
+			Pageable pageable,
+			int courseId,
+			String key
+	){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<TargetDto> targetDtoPage;
+		if (targetRepository.getTargetDtoResultCountByCourseId(courseId, key) < startItem) {
+			targetDtoPage = new PageImpl<TargetDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					targetRepository.getTargetDtoResultCountByCourseId(courseId, key)
+			);
+		} else {
+			targetDtoPage = targetRepository.getTargetDtoResultPagingByCourseId(
+					PageRequest.of(currentPage, pageSize),
+					courseId,
+					key
+			);
 		}
 		return targetDtoPage;
 	}

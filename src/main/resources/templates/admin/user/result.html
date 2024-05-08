@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/layout/default}">
+<head>
+<title>Kết quả tìm kiếm</title>
+</head>
+
+<body>
+	<section layout:fragment="content">
+		<h3 class="mb-3" th:text="${'Kết quả tìm kiếm '+key}">Kết quả tìm kiếm</h3>
+		<div class="row">
+			<div class="col-md-8">
+				<a class="btn btn-secondary" th:href="@{/admin/user}">Quay lại</a>
+				<a th:href="@{/admin/user/add}" class="btn btn-primary">Thêm mới +</a>
+			</div>
+			<div class="col-md-4">
+				<div class="input-group">
+					<form class="input-group" th:action="@{/admin/user/search}" method="get">
+						<input type="text" class="form-control" name="key" placeholder="Search by email...">
+						<div class="input-group-append">
+							<button class="input-group-text" id="basic-addon2" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<table class="table table-bordered table-hover mt-3">
+			<thead>
+				<tr>
+					<th>STT</th>
+					<th>Họ Tên</th>
+					<th>Email</th>
+					<th>Số ĐT</th>
+					<th>Vai trò</th>
+					<th>#</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user, state: ${users.content}">
+					<td th:text="${users.size*(users.number)+state.count}"></td>
+					<td th:text="${user.fullname}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.phone}"></td>
+					<td th:text="${user.roleDescription}"></td>
+					<td>
+						<a th:href="@{user/edit(id=${user.id})}" class="btn btn-sm btn-info">
+							<i class="fa fa-pencil-square-o"></i>
+						</a>
+						<a th:href="@{user/delete(id=${user.id})}" th:unless="${user.id == session.AUTH.id}" class="btn btn-sm btn-danger del-btn">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center pagination-sm">
+				<li class="page-item"
+					th:classappend="${users.number==0} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/user/search(page=${users.number}, key=${key})}"
+					>Previous</a>
+				</li>
+				<li  th:if="${users.totalPages > 0}" class="page-item"
+					 th:each="pageNumber : ${pageNumbers}"
+					 th:classappend="${pageNumber==users.number + 1} ? active">
+					<a th:href="@{/admin/user/search(page=${pageNumber}, key=${key})}"
+					   th:text=${pageNumber}
+					   class="page-link"
+					></a>
+				</li>
+				<li class="page-item"
+					th:classappend="${users.number+1==users.totalPages} ? disabled">
+					<a class="page-link"
+					   th:href="@{/admin/user/search(page=${users.number+2}, key=${key})}"
+					>Next</a>
+				</li>
+			</ul>
+		</nav>
+	</section>
+</body>
+</html>

@@ -22,9 +22,7 @@ import com.lethien.elearning.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-
 	private CategoryRepository categoryRepository;
-
 	/**
 	 * @param categoryRepository
 	 */
@@ -32,7 +30,6 @@ public class CategoryServiceImpl implements CategoryService {
 		super();
 		this.categoryRepository = categoryRepository;
 	}
-
 	@Override
 	public List<CategoryDto> getAll() {
 		List<Category> categories = categoryRepository.findAll();
@@ -46,7 +43,6 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		return dtos;
 	}
-
 	@Override
 	public CategoryDto getById(int id) {
 		Category category = categoryRepository.findById(id).get();
@@ -56,7 +52,6 @@ public class CategoryServiceImpl implements CategoryService {
 		dto.setIcon(category.getIcon());
 		return dto;
 	}
-
 	@Override
 	public void save(CategoryDto dto) {
 		Category category = new Category();
@@ -65,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryRepository.save(category);
 
 	}
-
 	@Override
 	public void edit(CategoryDto dto) {
 		Category category = categoryRepository.findById(dto.getId()).get();
@@ -74,15 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
 			category.setIcon(dto.getIcon());
 			categoryRepository.save(category);
 		}
-
 	}
-
 	@Override
 	public void remove(int id) {
 		categoryRepository.deleteById(id);
-
 	}
-
 	@Override
 	public Page<CategoryDto> getCategoryDtoPaging(Pageable pageable) {
 		int pageSize = pageable.getPageSize();
@@ -90,9 +80,38 @@ public class CategoryServiceImpl implements CategoryService {
 		int startItem = currentPage * pageSize;
 		Page<CategoryDto> categoryDtoPage;
 		if (categoryRepository.count() < startItem) {
-			categoryDtoPage = new PageImpl<CategoryDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),categoryRepository.count());
+			categoryDtoPage = new PageImpl<CategoryDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					categoryRepository.count()
+			);
 		} else {
-			categoryDtoPage = categoryRepository.getCategoryDtoPaging(PageRequest.of(currentPage, pageSize));
+			categoryDtoPage = categoryRepository.getCategoryDtoPaging(
+					PageRequest.of(currentPage, pageSize)
+			);
+		}
+		return categoryDtoPage;
+	}
+	@Override
+	public Page<CategoryDto> getCategoryDtoResultPaging(
+			Pageable pageable,
+			String key
+	) {
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<CategoryDto> categoryDtoPage;
+		if (categoryRepository.getCategoryDtoResultCount(key) < startItem) {
+			categoryDtoPage = new PageImpl<CategoryDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					categoryRepository.getCategoryDtoResultCount(key)
+			);
+		} else {
+			categoryDtoPage = categoryRepository.getCategoryDtoResultPaging(
+					PageRequest.of(currentPage, pageSize),
+					key
+			);
 		}
 		return categoryDtoPage;
 	}

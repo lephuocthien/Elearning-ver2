@@ -1,0 +1,91 @@
+<div id="tabTargetResult"
+     xmlns:th="http://www.thymeleaf.org"
+     th:fragment="tabTargetResult"
+     th:unless="${keyOfTarget == null}">
+    <h3 class="mb-3" th:text="${'Kết quả tìm kiếm ' + keyOfTarget}">Kết quả tìm kiếm</h3>
+    <div class="row">
+        <div class="col-md-8">
+            <a class="btn btn-secondary"
+               th:href="@{/admin/course/edit(
+                id=${course.id},
+                tabIndex=4)}"
+            >Quay lại</a>
+            <a class="btn btn-primary"
+               th:href="@{/admin/course/video/add(courseId=${course.id})}"
+            >Thêm mới +</a>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <form class="input-group" th:action="@{/admin/course/edit}" method="get">
+                    <input type="hidden" class="form-control" name="id" th:value="${course.id}"/>
+                    <input type="hidden" class="form-control" name="tabIndex" value="4"/>
+                    <input type="text" class="form-control" name="keyOfTarget" placeholder="Search by title...">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover mt-3">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Title</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="target, state: ${targets.content}">
+            <td th:text="${targets.size*(targets.number)+state.count}"></td>
+            <td th:text="${target.title}"></td>
+            <td>
+                <a th:href="@{target/edit(id=${target.id})}" class="btn btn-sm btn-info">
+                    <i class="fa fa-pencil-square-o"></i>
+                </a>
+                <a th:href="@{target/delete(id=${target.id},courseId=${course.id})}" class="btn btn-sm btn-danger del-btn">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${targets.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfTarget=${targets.number},
+                   keyOfTarget=${keyOfTarget},
+                   tabIndex=4)}"
+                >Previous</a>
+            </li>
+            <li  th:if="${targets.totalPages > 0}" class="page-item"
+                 th:each="pageNumber : ${pageNumbersOfTarget}"
+                 th:classappend="${pageNumber==targets.number + 1} ? active">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfTarget=${pageNumber},
+                   keyOfTarget=${keyOfTarget},
+                   tabIndex=4)}"
+                   th:text=${pageNumber}
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${targets.number+1==targets.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfTarget=${targets.number+2},
+                   keyOfTarget=${keyOfTarget},
+                   tabIndex=4)}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

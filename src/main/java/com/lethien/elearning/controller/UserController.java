@@ -1,5 +1,6 @@
 package com.lethien.elearning.controller;
 
+import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.RoleDto;
 import com.lethien.elearning.dto.UserDto;
 import com.lethien.elearning.service.RoleService;
@@ -29,11 +30,8 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
-
     private UserService userService;
     private RoleService roleService;
-    @Value("${app.data.page-size}")
-	private int pageSize;
 
     public UserController(
             UserService userService,
@@ -47,7 +45,9 @@ public class UserController {
             ModelMap modelMap,
             @RequestParam("page") Optional<Integer> page) {
         int currentPage = page.orElse(1);
-        Page<UserDto> userDtoPage = userService.getUserDtoPaging(PageRequest.of(currentPage - 1, pageSize));
+        Page<UserDto> userDtoPage = userService.getUserDtoPaging(
+                PageRequest.of(currentPage - 1, Common.PAGE_SIZE)
+        );
         modelMap.addAttribute("users", userDtoPage);
         int totalPages = userDtoPage.getTotalPages();
         if (totalPages > 0) {
@@ -98,28 +98,29 @@ public class UserController {
             HttpSession session) {
         UserDto auth = (UserDto) session.getAttribute("AUTH");
         userService.edit(user);
-        if (auth.getId() == user.getId()){
+        if (auth.getId() == user.getId()) {
             UserDto dto = userService.getUserDtoById(user.getId());
             session.setAttribute("AUTH", dto);
         }
-        return "redirect:/admin/user/edit?id="+user.getId();
+        return "redirect:/admin/user/edit?id=" + user.getId();
     }
+
     @RequestMapping(value = {"edit-avatar"}, method = RequestMethod.POST)
     public String editAvatar(
             @RequestParam("id") int id,
             @RequestParam("image") MultipartFile file,
             HttpSession session) throws IOException {
-        if (!file.isEmpty()){
+        if (!file.isEmpty()) {
             UserDto auth = (UserDto) session.getAttribute("AUTH");
             UserDto user = userService.getUserDtoById(id);
             user.setAvatar(file.getBytes());
             user.setPassword("");
             userService.edit(user);
-            if (auth.getId() == user.getId()){
+            if (auth.getId() == user.getId()) {
                 session.setAttribute("AUTH", user);
             }
         }
-        return "redirect:/admin/user/edit?id="+id;
+        return "redirect:/admin/user/edit?id=" + id;
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
@@ -138,5 +139,30 @@ public class UserController {
         UserDto user = userService.getById(id);
         InputStream is = new ByteArrayInputStream(user.getAvatar());
         IOUtils.copy(is, response.getOutputStream());
+    }
+
+    @RequestMapping(value = {"search"}, method = RequestMethod.GET)
+    public String searchUser(
+            @RequestParam("key") String key,
+            @RequestParam("page") Optional<Integer> page,
+            ModelMap modelMap) {
+        if (!key.isEmpty()) {
+            int currentPage = page.orElse(1);
+            Page<UserDto> userDtoPage = userService.getUserDtoResultPaging(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    "%" + key + "%");
+            modelMap.addAttribute("users", userDtoPage);
+            modelMap.addAttribute("key", key);
+            int totalPages = userDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream
+                        .rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+            return "admin/user/result";
+        }
+        return "redirect:/admin/user";
     }
 }

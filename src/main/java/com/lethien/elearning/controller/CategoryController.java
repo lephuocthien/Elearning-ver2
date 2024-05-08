@@ -1,5 +1,6 @@
 package com.lethien.elearning.controller;
 
+import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.CategoryDto;
 import com.lethien.elearning.dto.CourseDto;
 import com.lethien.elearning.dto.RoleDto;
@@ -24,17 +25,20 @@ import java.util.stream.IntStream;
 @RequestMapping("admin/category")
 public class CategoryController {
     private CategoryService categoryService;
-    @Value("${app.data.page-size}")
-    private int pageSize;
-    public  CategoryController (CategoryService categoryService){
+
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
-    @RequestMapping(value="", method = RequestMethod.GET)
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(
             ModelMap modelMap,
-            @RequestParam("page") Optional<Integer> page) {
+            @RequestParam("page") Optional<Integer> page
+    ) {
         int currentPage = page.orElse(1);
-        Page<CategoryDto> categoryDtoPage = categoryService.getCategoryDtoPaging(PageRequest.of(currentPage - 1, pageSize));
+        Page<CategoryDto> categoryDtoPage = categoryService.getCategoryDtoPaging(
+                PageRequest.of(currentPage - 1, Common.PAGE_SIZE)
+        );
         modelMap.addAttribute("categories", categoryDtoPage);
         int totalPages = categoryDtoPage.getTotalPages();
         if (totalPages > 0) {
@@ -43,8 +47,6 @@ public class CategoryController {
                     .collect(Collectors.toList());
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
-        //List<CategoryDto> categories = categoryService.getAll();
-        //modelMap.addAttribute("categories", categories);
         return "admin/category/index";
     }
 
@@ -62,7 +64,10 @@ public class CategoryController {
     }
 
     @RequestMapping(value = {"edit"}, method = RequestMethod.GET)
-    public String edit(@RequestParam("id") int id, ModelMap modelMap, HttpSession session) {
+    public String edit(
+            @RequestParam("id") int id,
+            ModelMap modelMap
+    ) {
         CategoryDto category = categoryService.getById(id);
         modelMap.addAttribute("category", category);
         return "admin/category/edit";
@@ -77,6 +82,31 @@ public class CategoryController {
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
     public String delete(@RequestParam("id") int id) {
         categoryService.remove(id);
+        return "redirect:/admin/category";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String searchCategory(
+            ModelMap modelMap,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("key") String key
+    ) {
+        if (!key.isEmpty()) {
+            int currentPage = page.orElse(1);
+            Page<CategoryDto> categoryDtoPage = categoryService.getCategoryDtoResultPaging(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    "%" + key + "%");
+            modelMap.addAttribute("categories", categoryDtoPage);
+            modelMap.addAttribute("key", key);
+            int totalPages = categoryDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+            return "/admin/category/result";
+        }
         return "redirect:/admin/category";
     }
 }

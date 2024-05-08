@@ -20,17 +20,13 @@ import com.lethien.elearning.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-
 	private UserRepository userRepository;
 	public UserDetailsServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
-			}
-	
+	}
 	// PHƯƠNG THỨC KIỂM TRA EMAIL(USERNAME) ĐĂNG NHẬP
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		UserDto userDto = userRepository.findByEmail(email);
 		if (userDto == null ) throw new UsernameNotFoundException("Email không tồn tại!");
 		// Tạo danh sách chứa tên quyền
@@ -38,5 +34,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		authorities.add(new SimpleGrantedAuthority(userDto.getRoleName()));
 		return new User(email, userDto.getPassword(), authorities);
 	}
-
 }

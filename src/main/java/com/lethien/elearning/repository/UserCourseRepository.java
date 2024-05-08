@@ -20,5 +20,9 @@ public interface UserCourseRepository extends JpaRepository<UserCourse, UserCour
 	@Transactional
 	@Modifying
 	@Query(value = "insert into user_courses (user_id, course_id, role_id) values (:userId, :courseId, :roleId)", nativeQuery = true)
-	void saveUserCourse(@Param("userId") int userId, @Param("courseId") int courseId, @Param("roleId") int roleId);
+	void saveUserCourse(
+			@Param("userId") int userId,
+			@Param("courseId") int courseId,
+			@Param("roleId") int roleId
+	);
 }

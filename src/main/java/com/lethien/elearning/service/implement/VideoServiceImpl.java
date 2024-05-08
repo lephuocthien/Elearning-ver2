@@ -22,9 +22,7 @@ import com.lethien.elearning.service.VideoService;
 
 @Service
 public class VideoServiceImpl implements VideoService {
-
 	private VideoRepository videoRepository;
-
 	/**
 	 * @param videoRepository
 	 */
@@ -32,7 +30,6 @@ public class VideoServiceImpl implements VideoService {
 		super();
 		this.videoRepository = videoRepository;
 	}
-
 	@Override
 	public List<VideoDto> getAll() {
 		List<Video> videos = videoRepository.findAll();
@@ -48,10 +45,9 @@ public class VideoServiceImpl implements VideoService {
 		}
 		return dtos;
 	}
-
 	@Override
 	public VideoDto getById(int id) {
-		Video video = videoRepository.findById(id).get();
+		Video video = videoRepository.findById(id).orElse(null);
 		VideoDto dto = new VideoDto();
 		dto.setId(video.getId());
 		dto.setTitle(video.getTitle());
@@ -60,7 +56,6 @@ public class VideoServiceImpl implements VideoService {
 		dto.setCourseId(video.getCourseId());
 		return dto;
 	}
-
 	@Override
 	public void save(VideoDto dto) {
 		Video video = new Video();
@@ -71,10 +66,9 @@ public class VideoServiceImpl implements VideoService {
 		videoRepository.save(video);
 
 	}
-
 	@Override
 	public void edit(VideoDto dto) {
-		Video video = videoRepository.findById(dto.getId()).get();
+		Video video = videoRepository.findById(dto.getId()).orElse(null);
 		if (video != null) {
 			video.setTitle(dto.getTitle());
 			video.setUrl(dto.getUrl());
@@ -82,7 +76,6 @@ public class VideoServiceImpl implements VideoService {
 			video.setCourseId(dto.getCourseId());
 			videoRepository.save(video);
 		}
-
 	}
 	@Override
 	public void remove(int id) {
@@ -93,15 +86,50 @@ public class VideoServiceImpl implements VideoService {
 		return videoRepository.getAllVideoByCourseId(courseId);
 	}
 	@Override
-	public Page<VideoDto> getVideoDtoPagingByCourseId(Pageable pageable, int courseId){
+	public Page<VideoDto> getVideoDtoPagingByCourseId(
+			Pageable pageable,
+			int courseId
+	){
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();
 		int startItem = currentPage * pageSize;
 		Page<VideoDto> videoDtoPage;
 		if (videoRepository.count() < startItem) {
-			videoDtoPage = new PageImpl<VideoDto>(Collections.emptyList(), PageRequest.of(currentPage, pageSize),videoRepository.count());
+			videoDtoPage = new PageImpl<VideoDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					videoRepository.count()
+			);
 		} else {
-			videoDtoPage = videoRepository.getVideoDtoPagingByCourseId(PageRequest.of(currentPage, pageSize), courseId);
+			videoDtoPage = videoRepository.getVideoDtoPagingByCourseId(
+					PageRequest.of(currentPage, pageSize),
+					courseId
+			);
+		}
+		return videoDtoPage;
+	}
+	@Override
+	public Page<VideoDto> getVideoDtoResultPagingByCourseId(
+			Pageable pageable,
+			int courseId,
+			String key
+	){
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+		Page<VideoDto> videoDtoPage;
+		if (videoRepository.getVideoDtoResultCountByCourseId(courseId, key) < startItem) {
+			videoDtoPage = new PageImpl<VideoDto>(
+					Collections.emptyList(),
+					PageRequest.of(currentPage, pageSize),
+					videoRepository.getVideoDtoResultCountByCourseId(courseId, key)
+			);
+		} else {
+			videoDtoPage = videoRepository.getVideoDtoResultPagingByCourseId(
+					PageRequest.of(currentPage, pageSize),
+					courseId,
+					key
+			);
 		}
 		return videoDtoPage;
 	}

@@ -19,4 +19,5 @@ public interface RoleService {
 	void edit(RoleDto dto);
 	void remove(int id);
 	Page<RoleDto> getRoleDtoPaging(Pageable pageable);
+	Page<RoleDto> getRoleDtoResultPaging(Pageable pageable, String key);
 }

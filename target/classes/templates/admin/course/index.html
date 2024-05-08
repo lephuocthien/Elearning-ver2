@@ -16,11 +16,14 @@
         </div>
         <div class="col-md-4">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                <div class="input-group-append">
-						<span class="input-group-text" id="basic-addon2"><i
-                                class="fa fa-search"></i></span>
-                </div>
+                <form class="input-group" th:action="@{/admin/course/search}" method="get">
+                    <input type="text" class="form-control" name="key" placeholder="Search by title...">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

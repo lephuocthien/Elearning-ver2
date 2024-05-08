@@ -1,4 +1,7 @@
-<div id="tabVideo" xmlns:th="http://www.thymeleaf.org" th:fragment="tabVideo">
+<div id="tabVideo"
+     xmlns:th="http://www.thymeleaf.org"
+     th:fragment="tabVideo"
+     th:if="${keyOfVideo == null}">
     <div class="row">
         <div class="col-md-8">
             <a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
@@ -6,11 +9,16 @@
         </div>
         <div class="col-md-4">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tìm kiếm...">
-                <div class="input-group-append">
-						<span class="input-group-text" id="basic-addon2"><i
-                                class="fa fa-search"></i></span>
-                </div>
+                <form class="input-group" th:action="@{/admin/course/edit}" method="get">
+                    <input type="hidden" class="form-control" name="id" th:value="${course.id}" />
+                    <input type="hidden" class="form-control" name="tabIndex" value="3" />
+                    <input type="text" class="form-control" name="keyOfVideo" placeholder="Search by title...">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -46,21 +54,30 @@
             <li class="page-item"
                 th:classappend="${videos.number==0} ? disabled">
                 <a class="page-link"
-                   th:href="@{/admin/course/edit(id=${course.id},pageOfVideo=${videos.number})}"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfVideo=${videos.number},
+                   tabIndex=3)}"
                 >Previous</a>
             </li>
             <li  th:if="${videos.totalPages > 0}" class="page-item"
                  th:each="pageNumber : ${pageNumbersOfVideo}"
                  th:classappend="${pageNumber==videos.number + 1} ? active">
-                <a th:href="@{/admin/course/edit(id=${course.id},pageOfVideo=${pageNumber})}"
+                <a class="page-link"
+                   th:href="@{/admin/course/edit(
+                    id=${course.id},
+                    pageOfVideo=${pageNumber},
+                    tabIndex=3)}"
                    th:text=${pageNumber}
-                   class="page-link"
                 ></a>
             </li>
             <li class="page-item"
                 th:classappend="${videos.number+1==videos.totalPages} ? disabled">
                 <a class="page-link"
-                   th:href="@{/admin/course/edit(id=${course.id},pageOfVideo=${videos.number+2})}"
+                   th:href="@{/admin/course/edit(
+                   id=${course.id},
+                   pageOfVideo=${videos.number+2},
+                   tabIndex=3)}"
                 >Next</a>
             </li>
         </ul>

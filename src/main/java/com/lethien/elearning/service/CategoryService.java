@@ -18,4 +18,5 @@ public interface CategoryService {
 	void edit(CategoryDto dto);
 	void remove(int id);
 	Page<CategoryDto> getCategoryDtoPaging(Pageable pageable);
+	Page<CategoryDto> getCategoryDtoResultPaging(Pageable pageable, String key);
 }

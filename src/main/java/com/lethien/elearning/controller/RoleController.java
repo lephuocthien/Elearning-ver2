@@ -1,5 +1,6 @@
 package com.lethien.elearning.controller;
 
+import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.RoleDto;
 import com.lethien.elearning.service.RoleService;
 import jakarta.servlet.http.HttpSession;
@@ -23,59 +24,88 @@ import java.util.stream.IntStream;
 public class RoleController {
 
     private RoleService roleService;
-	@Value("${app.data.page-size}")
-	private int pageSize;
+
     public RoleController(RoleService roleService) {
         this.roleService = roleService;
     }
 
-    @RequestMapping(value="", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(
-			ModelMap modelMap,
-			@RequestParam("page") Optional<Integer> page) {
-		int currentPage = page.orElse(1);
-		Page<RoleDto> roleDtoPage = roleService.getRoleDtoPaging(PageRequest.of(currentPage - 1, pageSize));
-		modelMap.addAttribute("roles", roleDtoPage);
-		int totalPages = roleDtoPage.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-					.boxed()
-					.collect(Collectors.toList());
-			modelMap.addAttribute("pageNumbers", pageNumbers);
-		}
+            ModelMap modelMap,
+            @RequestParam("page") Optional<Integer> page
+    ) {
+        int currentPage = page.orElse(1);
+        Page<RoleDto> roleDtoPage = roleService.getRoleDtoPaging(
+                PageRequest.of(currentPage - 1, Common.PAGE_SIZE)
+        );
+        modelMap.addAttribute("roles", roleDtoPage);
+        int totalPages = roleDtoPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNumbers);
+        }
         return "admin/role/index";
     }
+
     @RequestMapping(value = {"add"}, method = RequestMethod.GET)
-	public String add(ModelMap modelMap, HttpSession session) {
-		// Tạo đối tượng rỗng (ko có dữ liệu)
-		RoleDto dto = new RoleDto();
-		// Truyền đối tượng vừa tạo qua cho add.html
+    public String add(ModelMap modelMap) {
+        // Tạo đối tượng rỗng (ko có dữ liệu)
+        RoleDto dto = new RoleDto();
+        // Truyền đối tượng vừa tạo qua cho add.html
         modelMap.addAttribute("role", dto);
-		return "admin/role/add";
-	}
+        return "admin/role/add";
+    }
 
-	@RequestMapping(value = {"add"}, method = RequestMethod.POST)
-	public String add(@ModelAttribute("role") RoleDto role) {
-		roleService.save(role);
-		return "redirect:/admin/role";
-	}
+    @RequestMapping(value = {"add"}, method = RequestMethod.POST)
+    public String add(@ModelAttribute("role") RoleDto role) {
+        roleService.save(role);
+        return "redirect:/admin/role";
+    }
 
-	@RequestMapping(value = {"edit"}, method = RequestMethod.GET)
-	public String edit(@RequestParam("id") int id, ModelMap modelMap, HttpSession session) {
-		RoleDto dto = roleService.getById(id);
+    @RequestMapping(value = {"edit"}, method = RequestMethod.GET)
+    public String edit(@RequestParam("id") int id, ModelMap modelMap) {
+        RoleDto dto = roleService.getById(id);
         modelMap.addAttribute("role", dto);
-		return "admin/role/edit";
-	}
+        return "admin/role/edit";
+    }
 
-	@RequestMapping(value = {"edit"}, method = RequestMethod.POST)
-	public String edit(@ModelAttribute("role") RoleDto role) {
-		roleService.edit(role);
-		return "redirect:/admin/role";
-	}
+    @RequestMapping(value = {"edit"}, method = RequestMethod.POST)
+    public String edit(@ModelAttribute("role") RoleDto role) {
+        roleService.edit(role);
+        return "redirect:/admin/role";
+    }
 
-	@RequestMapping(value = {"delete"}, method = RequestMethod.GET)
-	public String delete(@RequestParam("id") int id) {
-		roleService.remove(id);
-		return "redirect:/admin/role";
-	}
+    @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
+    public String delete(@RequestParam("id") int id) {
+        roleService.remove(id);
+        return "redirect:/admin/role";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String searchRole(
+            ModelMap modelMap,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("key") String key
+    ) {
+        if (!key.isEmpty()) {
+            int currentPage = page.orElse(1);
+            Page<RoleDto> roleDtoPage = roleService.getRoleDtoResultPaging(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    "%" + key + "%"
+            );
+            modelMap.addAttribute("roles", roleDtoPage);
+            modelMap.addAttribute("key", key);
+            int totalPages = roleDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+            return "/admin/role/result";
+        }
+        return "redirect:/admin/role";
+    }
 }

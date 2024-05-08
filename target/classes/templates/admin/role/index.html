@@ -16,11 +16,14 @@
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Tìm kiếm...">
-					<div class="input-group-append">
-						<span class="input-group-text" id="basic-addon2"><i
-							class="fa fa-search"></i></span>
-					</div>
+					<form class="input-group" th:action="@{/admin/role/search}" method="get">
+						<input type="text" class="form-control" name="key" placeholder="Search by name...">
+						<div class="input-group-append">
+							<button class="input-group-text" id="basic-addon2" type="submit">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -39,8 +42,16 @@
 					<td th:text="${role.name}"></td>
 					<td th:text="${role.description}"></td>
 					<td>
-						<a th:href="@{/admin/role/edit(id=${role.id})}" class="btn btn-sm btn-primary">Sửa</a>
-						<a th:href="@{/admin/role/delete(id=${role.id})}" th:unless="${role.id == 1 OR role.id == 2 OR role.id == 3}" class="btn btn-sm btn-danger del-btn">Xóa</a></td>
+						<a th:href="@{/admin/role/edit(id=${role.id})}"
+						   class="btn btn-sm btn-info">
+							<i class="fa fa-pencil-square-o"></i>
+						</a>
+						<a th:href="@{/admin/role/delete(id=${role.id})}"
+						   th:unless="${role.id == 1 OR role.id == 2 OR role.id == 3}"
+						   class="btn btn-sm btn-danger del-btn">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

@@ -1,5 +1,6 @@
 package com.lethien.elearning.controller;
 
+import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.*;
 import com.lethien.elearning.service.CategoryService;
 import com.lethien.elearning.service.CourseService;
@@ -35,14 +36,13 @@ public class CourseController {
     private CategoryService categoryService;
     private VideoService videoService;
     private TargetService targetService;
-    @Value("${app.data.page-size}")
-    private int pageSize;
 
     public CourseController(
             CourseService courseService,
             CategoryService categoryService,
             VideoService videoService,
-            TargetService targetService) {
+            TargetService targetService
+    ) {
         this.courseService = courseService;
         this.categoryService = categoryService;
         this.videoService = videoService;
@@ -55,7 +55,9 @@ public class CourseController {
             ModelMap modelMap,
             HttpSession session) {
         int currentPage = page.orElse(1);
-        Page<CourseDto> courseDtoPage = courseService.getCourseDtoPaging(PageRequest.of(currentPage - 1, pageSize));
+        Page<CourseDto> courseDtoPage = courseService.getCourseDtoPaging(
+                PageRequest.of(currentPage - 1, Common.PAGE_SIZE)
+        );
         modelMap.addAttribute("courses", courseDtoPage);
         int totalPages = courseDtoPage.getTotalPages();
         if (totalPages > 0) {
@@ -64,14 +66,11 @@ public class CourseController {
                     .collect(Collectors.toList());
             modelMap.addAttribute("pageNumbers", pageNumbers);
         }
-        session.removeAttribute("TAB_INDEX");
         return "admin/course/index";
     }
 
     @RequestMapping(value = {"add"}, method = RequestMethod.GET)
-    public String add(
-            ModelMap modelMap,
-            HttpSession session) {
+    public String add(ModelMap modelMap) {
         CourseDto course = new CourseDto();
         List<CategoryDto> categories = categoryService.getAll();
         modelMap.addAttribute("course", course);
@@ -81,10 +80,7 @@ public class CourseController {
 
     @RequestMapping(value = {"add"}, method = RequestMethod.POST)
     public String add(
-            @ModelAttribute("course") CourseDto course,
-            ModelMap modelMap,
-            HttpSession session) {
-        //course.setImage("course.jpg");
+            @ModelAttribute("course") CourseDto course) {
         course.setLastUpdate(new java.util.Date());
         int id = courseService.saveGetBackId(course);
         return "redirect:/admin/course/edit?id=" + id;
@@ -93,50 +89,96 @@ public class CourseController {
     @RequestMapping(value = {"edit"}, method = RequestMethod.GET)
     public String edit(
             @RequestParam("id") int courseId,
+            @RequestParam("tabIndex") Optional<Integer> tabIndex,
             @RequestParam("pageOfVideo") Optional<Integer> pageOfVideo,
             @RequestParam("pageOfTarget") Optional<Integer> pageOfTarget,
+            @RequestParam("keyOfVideo") Optional<String> keyOfVideo,
+            @RequestParam("keyOfTarget") Optional<String> keyOfTarget,
             ModelMap modelMap,
-            HttpSession session) {
+            HttpSession session
+    ) {
+        int currentTabIndex = tabIndex.orElse(1);
         int currentPageOfVideo = pageOfVideo.orElse(1);
         int currentPageOfTarget = pageOfTarget.orElse(1);
-        if (session.getAttribute("TAB_INDEX") == null) {
+        String currentKeyOfVideo = keyOfVideo.orElse("");
+        String currentKeyOfTarget = keyOfTarget.orElse("");
+        /*if (session.getAttribute("TAB_INDEX") == null) {
             session.setAttribute("TAB_INDEX", 1);
         } else if (pageOfVideo.isPresent()) {
             session.setAttribute("TAB_INDEX", 2);
         } else if (pageOfTarget.isPresent()) {
             session.setAttribute("TAB_INDEX", 3);
-        }
+        }*/
         List<CategoryDto> categories = categoryService.getAll();
         CourseDto course = courseService.getById(courseId);
         //Paging Video
-        Page<VideoDto> videoDtoPage = videoService
-                .getVideoDtoPagingByCourseId(
-                        PageRequest.of(currentPageOfVideo - 1, pageSize),
-                        courseId);
-        int totalPages = videoDtoPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            modelMap.addAttribute("pageNumbersOfVideo", pageNumbers);
+        if (!currentKeyOfVideo.isEmpty()) {
+            Page<VideoDto> videoDtoPage = videoService
+                    .getVideoDtoResultPagingByCourseId(
+                            PageRequest.of(currentPageOfVideo - 1, Common.PAGE_SIZE),
+                            courseId,
+                            "%" + currentKeyOfVideo + "%"
+                    );
+            int totalPages = videoDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbersOfVideo", pageNumbers);
+            }
+            modelMap.addAttribute("keyOfVideo", currentKeyOfVideo);
+            modelMap.addAttribute("videos", videoDtoPage);
+        } else {
+            Page<VideoDto> videoDtoPage = videoService
+                    .getVideoDtoPagingByCourseId(
+                            PageRequest.of(currentPageOfVideo - 1, Common.PAGE_SIZE),
+                            courseId
+                    );
+            int totalPages = videoDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbersOfVideo", pageNumbers);
+                modelMap.addAttribute("videos", videoDtoPage);
+            }
         }
         //Paging Target
-        Page<TargetDto> targetDtoPage = targetService
-                .getTargetDtoPagingByCourseId(
-                        PageRequest.of(currentPageOfTarget - 1, pageSize),
-                        courseId);
-        totalPages = targetDtoPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            modelMap.addAttribute("pageNumbersOfTarget", pageNumbers);
+        if (!currentKeyOfTarget.isEmpty()) {
+            Page<TargetDto> targetDtoPage = targetService
+                    .getTargetDtoResultPagingByCourseId(
+                            PageRequest.of(currentPageOfTarget - 1, Common.PAGE_SIZE),
+                            courseId,
+                            "%" + currentKeyOfTarget + "%"
+                    );
+            int totalPages = targetDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbersOfTarget", pageNumbers);
+            }
+            modelMap.addAttribute("keyOfTarget", currentKeyOfTarget);
+            modelMap.addAttribute("targets", targetDtoPage);
+        } else {
+            Page<TargetDto> targetDtoPage = targetService
+                    .getTargetDtoPagingByCourseId(
+                            PageRequest.of(currentPageOfTarget - 1, Common.PAGE_SIZE),
+                            courseId
+                    );
+            int totalPages = targetDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbersOfTarget", pageNumbers);
+            }
+            modelMap.addAttribute("targets", targetDtoPage);
         }
         //Set modelMap
+        modelMap.addAttribute("tabIndex", currentTabIndex);
         modelMap.addAttribute("categories", categories);
         modelMap.addAttribute("course", course);
-        modelMap.addAttribute("videos", videoDtoPage);
-        modelMap.addAttribute("targets", targetDtoPage);
         return "admin/course/edit/edit-layout";
     }
 
@@ -151,13 +193,14 @@ public class CourseController {
     @RequestMapping(value = {"edit-img"}, method = RequestMethod.POST)
     public String editAvatar(
             @RequestParam("id") int id,
-            @RequestParam("image") MultipartFile file) throws IOException {
-        if (!file.isEmpty()){
+            @RequestParam("image") MultipartFile file
+    ) throws IOException {
+        if (!file.isEmpty()) {
             CourseDto course = courseService.getById(id);
             course.setImage(file.getBytes());
             courseService.edit(course);
         }
-        return "redirect:/admin/course/edit?id=" + id;
+        return "redirect:/admin/course/edit?id=" + id + "&tabIndex=2";
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
@@ -170,11 +213,11 @@ public class CourseController {
     public String addVideoGet(
             @RequestParam("courseId") int courseId,
             ModelMap modelMap,
-            HttpSession session) {
+            HttpSession session
+    ) {
         VideoDto videoDto = new VideoDto();
         videoDto.setCourseId(courseId);
         modelMap.addAttribute("video", videoDto);
-        session.setAttribute("TAB_INDEX", 2);
         return "admin/course/video/add";
     }
 
@@ -194,17 +237,17 @@ public class CourseController {
         course.setHourCount(hourCourse);
         courseService.edit(course);
         //Update hourCourse of course END
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
     @RequestMapping(value = {"video/edit"}, method = RequestMethod.GET)
     public String editVideoGet(
             @RequestParam("id") int id,
             ModelMap modelMap,
-            HttpSession session) {
+            HttpSession session
+    ) {
         VideoDto videoDto = videoService.getById(id);
         modelMap.addAttribute("video", videoDto);
-        session.setAttribute("TAB_INDEX", 2);
         return "admin/course/video/edit";
     }
 
@@ -224,33 +267,35 @@ public class CourseController {
         course.setHourCount(hourCourse);
         courseService.edit(course);
         //Update hourCourse of course END
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
     @RequestMapping(value = {"video/delete"}, method = RequestMethod.GET)
     public String deleteVideo(
             @RequestParam("id") int id,
-            @RequestParam("courseId") int courseId) {
+            @RequestParam("courseId") int courseId
+    ) {
         videoService.remove(id);
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
     @RequestMapping(value = {"target/add"}, method = RequestMethod.GET)
     public String addTargetGet(
             @RequestParam("courseId") int courseId,
             ModelMap modelMap,
-            HttpSession session) {
+            HttpSession session
+    ) {
         TargetDto targetDto = new TargetDto();
         targetDto.setCourseId(courseId);
         modelMap.addAttribute("target", targetDto);
-        session.setAttribute("TAB_INDEX", 3);
         return "admin/course/target/add";
     }
+
     @RequestMapping(value = {"target/add"}, method = RequestMethod.POST)
     public String addTargetPost(@ModelAttribute("target") TargetDto target) {
         targetService.save(target);
         int courseId = target.getCourseId();
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
     @RequestMapping(value = {"target/edit"}, method = RequestMethod.GET)
@@ -260,7 +305,6 @@ public class CourseController {
             HttpSession session) {
         TargetDto targetDto = targetService.getById(id);
         modelMap.addAttribute("target", targetDto);
-        session.setAttribute("TAB_INDEX", 3);
         return "admin/course/target/edit";
     }
 
@@ -268,7 +312,7 @@ public class CourseController {
     public String editTargetPost(@ModelAttribute("target") TargetDto target) {
         targetService.edit(target);
         int courseId = target.getCourseId();
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
     @RequestMapping(value = {"target/delete"}, method = RequestMethod.GET)
@@ -276,7 +320,7 @@ public class CourseController {
             @RequestParam("id") int id,
             @RequestParam("courseId") int courseId) {
         targetService.remove(id);
-        return "redirect:/admin/course/edit?id=" + courseId;
+        return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
     @RequestMapping(value = {"image"}, method = RequestMethod.GET)
@@ -288,5 +332,32 @@ public class CourseController {
         CourseDto courseDto = courseService.getById(id);
         InputStream is = new ByteArrayInputStream(courseDto.getImage());
         IOUtils.copy(is, response.getOutputStream());
+    }
+
+    @RequestMapping(value = {"search"}, method = RequestMethod.GET)
+    public String searchCourse(
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("key") String key,
+            ModelMap modelMap,
+            HttpSession session
+    ) {
+        if (!key.isEmpty()) {
+            int currentPage = page.orElse(1);
+            Page<CourseDto> courseDtoPage = courseService.getCourseDtoResultPaging(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    "%" + key + "%"
+            );
+            modelMap.addAttribute("courses", courseDtoPage);
+            modelMap.addAttribute("key", key);
+            int totalPages = courseDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+            return "admin/course/result";
+        }
+        return "redirect:/admin/course";
     }
 }
