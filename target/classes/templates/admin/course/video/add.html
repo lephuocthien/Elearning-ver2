@@ -2,17 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/layout/default}">
-
 <head>
-  <title>Thêm mới video</title>
+  <title>Add a new video</title>
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Thêm mới video</h3>
+  <h3 class="mb-4 text-center">Add a new video</h3>
   <form th:action="@{/admin/course/video/add}" method="post" th:object="${video}">
     <input type="hidden" class="form-control" th:field="*{courseId}"/>
     <div class="row">
-      <div class="col-8">
+      <div class="col-md-8 m-auto">
         <div class="form-group">
           <label>Title</label>
           <input type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
@@ -22,13 +21,15 @@
           <input type="text" class="form-control" placeholder="URL" th:field="*{url}"/>
         </div>
         <div class="form-group">
-          <label>Time</label>
+          <label>Time (second)</label>
           <input type="number" class="form-control" placeholder="0" th:field="*{timeCount}"/>
         </div>
-      </div>
-      <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-success">Lưu lại</button>
-        <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${video.courseId})}">Quay lại</a>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Save</button>
+          <a class="btn btn-secondary" th:href="@{/admin/course/edit(
+          id=${video.courseId},
+          tabIndex=3)}">Back</a>
+        </div>
       </div>
     </div>
   </form>

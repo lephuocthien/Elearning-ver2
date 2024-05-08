@@ -3,16 +3,16 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{admin/layout/default}">
 <head>
-<title>Kết quả tìm kiếm</title>
+<title>Result of search</title>
 </head>
 
 <body>
 	<section layout:fragment="content">
-		<h3 class="mb-3" th:text="${'Kết quả tìm kiếm '+key}">Kết quả tìm kiếm</h3>
+		<h3 class="mb-3" th:text="${'Result of '+key}"></h3>
 		<div class="row">
 			<div class="col-md-8">
-				<a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
-				<a th:href="@{/admin/user/add}" class="btn btn-primary">Thêm mới +</a>
+				<a class="btn btn-secondary" th:href="@{/admin/course}">Back</a>
+				<a th:href="@{/admin/user/add}" class="btn btn-primary">Add new +</a>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">

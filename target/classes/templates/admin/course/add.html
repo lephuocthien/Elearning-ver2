@@ -4,11 +4,11 @@
       layout:decorate="~{admin/layout/default}">
 
 <head>
-  <title>Thêm mới khoá học</title>
+  <title>Add a new course</title>
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Thêm mới khoá học</h3>
+  <h3 class="mb-4">Add a new course</h3>
   <form th:action="@{/admin/course/add}" method="post" th:object="${course}">
     <div class="row">
       <div class="col-md-6">
@@ -17,7 +17,7 @@
           <input type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
         </div>
         <div class="form-group">
-          <label>Phân loại</label>
+          <label>Category</label>
           <select class="form-control" th:field="*{categoryId}">
             <option th:each="category, state: ${categories}" th:value="${category.id}" th:text="${category.title}">
             </option>
@@ -34,22 +34,22 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label>Giá gốc</label>
+          <label>Price</label>
           <input type="number" id="coursePrice" class="form-control" placeholder="0" th:field="*{price}"/>
         </div>
         <div class="form-group">
-          <label>Chiết khấu (%)</label>
+          <label>Discount (%)</label>
           <input type="number" id="courseDiscount" class="form-control" placeholder="0" th:field="*{discount}"/>
         </div>
         <div class="form-group">
-          <label>Giá cuối cùng</label>
+          <label>Promotion Price</label>
           <input type="hidden" id="promotionPrice" class="form-control"th:field="*{promotionPrice}"/>
           <input type="number" id="promotionPriceShow" class="form-control" placeholder="0" disabled/>
         </div>
       </div>
       <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-success">Lưu lại</button>
-        <a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a class="btn btn-secondary" th:href="@{/admin/course}">Back</a>
       </div>
     </div>
   </form>

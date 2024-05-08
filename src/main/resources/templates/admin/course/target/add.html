@@ -2,29 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/layout/default}">
-
 <head>
-  <title>Thêm mới target</title>
+  <title>Add a new target</title>
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Thêm mới target</h3>
+  <h3 class="mb-4 text-center">Add a new target</h3>
   <form th:action="@{/admin/course/target/add}" method="post" th:object="${target}">
     <input type="hidden" class="form-control" th:field="*{courseId}"/>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8 m-auto">
         <div class="form-group">
           <label>Title</label>
           <input type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
         </div>
-      </div>
-      <div class="col-12 mt-3">
-        <button type="submit" class="btn btn-success">Lưu lại</button>
-        <a class="btn btn-secondary" th:href="@{/admin/course/edit(id=${target.courseId})}">Quay lại</a>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Save</button>
+          <a class="btn btn-secondary" th:href="@{/admin/course/edit(
+          id=${target.courseId},
+          tabIndex=4)}">Back</a>
+        </div>
       </div>
     </div>
   </form>
 </section>
 </body>
-
 </html>

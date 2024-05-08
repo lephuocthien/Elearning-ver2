@@ -2,15 +2,15 @@
      xmlns:th="http://www.thymeleaf.org"
      th:fragment="tabVideoResult"
      th:unless="${keyOfVideo == null}">
-    <h3 class="mb-3" th:text="${'Kết quả tìm kiếm ' + keyOfVideo}">Kết quả tìm kiếm</h3>
+    <h3 class="mb-3" th:text="${'Result of ' + keyOfVideo}"></h3>
     <div class="row">
         <div class="col-md-8">
             <a class="btn btn-secondary"
                th:href="@{/admin/course/edit(
                 id=${course.id},
                 tabIndex=3)}"
-            >Quay lại</a>
-            <a th:href="@{/admin/course/video/add(courseId=${course.id})}" class="btn btn-primary">Thêm mới +</a>
+            >Back</a>
+            <a th:href="@{/admin/course/video/add(courseId=${course.id})}" class="btn btn-primary">Add new +</a>
         </div>
         <div class="col-md-4">
             <div class="input-group">

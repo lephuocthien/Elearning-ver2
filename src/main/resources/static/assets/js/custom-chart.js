@@ -4,7 +4,7 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['2014', '2015', '2016', '2017', '2018', '2019'],
         datasets: [{
-            label: '# số khóa học',
+            label: '# Course',
             data: [120, 190, 100, 150, 220, 330],
             backgroundColor: ['rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
@@ -34,7 +34,7 @@ var myChart2 = new Chart(ctx2, {
     data: {
         labels: ['2014', '2015', '2016', '2017', '2018', '2019'],
         datasets: [{
-            label: '# số học viên',
+            label: '# User',
             data: [1200, 1900, 1000, 1500, 2200, 3300],
             backgroundColor: ['rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',

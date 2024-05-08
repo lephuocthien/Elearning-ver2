@@ -4,11 +4,11 @@
 	  layout:decorate="~{admin/layout/default}">
 
 <head>
-<title>Thêm mới thành viên</title>
+<title>Add a new user</title>
 </head>
 <body>
 	<section layout:fragment="content">
-		<h3 class="mb-4">Thêm mới thành viên</h3>
+		<h3 class="mb-4">Add a new user</h3>
 		<form th:action="@{/admin/user/add}" method="post" th:object="${user}">
 			<div class="row">
 				<div class="col-md-6">
@@ -17,15 +17,11 @@
 						<input type="text" class="form-control" placeholder="email" th:field="*{email}"/>
 					</div>
 					<div class="form-group">
-						<label>Mật khẩu</label>
+						<label>Password</label>
 						<input type="password" class="form-control" placeholder="password" th:field="*{password}"/>
 					</div>
 					<div class="form-group">
-						<label>Họ tên</label>
-						<input type="text" class="form-control" placeholder="fullname" th:field="*{fullname}"/>
-					</div>
-					<div class="form-group">
-						<label>Vai trò</label>
+						<label>Role</label>
 						<select class="form-control" th:field="*{roleId}">
 							<option th:each="role, state: ${roles}" th:value="${role.id}" th:text="${role.description}">
 							</option>
@@ -34,21 +30,21 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label>Số điện thoại</label>
+						<label>Fullname</label>
+						<input type="text" class="form-control" placeholder="fullname" th:field="*{fullname}"/>
+					</div>
+					<div class="form-group">
+						<label>Phone</label>
 						<input type="text" class="form-control" placeholder="phone" th:field="*{phone}"/>
 					</div>
 					<div class="form-group">
-						<label>Địa chỉ</label>
+						<label>Address</label>
 						<input type="text" class="form-control" placeholder="address" th:field="*{address}"/>
 					</div>
-					<!--<div class="form-group">
-						<label>Avatar</label>
-						<input type="text" class="form-control" placeholder="avatar" th:field="*{avatar}"/>
-					</div>-->
 				</div>
 				<div class="col-12 mt-3">
-					<button type="submit" class="btn btn-success">Lưu lại</button>
-					<a class="btn btn-secondary" th:href="@{/admin/user}">Quay lại</a>
+					<button type="submit" class="btn btn-success">Save</button>
+					<a class="btn btn-secondary" th:href="@{/admin/user}">Back</a>
 				</div>
 			</div>
 		</form>

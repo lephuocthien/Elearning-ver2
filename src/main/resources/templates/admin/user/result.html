@@ -3,16 +3,16 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{admin/layout/default}">
 <head>
-<title>Kết quả tìm kiếm</title>
+<title>Result of search</title>
 </head>
 
 <body>
 	<section layout:fragment="content">
-		<h3 class="mb-3" th:text="${'Kết quả tìm kiếm '+key}">Kết quả tìm kiếm</h3>
+		<h3 class="mb-3" th:text="${'Result of '+key}"></h3>
 		<div class="row">
 			<div class="col-md-8">
-				<a class="btn btn-secondary" th:href="@{/admin/user}">Quay lại</a>
-				<a th:href="@{/admin/user/add}" class="btn btn-primary">Thêm mới +</a>
+				<a class="btn btn-secondary" th:href="@{/admin/user}">Back</a>
+				<a th:href="@{/admin/user/add}" class="btn btn-primary">Add new +</a>
 			</div>
 			<div class="col-md-4">
 				<div class="input-group">
@@ -31,10 +31,11 @@
 			<thead>
 				<tr>
 					<th>STT</th>
-					<th>Họ Tên</th>
+					<th>Fullname</th>
 					<th>Email</th>
-					<th>Số ĐT</th>
-					<th>Vai trò</th>
+					<th>Phone</th>
+					<th>Address</th>
+					<th>Role</th>
 					<th>#</th>
 				</tr>
 			</thead>
@@ -44,6 +45,7 @@
 					<td th:text="${user.fullname}"></td>
 					<td th:text="${user.email}"></td>
 					<td th:text="${user.phone}"></td>
+					<td th:text="${user.address}"></td>
 					<td th:text="${user.roleDescription}"></td>
 					<td>
 						<a th:href="@{user/edit(id=${user.id})}" class="btn btn-sm btn-info">

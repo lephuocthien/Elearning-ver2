@@ -1,26 +1,31 @@
 <!-- SIDE BAR -->
         <div id="side-bar" xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar">
-            <div class="logo" th:onclick="|window.location.href='/admin/home'|">ADMIN PAGE</div>
+            <div class="logo" th:href="@{/admin/home}">ADMIN PAGE</div>
             <ul class="list-group rounded-0">
                 <li class="dashboard">DASHBOARD</li>
                 <li>
+                    <a th:href="@{/admin/home}">
+                        <i class="fa fa-home mr-2"></i> Home
+                    </a>
+                </li>
+                <li>
                     <a th:href="@{/admin/user}">
-                        <i class="fa fa-user mr-2"></i> Quản lý thành viên
+                        <i class="fa fa-user mr-2"></i> Users
                     </a>
                 </li>
                 <li>
                     <a th:href="@{/admin/role}">
-                        <i class="fa fa-check-circle mr-2"></i> Quản lý quyền
+                        <i class="fa fa-check-circle mr-2"></i> Roles
                     </a>
                 </li>
                 <li>
                     <a th:href="@{/admin/course}">
-                        <i class="fa fa-book mr-2"></i> Quản lý khoá học
+                        <i class="fa fa-book mr-2"></i> Courses
                     </a>
                 </li>
                 <li>
                     <a th:href="@{/admin/category}">
-                        <i class="fa fa-slack mr-2"></i> Quản lý danh mục
+                        <i class="fa fa-slack mr-2"></i> Categories
                     </a>
                 </li>
             </ul>

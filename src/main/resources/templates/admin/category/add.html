@@ -3,11 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{admin/layout/default}">
 <head>
-<title>Thêm mới danh mục</title>
+<title>Add a new category</title>
 </head>
 <body>
 	<section layout:fragment="content">
-		<h3 class="mb-4 text-center">Thêm mới danh mục</h3>
+		<h3 class="mb-4 text-center">Add a new category</h3>
 		<form th:action="@{/admin/category/add}" method="post" th:object="${category}">
 			<div class="row">
 				<div class="col-md-6 m-auto">
@@ -26,8 +26,8 @@
 						<i id="iconPreview"></i>
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-success">Lưu lại</button>
-						<a class="btn btn-secondary" th:href="@{/admin/category}">Quay lại</a>
+						<button type="submit" class="btn btn-success">Save</button>
+						<a class="btn btn-secondary" th:href="@{/admin/category}">Back</a>
 					</div>
 				</div>
 			</div>

@@ -4,30 +4,30 @@
       layout:decorate="~{admin/layout/default}">
 
 <head>
-  <title>Cập nhật khoá học</title>
+  <title>Update course</title>
 </head>
 <body>
 <section layout:fragment="content">
-  <h3 class="mb-4">Cập nhật khoá học</h3>
+  <h3 class="mb-4">Update course</h3>
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#course" th:classappend="${tabIndex == 1} ? active : ''">
-        <h6>Thông tin khoá học</h6>
+        <h6>Information</h6>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#image" th:classappend="${tabIndex == 2} ? active : ''">
-        <h6>Ảnh khoá học</h6>
+        <h6>Image</h6>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#video" th:classappend="${tabIndex == 3} ? active : ''">
-        <h6>Thông tin video</h6>
+        <h6>Videos</h6>
       </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#target" th:classappend="${tabIndex == 4} ? active : ''">
-        <h6>Thông tin target</h6>
+        <h6>Targets</h6>
       </a>
     </li>
   </ul>

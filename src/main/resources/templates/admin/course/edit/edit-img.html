@@ -1,12 +1,10 @@
 <section id="tabImg" xmlns:th="http://www.thymeleaf.org" th:fragment="tabImg">
-	<!--<h3 class="mb-4">Chỉnh sửa thông tin thành viên</h3>-->
 	<form th:action="@{/admin/course/edit-img}" method="post" enctype="multipart/form-data">
 		<input type="hidden" class="form-control" name="id" th:value="${course.id}" />
-		<!--<input type="hidden" class="form-control" name="tabIndex" value="2" />-->
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label>File ảnh khoá học</label>
+					<label>Image of course</label>
 					<input type="file" name="image" id="uploadFile" accept="image/*" class="form-control-file">
 				</div>
 			</div>
@@ -19,8 +17,8 @@
 				</div>
 			</div>
 			<div class="col-12 mt-3">
-				<button type="submit" class="btn btn-success">Lưu lại</button>
-				<a class="btn btn-secondary" th:href="@{/admin/course}">Quay lại</a>
+				<button type="submit" class="btn btn-success">Update</button>
+				<a class="btn btn-secondary" th:href="@{/admin/course}">Back</a>
 			</div>
 		</div>
 	</form>
