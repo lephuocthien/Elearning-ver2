@@ -32,10 +32,10 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("admin/course")
 public class CourseController {
-    private CourseService courseService;
-    private CategoryService categoryService;
-    private VideoService videoService;
-    private TargetService targetService;
+    private final CourseService courseService;
+    private final CategoryService categoryService;
+    private final VideoService videoService;
+    private final TargetService targetService;
 
     public CourseController(
             CourseService courseService,

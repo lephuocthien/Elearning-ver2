@@ -20,7 +20,6 @@ import com.lethien.elearning.entity.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-
     @Query("SELECT new com.lethien.elearning.dto.RoleDto" +
             "(id, " +
             "name, " +
@@ -40,7 +39,7 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
             "(id, " +
             "name, " +
             "description) " +
-            "FROM Role "+
+            "FROM Role " +
             "WHERE name LIKE :key")
     Page<RoleDto> getRoleDtoResultPaging(
             Pageable pageable,

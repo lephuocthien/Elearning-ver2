@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("admin/category")
 public class CategoryController {
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;

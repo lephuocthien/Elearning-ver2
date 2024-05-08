@@ -18,7 +18,7 @@ import com.lethien.elearning.service.UserCourseService;
 
 @Service
 public class UserCourseServiceImpl implements UserCourseService {
-	private UserCourseRepository userCourseRepository;
+	private final UserCourseRepository userCourseRepository;
 	public UserCourseServiceImpl(UserCourseRepository userCourseRepository) {
 		this.userCourseRepository = userCourseRepository;
 	}
@@ -37,11 +37,13 @@ public class UserCourseServiceImpl implements UserCourseService {
 	}
 	@Override
 	public UserCourseDto getById(UserCourseId userCourseId) {
-		UserCourse userCourse = userCourseRepository.findById(userCourseId).get();
+		UserCourse userCourse = userCourseRepository.findById(userCourseId).orElse(null);
 		UserCourseDto dto = new UserCourseDto();
-		dto.setUserId(userCourse.getUserCourseId().getUserId());
-		dto.setCourseId(userCourse.getUserCourseId().getCourseId());
-		dto.setRoleId(userCourse.getRoleId());
+		if(userCourse != null){
+			dto.setUserId(userCourse.getUserCourseId().getUserId());
+			dto.setCourseId(userCourse.getUserCourseId().getCourseId());
+			dto.setRoleId(userCourse.getRoleId());
+		}
 		return dto;
 	}
 	@Override

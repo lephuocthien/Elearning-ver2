@@ -25,7 +25,7 @@ import com.lethien.elearning.service.RoleService;
 @RestController
 @RequestMapping("api/role")
 public class ApiRoleController {
-	private RoleService roleService;
+	private final RoleService roleService;
 
 	/**
 	 * @param roleService

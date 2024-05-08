@@ -31,8 +31,8 @@ import javax.crypto.spec.SecretKeySpec;
 @RestController
 @RequestMapping("api/auth")
 public class ApiAuthController {
-    private AuthenticationManager authenticationManager;
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     /**
      *

@@ -17,7 +17,7 @@ import com.lethien.elearning.service.TargetService;
 @RestController
 @RequestMapping("api/target")
 public class ApiTargetController {
-	private TargetService targetService;
+	private final TargetService targetService;
 
 	/**
 	 * @param targetService

@@ -18,7 +18,7 @@ import com.lethien.elearning.service.CategoryService;
 @RequestMapping("api/category")
 public class ApiCategoryController {
 
-	private CategoryService categoryService;
+	private final CategoryService categoryService;
 
 	/**
 	 * @param_categotyService

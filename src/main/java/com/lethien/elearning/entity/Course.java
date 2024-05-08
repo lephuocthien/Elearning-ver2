@@ -1,6 +1,7 @@
 /**
  * Dec 4, 2020
  * 4:41:08 PM
+ *
  * @author LeThien
  */
 package com.lethien.elearning.entity;
@@ -16,299 +17,299 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "courses")
-public class Course implements Serializable{
+public class Course implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	@Column(name = "title")
-	private String title;
+    @Column(name = "title")
+    private String title;
 
-	@Lob
-	@Column(name = "image")
-	private byte[] image;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
 
-	@Column(name = "letures_count")
-	private int leturesCount;
+    @Column(name = "letures_count")
+    private int leturesCount;
 
-	@Column(name = "hour_count")
-	private int hourCount;
+    @Column(name = "hour_count")
+    private int hourCount;
 
-	@Column(name = "view_count")
-	private int viewCount;
+    @Column(name = "view_count")
+    private int viewCount;
 
-	@Column(name = "price")
-	private BigDecimal price;
+    @Column(name = "price")
+    private BigDecimal price;
 
-	@Column(name = "discount")
-	private int discount;
+    @Column(name = "discount")
+    private int discount;
 
-	@Column(name = "promotion_price")
-	private BigDecimal promotionPrice;
+    @Column(name = "promotion_price")
+    private BigDecimal promotionPrice;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@Column(name = "content")
-	private String content;
+    @Column(name = "content")
+    private String content;
 
-	@Column(name = "category_id")
-	private int categoryId;
+    @Column(name = "category_id")
+    private int categoryId;
 
-	@Column(name = "last_update")
-	private Date lastUpdate;
+    @Column(name = "last_update")
+    private Date lastUpdate;
 
-	// Quan hệ 1 - nhiều với UserCourse
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-	private List<UserCourse> userCourses;
-	
-	@ManyToOne
-	@JoinColumn(name = "category_id", insertable = false, updatable = false)
-	@JsonIgnore
-	private Category category;
+    // Quan hệ 1 - nhiều với UserCourse
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private List<UserCourse> userCourses;
 
-	/**
-	 * 
-	 */
-	public Course() {
-		super();
-	}
+    @ManyToOne
+    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private Category category;
 
-	/**
-	 * @param id
-	 * @param title
-	 * @param image
-	 * @param leturesCount
-	 * @param hourCount
-	 * @param viewCount
-	 * @param price
-	 * @param discount
-	 * @param promotionPrice
-	 * @param description
-	 * @param content
-	 * @param categoryId
-	 * @param lastUpdate
-	 */
-	public Course(int id, String title, byte[] image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
-			int discount, BigDecimal promotionPrice, String description, String content, int categoryId, Date lastUpdate) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.image = image;
-		this.leturesCount = leturesCount;
-		this.hourCount = hourCount;
-		this.viewCount = viewCount;
-		this.price = price;
-		this.discount = discount;
-		this.promotionPrice = promotionPrice;
-		this.description = description;
-		this.content = content;
-		this.categoryId = categoryId;
-		this.lastUpdate = lastUpdate;
-	}
+    /**
+     *
+     */
+    public Course() {
+        super();
+    }
 
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
+    /**
+     * @param id
+     * @param title
+     * @param image
+     * @param leturesCount
+     * @param hourCount
+     * @param viewCount
+     * @param price
+     * @param discount
+     * @param promotionPrice
+     * @param description
+     * @param content
+     * @param categoryId
+     * @param lastUpdate
+     */
+    public Course(int id, String title, byte[] image, int leturesCount, int hourCount, int viewCount, BigDecimal price,
+                  int discount, BigDecimal promotionPrice, String description, String content, int categoryId, Date lastUpdate) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.leturesCount = leturesCount;
+        this.hourCount = hourCount;
+        this.viewCount = viewCount;
+        this.price = price;
+        this.discount = discount;
+        this.promotionPrice = promotionPrice;
+        this.description = description;
+        this.content = content;
+        this.categoryId = categoryId;
+        this.lastUpdate = lastUpdate;
+    }
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * @param title the title to set
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	/**
-	 * @return the image
-	 */
-	public byte[] getImage() {
-		return image;
-	}
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/**
-	 * @param image the image to set
-	 */
-	public void setImage(byte[] image) {
-		this.image = image;
-	}
+    /**
+     * @return the image
+     */
+    public byte[] getImage() {
+        return image;
+    }
 
-	/**
-	 * @return the leturesCount
-	 */
-	public int getLeturesCount() {
-		return leturesCount;
-	}
+    /**
+     * @param image the image to set
+     */
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
-	/**
-	 * @param leturesCount the leturesCount to set
-	 */
-	public void setLeturesCount(int leturesCount) {
-		this.leturesCount = leturesCount;
-	}
+    /**
+     * @return the leturesCount
+     */
+    public int getLeturesCount() {
+        return leturesCount;
+    }
 
-	/**
-	 * @return the hourCount
-	 */
-	public int getHourCount() {
-		return hourCount;
-	}
+    /**
+     * @param leturesCount the leturesCount to set
+     */
+    public void setLeturesCount(int leturesCount) {
+        this.leturesCount = leturesCount;
+    }
 
-	/**
-	 * @param hourCount the hourCount to set
-	 */
-	public void setHourCount(int hourCount) {
-		this.hourCount = hourCount;
-	}
+    /**
+     * @return the hourCount
+     */
+    public int getHourCount() {
+        return hourCount;
+    }
 
-	/**
-	 * @return the viewCount
-	 */
-	public int getViewCount() {
-		return viewCount;
-	}
+    /**
+     * @param hourCount the hourCount to set
+     */
+    public void setHourCount(int hourCount) {
+        this.hourCount = hourCount;
+    }
 
-	/**
-	 * @param viewCount the viewCount to set
-	 */
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
-	}
+    /**
+     * @return the viewCount
+     */
+    public int getViewCount() {
+        return viewCount;
+    }
 
-	/**
-	 * @return the price
-	 */
-	public BigDecimal getPrice() {
-		return price;
-	}
+    /**
+     * @param viewCount the viewCount to set
+     */
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
 
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
 
-	/**
-	 * @return the discount
-	 */
-	public int getDiscount() {
-		return discount;
-	}
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
-	/**
-	 * @param discount the discount to set
-	 */
-	public void setDiscount(int discount) {
-		this.discount = discount;
-	}
+    /**
+     * @return the discount
+     */
+    public int getDiscount() {
+        return discount;
+    }
 
-	/**
-	 * @return the promotionPrice
-	 */
-	public BigDecimal getPromotionPrice() {
-		return promotionPrice;
-	}
+    /**
+     * @param discount the discount to set
+     */
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
 
-	/**
-	 * @param promotionPrice the promotionPrice to set
-	 */
-	public void setPromotionPrice(BigDecimal promotionPrice) {
-		this.promotionPrice = promotionPrice;
-	}
+    /**
+     * @return the promotionPrice
+     */
+    public BigDecimal getPromotionPrice() {
+        return promotionPrice;
+    }
 
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * @param promotionPrice the promotionPrice to set
+     */
+    public void setPromotionPrice(BigDecimal promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
 
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @return the content
-	 */
-	public String getContent() {
-		return content;
-	}
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @param content the content to set
-	 */
-	public void setContent(String content) {
-		this.content = content;
-	}
+    /**
+     * @return the content
+     */
+    public String getContent() {
+        return content;
+    }
 
-	/**
-	 * @return the categoryId
-	 */
-	public int getCategoryId() {
-		return categoryId;
-	}
+    /**
+     * @param content the content to set
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	/**
-	 * @param categoryId the categoryId to set
-	 */
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
+    /**
+     * @return the categoryId
+     */
+    public int getCategoryId() {
+        return categoryId;
+    }
 
-	/**
-	 * @return the lastUpdate
-	 */
-	public Date getLastUpdate() {
-		return lastUpdate;
-	}
+    /**
+     * @param categoryId the categoryId to set
+     */
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
-	/**
-	 * @param lastUpdate the lastUpdate to set
-	 */
-	public void setLastUpdate(Date lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
+    /**
+     * @return the lastUpdate
+     */
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
 
-	/**
-	 * @return the userCourses
-	 */
-	public List<UserCourse> getUserCourses() {
-		return userCourses;
-	}
+    /**
+     * @param lastUpdate the lastUpdate to set
+     */
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
 
-	/**
-	 * @param userCourses the userCourses to set
-	 */
-	public void setUserCourses(List<UserCourse> userCourses) {
-		this.userCourses = userCourses;
-	}
+    /**
+     * @return the userCourses
+     */
+    public List<UserCourse> getUserCourses() {
+        return userCourses;
+    }
+
+    /**
+     * @param userCourses the userCourses to set
+     */
+    public void setUserCourses(List<UserCourse> userCourses) {
+        this.userCourses = userCourses;
+    }
 
 //	/**
 //	 * @return the targets
@@ -338,20 +339,17 @@ public class Course implements Serializable{
 //		this.videos = videos;
 //	}
 
-	/**
-	 * @return the category
-	 */
-	public Category getCategory() {
-		return category;
-	}
+    /**
+     * @return the category
+     */
+    public Category getCategory() {
+        return category;
+    }
 
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-	
-
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

@@ -39,11 +39,8 @@ import com.lethien.elearning.service.UserService;
 @RestController
 @RequestMapping("api/user")
 public class ApiUserController {
-
-	private final String UPLOAD_FOLDER = "/src/main/resources/upload/user/";
-	
-	private UserService userService;
-	private CourseService courseService;
+	private final UserService userService;
+	private final CourseService courseService;
 
 	/**
 	 * @param userService
@@ -146,18 +143,14 @@ public class ApiUserController {
 	public Object getUserDtoByToken() {
 		try {
 			// Lấy thông tin user lưu trữ trong SercurityContext
-//			System.out.println("agajhgfjhgak");
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			// Ép kiểu về UserDetails
 			UserDetails userDetails = (UserDetails) principal;
-			//System.out.println(principal);
 			// Lấy ra email
 			String email = userDetails.getUsername();
-			//System.out.println(email);
 			// Lấy ra thông tin User để trả về cho client;
 			UserDto dto = userService.getUserDtoByEmail(email);
 			dto.setCourses(courseService.getAllCourseDtoByUserId(dto.getId()));
-			//System.out.println(dto.getFullname());
 			return new ResponseEntity<UserDto>(dto, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
@@ -185,7 +178,6 @@ public class ApiUserController {
 	public ResponseEntity<Object> getFile(@PathVariable("id") int id) throws IOException {
 		UserDto dto = userService.getUserDtoById(id);
 		return new ResponseEntity<Object>(dto.getAvatar(), HttpStatus.CREATED);
-		//return new FileSystemResource(pathName);
 	}
 
 }

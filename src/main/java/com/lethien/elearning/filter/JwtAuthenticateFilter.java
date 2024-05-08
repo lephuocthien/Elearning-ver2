@@ -27,8 +27,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 public class JwtAuthenticateFilter extends BasicAuthenticationFilter {
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     public JwtAuthenticateFilter(
             AuthenticationManager authenticationManager,

@@ -29,8 +29,8 @@ import java.util.Date;
 @Controller
 @RequestMapping("admin")
 public class LoginController {
-    private AuthenticationManager authenticationManager;
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
 
     public LoginController(
             AuthenticationManager authenticationManager,

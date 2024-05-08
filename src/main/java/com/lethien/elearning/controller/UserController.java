@@ -30,8 +30,8 @@ import java.util.stream.IntStream;
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
-    private UserService userService;
-    private RoleService roleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     public UserController(
             UserService userService,

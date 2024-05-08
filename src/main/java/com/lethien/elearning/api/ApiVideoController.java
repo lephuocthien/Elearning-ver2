@@ -17,8 +17,7 @@ import com.lethien.elearning.service.VideoService;
 @RestController
 @RequestMapping("api/video")
 public class ApiVideoController {
-
-	private VideoService videoService;
+	private final VideoService videoService;
 
 	/**
 	 * @param videoService

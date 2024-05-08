@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CourseDto {
-
 	private int id;
 	private String title;
 	private byte[] image;
@@ -328,6 +327,4 @@ public class CourseDto {
 	public void setVideos(List<VideoDto> videos) {
 		this.videos = videos;
 	}
-
-	
 }

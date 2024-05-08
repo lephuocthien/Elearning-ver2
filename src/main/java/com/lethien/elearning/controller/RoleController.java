@@ -23,7 +23,7 @@ import java.util.stream.IntStream;
 @RequestMapping("admin/role")
 public class RoleController {
 
-    private RoleService roleService;
+    private final RoleService roleService;
 
     public RoleController(RoleService roleService) {
         this.roleService = roleService;

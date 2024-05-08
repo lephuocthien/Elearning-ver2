@@ -18,19 +18,14 @@ import com.lethien.elearning.service.UserService;
 @RestController
 @RequestMapping("api/user-course")
 public class ApiUserCourseController {
-	private UserCourseService userCourseService;
-	private UserService userService;
-
-	
+	private final UserCourseService userCourseService;
 
 	/**
 	 * @param userCourseService
-	 * @param userService
 	 */
-	public ApiUserCourseController(UserCourseService userCourseService, UserService userService) {
+	public ApiUserCourseController(UserCourseService userCourseService) {
 		super();
 		this.userCourseService = userCourseService;
-		this.userService = userService;
 	}
 
 	// Tìm theo id
@@ -50,7 +45,6 @@ public class ApiUserCourseController {
 	@PostMapping("add")
 	public ResponseEntity<Object> add(@RequestBody UserCourseDto userCourseDto){
 		try {
-//			userCourseDto.setRoleId(userService.getById(userCourseDto.getUserId()).getRoleId());
 			userCourseService.save(userCourseDto);
 			return new ResponseEntity<Object>("Thêm thành công!", HttpStatus.CREATED);
 		} catch (Exception e) {

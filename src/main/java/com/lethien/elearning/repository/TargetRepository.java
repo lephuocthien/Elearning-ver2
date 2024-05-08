@@ -20,7 +20,6 @@ import com.lethien.elearning.entity.Target;
 
 @Repository
 public interface TargetRepository extends JpaRepository<Target, Integer> {
-
     @Query("SELECT new com.lethien.elearning.dto.TargetDto" +
             "(t.id, " +
             "t.title, " +
