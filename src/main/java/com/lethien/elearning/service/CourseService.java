@@ -25,4 +25,6 @@ public interface CourseService {
 	Page<CourseDto> getCourseDtoPaging(Pageable pageable);
 	Page<CourseDto> getCourseDtoResultPaging(Pageable pageable, String key);
 	Page<CourseDto> getCourseDtoPagingByUserId(Pageable pageable, int userId);
+	Page<CourseDto> getCourseDtoPagingWithoutUserId(Pageable pageable, int userId);
+	Page<CourseDto> getCourseDtoPagingWithoutUserIdByKey(Pageable pageable, int userId, String key);
 }

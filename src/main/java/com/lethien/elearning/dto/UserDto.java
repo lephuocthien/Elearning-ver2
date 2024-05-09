@@ -125,6 +125,21 @@ public class UserDto {
 
     /**
      *
+     * @param id
+     * @param email
+     * @param fullname
+     * @param phone
+     */
+    public UserDto(int id, String email, String fullname, String phone) {
+        super();
+        this.id = id;
+        this.email = email;
+        this.fullname = fullname;
+        this.phone = phone;
+    }
+
+    /**
+     *
      * @param email
      * @param password
      * @param roleName

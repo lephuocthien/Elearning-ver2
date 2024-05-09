@@ -123,6 +123,24 @@ public class CourseDto {
 	}
 
 	/**
+	 *
+	 * @param id
+	 * @param title
+	 * @param leturesCount
+	 * @param hourCount
+	 * @param viewCount
+	 * @param dateCreateUser
+	 */
+	public CourseDto(int id, String title, int leturesCount, int hourCount, int viewCount) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.leturesCount = leturesCount;
+		this.hourCount = hourCount;
+		this.viewCount = viewCount;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public int getId() {

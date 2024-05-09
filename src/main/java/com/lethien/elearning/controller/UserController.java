@@ -3,6 +3,7 @@ package com.lethien.elearning.controller;
 import com.lethien.elearning.common.Common;
 import com.lethien.elearning.dto.CourseDto;
 import com.lethien.elearning.dto.RoleDto;
+import com.lethien.elearning.dto.UserCourseDto;
 import com.lethien.elearning.dto.UserDto;
 import com.lethien.elearning.service.CourseService;
 import com.lethien.elearning.service.RoleService;
@@ -201,5 +202,61 @@ public class UserController {
     ) {
         userCourseService.remove(userId, courseId);
         return "redirect:/admin/user/edit?id=" + userId + "&tabIndex=3";
+    }
+
+    @RequestMapping(value = {"course/add"}, method = RequestMethod.GET)
+    public String addMember(
+            @RequestParam("userId") int userId,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("key") Optional<String> key,
+            ModelMap modelMap
+    ) {
+        int currentPage = page.orElse(1);
+        String currentKey = key.orElse("");
+        if (!currentKey.isEmpty()) {
+            Page<CourseDto> courseDtoPage = courseService.getCourseDtoPagingWithoutUserIdByKey(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    userId,
+                    "%" + currentKey + "%"
+            );
+            modelMap.addAttribute("courses", courseDtoPage);
+            int totalPages = courseDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+        } else {
+            Page<CourseDto> courseDtoPage = courseService.getCourseDtoPagingWithoutUserId(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    userId
+            );
+            modelMap.addAttribute("courses", courseDtoPage);
+            int totalPages = courseDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+        }
+        modelMap.addAttribute("userFullname", userService.getById(userId).getFullname());
+        modelMap.addAttribute("key", currentKey);
+        modelMap.addAttribute("userId", userId);
+        return "admin/user/course/add";
+    }
+
+    @RequestMapping(value = {"course/add-perform"}, method = RequestMethod.GET)
+    public String addMemberPerform(
+            @RequestParam("courseId") int courseId,
+            @RequestParam("userId") int userId
+    ) {
+        UserCourseDto userCourseDto = new UserCourseDto();
+        userCourseDto.setCourseId(courseId);
+        userCourseDto.setUserId(userId);
+        userCourseDto.setRoleId(userService.getById(userId).getRoleId());
+        userCourseService.save(userCourseDto);
+        return "redirect:/admin/user/course/add?userId=" + userId;
     }
 }

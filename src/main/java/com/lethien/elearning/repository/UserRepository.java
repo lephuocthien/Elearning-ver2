@@ -155,4 +155,62 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     int getUserDtoCountByCourseId(
             @Param("courseId") int courseId
     );
+
+    @Query("SELECT new com.lethien.elearning.dto.UserDto" +
+            "(u.id, " +
+            "u.email, " +
+            "u.fullname, " +
+            "u.phone) " +
+            "FROM User u " +
+            "WHERE u.id NOT IN (SELECT u1.id " +
+            "FROM UserCourse uc " +
+            "JOIN User u1 " +
+            "ON u1.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId )")
+    Page<UserDto> getUserDtoPagingWithoutCourseId(
+            Pageable pageable,
+            @Param("courseId") int courseId
+    );
+
+    @Query("SELECT COUNT(*) " +
+            "FROM User u " +
+            "WHERE u.id NOT IN (SELECT u1.id " +
+            "FROM UserCourse uc " +
+            "JOIN User u1 " +
+            "ON u1.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId )")
+    int getUserDtoCountWithoutCourseId(
+            @Param("courseId") int courseId
+    );
+
+    @Query("SELECT new com.lethien.elearning.dto.UserDto" +
+            "(u.id, " +
+            "u.email, " +
+            "u.fullname, " +
+            "u.phone) " +
+            "FROM User u " +
+            "WHERE u.id NOT IN (SELECT u1.id " +
+            "FROM UserCourse uc " +
+            "JOIN User u1 " +
+            "ON u1.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId) " +
+            "AND u.email LIKE :key")
+    Page<UserDto> getUserDtoPagingWithoutCourseIdByKey(
+            Pageable pageable,
+            @Param("courseId") int courseId,
+            @Param("key") String key
+    );
+
+    @Query("SELECT COUNT(*) " +
+            "FROM User u " +
+            "WHERE u.id NOT IN (SELECT u1.id " +
+            "FROM UserCourse uc " +
+            "JOIN User u1 " +
+            "ON u1.id = uc.userCourseId.userId " +
+            "WHERE uc.userCourseId.courseId = :courseId ) " +
+            "AND u.email LIKE :key")
+    int getUserDtoCountWithoutCourseIdByKey(
+            @Param("courseId") int courseId,
+            @Param("key") String key
+    );
 }

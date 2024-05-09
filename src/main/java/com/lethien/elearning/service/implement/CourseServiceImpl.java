@@ -296,4 +296,47 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDtoPage;
     }
+
+    @Override
+    public Page<CourseDto> getCourseDtoPagingWithoutUserId(Pageable pageable, int userId){
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        Page<CourseDto> courseDtoPage;
+        if (courseRepository.getCourseDtoCountWithoutUserId(userId) < startItem) {
+            courseDtoPage = new PageImpl<CourseDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    courseRepository.getCourseDtoCountWithoutUserId(userId)
+            );
+        } else {
+            courseDtoPage = courseRepository.getCourseDtoPagingWithoutUserId(
+                    PageRequest.of(currentPage, pageSize),
+                    userId
+            );
+        }
+        return courseDtoPage;
+    }
+
+    @Override
+    public Page<CourseDto> getCourseDtoPagingWithoutUserIdByKey(Pageable pageable, int userId, String key){
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        Page<CourseDto> courseDtoPage;
+        if (courseRepository.getCourseDtoCountWithoutUserIdByKey(userId, key) < startItem) {
+            courseDtoPage = new PageImpl<CourseDto>(
+                    Collections.emptyList(),
+                    PageRequest.of(currentPage, pageSize),
+                    courseRepository.getCourseDtoCountWithoutUserIdByKey(userId, key)
+            );
+        } else {
+            courseDtoPage = courseRepository.getCourseDtoPagingWithoutUserIdByKey(
+                    PageRequest.of(currentPage, pageSize),
+                    userId,
+                    key
+            );
+        }
+        return courseDtoPage;
+    }
 }

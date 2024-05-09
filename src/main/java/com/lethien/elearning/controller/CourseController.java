@@ -349,8 +349,7 @@ public class CourseController {
     public String searchCourse(
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("key") String key,
-            ModelMap modelMap,
-            HttpSession session
+            ModelMap modelMap
     ) {
         if (!key.isEmpty()) {
             int currentPage = page.orElse(1);
@@ -379,5 +378,61 @@ public class CourseController {
     ) {
         userCourseService.remove(userId, courseId);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=5";
+    }
+
+    @RequestMapping(value = {"member/add"}, method = RequestMethod.GET)
+    public String addMember(
+            @RequestParam("courseId") int courseId,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("key") Optional<String> key,
+            ModelMap modelMap
+    ) {
+        int currentPage = page.orElse(1);
+        String currentKey = key.orElse("");
+        if (!currentKey.isEmpty()) {
+            Page<UserDto> userDtoPage = userService.getUserDtoPagingWithoutCourseIdByKey(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    courseId,
+                    "%" + currentKey + "%"
+            );
+            modelMap.addAttribute("users", userDtoPage);
+            int totalPages = userDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+        } else{
+            Page<UserDto> userDtoPage = userService.getUserDtoPagingWithoutCourseId(
+                    PageRequest.of(currentPage - 1, Common.PAGE_SIZE),
+                    courseId
+            );
+            modelMap.addAttribute("users", userDtoPage);
+            int totalPages = userDtoPage.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                        .boxed()
+                        .collect(Collectors.toList());
+                modelMap.addAttribute("pageNumbers", pageNumbers);
+            }
+        }
+        modelMap.addAttribute("courseTitle", courseService.getById(courseId).getTitle());
+        modelMap.addAttribute("key", currentKey);
+        modelMap.addAttribute("courseId", courseId);
+        return "admin/course/member/add";
+    }
+
+    @RequestMapping(value = {"member/add-perform"}, method = RequestMethod.GET)
+    public String addMemberPerform(
+            @RequestParam("courseId") int courseId,
+            @RequestParam("userId") int userId
+    ) {
+        UserCourseDto userCourseDto = new UserCourseDto();
+        userCourseDto.setCourseId(courseId);
+        userCourseDto.setUserId(userId);
+        userCourseDto.setRoleId(userService.getById(userId).getRoleId());
+        userCourseService.save(userCourseDto);
+        return "redirect:/admin/course/member/add?courseId=" + courseId;
     }
 }

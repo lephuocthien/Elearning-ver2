@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout/default}">
+<head>
+    <title>Add course for member</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <h3 class="mb-3" th:text="${'Add course for '+userFullname}"></h3>
+    <div class="row">
+        <div class="col-md-8">
+            <a class="btn btn-secondary" th:href="@{/admin/user/edit(
+            id=${userId},
+            tabIndex=3)}">Back</a>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <form class="input-group" th:action="@{/admin/user/course/add}" method="get">
+                    <input type="text" class="form-control" name="key" th:value="${key}" placeholder="Search by email...">
+                    <input type="hidden" name="userId" th:value="${userId}">
+                    <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon2" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover mt-3">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Title</th>
+            <th>Letures</th>
+            <th>Time (second)</th>
+            <th>Member</th>
+            <th>Date of purchase</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course, state: ${courses.content}">
+            <td th:text="${courses.size*(courses.number)+state.count}"></td>
+            <td th:text="${course.title}"></td>
+            <td th:text="${course.leturesCount}"></td>
+            <td th:text="${course.hourCount}"></td>
+            <td th:text="${course.viewCount}"></td>
+            <td th:text="${course.dateCreateUser}"></td>
+            <td>
+                <a class="btn btn-sm btn-primary"
+                   th:href="@{add-perform(
+                    userId=${userId},
+                    courseId=${course.id})}">
+                    <i class="fa fa-plus-square"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination justify-content-center pagination-sm">
+            <li class="page-item"
+                th:classappend="${courses.number==0} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/user/course/add(
+                   userId=${userId},
+                   page=${courses.number},
+                   key=${key})}"
+                >Previous</a>
+            </li>
+            <li  th:if="${courses.totalPages > 0}" class="page-item"
+                 th:each="pageNumber : ${pageNumbers}"
+                 th:classappend="${pageNumber==courses.number + 1} ? active">
+                <a class="page-link"
+                   th:href="@{/admin/user/course/add(
+                    userId=${userId},
+                    page=${pageNumber},
+                    key=${key})}"
+                   th:text=${pageNumber}
+                ></a>
+            </li>
+            <li class="page-item"
+                th:classappend="${courses.number+1==courses.totalPages} ? disabled">
+                <a class="page-link"
+                   th:href="@{/admin/user/course/add(
+                   userId=${userId},
+                   page=${courses.number+2},
+                   key=${key})}"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
+</section>
+</body>
+</html>

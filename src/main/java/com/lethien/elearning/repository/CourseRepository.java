@@ -159,10 +159,72 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     Page<CourseDto> getCourseDtoPagingByUserId(
             Pageable pageable,
             @Param("userId") int userId);
+
     @Query("SELECT COUNT(*)" +
             "FROM Course c " +
             "JOIN UserCourse uc " +
             "ON c.id = uc.userCourseId.courseId " +
             "WHERE uc.userCourseId.userId = :userId")
     int getCourseDtoCountByUserId(@Param("userId") int userId);
+
+    @Query("SELECT new com.lethien.elearning.dto.CourseDto" +
+            "(c.id, " +
+            "c.title, " +
+            "c.leturesCount, " +
+            "c.hourCount, " +
+            "c.viewCount) " +
+            "FROM Course c " +
+            "WHERE c.id NOT IN( " +
+            "SELECT c1.id " +
+            "FROM UserCourse uc " +
+            "JOIN Course c1 " +
+            "ON c1.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId)")
+    Page<CourseDto> getCourseDtoPagingWithoutUserId(
+            Pageable pageable,
+            @Param("userId") int userId);
+
+    @Query("SELECT COUNT(*) " +
+            "FROM Course c " +
+            "WHERE c.id NOT IN( " +
+            "SELECT c1.id " +
+            "FROM UserCourse uc " +
+            "JOIN Course c1 " +
+            "ON c1.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId)")
+    int getCourseDtoCountWithoutUserId(@Param("userId") int userId);
+
+    @Query("SELECT new com.lethien.elearning.dto.CourseDto" +
+            "(c.id, " +
+            "c.title, " +
+            "c.leturesCount, " +
+            "c.hourCount, " +
+            "c.viewCount) " +
+            "FROM Course c " +
+            "WHERE c.id NOT IN( " +
+            "SELECT c1.id " +
+            "FROM UserCourse uc " +
+            "JOIN Course c1 " +
+            "ON c1.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId) "+
+            "AND c.title LIKE :key")
+    Page<CourseDto> getCourseDtoPagingWithoutUserIdByKey(
+            Pageable pageable,
+            @Param("userId") int userId,
+            @Param("key") String key
+    );
+
+    @Query("SELECT COUNT(*) " +
+            "FROM Course c " +
+            "WHERE c.id NOT IN( " +
+            "SELECT c1.id " +
+            "FROM UserCourse uc " +
+            "JOIN Course c1 " +
+            "ON c1.id = uc.userCourseId.courseId " +
+            "WHERE uc.userCourseId.userId = :userId) "+
+            "AND c.title LIKE :key")
+    int getCourseDtoCountWithoutUserIdByKey(
+            @Param("userId") int userId,
+            @Param("key") String key
+    );
 }

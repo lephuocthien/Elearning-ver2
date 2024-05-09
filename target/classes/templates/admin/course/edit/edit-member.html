@@ -1,6 +1,11 @@
 <div id="tabMember"
      xmlns:th="http://www.thymeleaf.org"
      th:fragment="tabMember">
+    <div class="row">
+        <div class="col-md-8">
+            <a th:href="@{/admin/course/member/add(courseId=${course.id})}" class="btn btn-primary">Add new member +</a>
+        </div>
+    </div>
     <table class="table table-bordered table-hover mt-3">
         <thead>
         <tr>
