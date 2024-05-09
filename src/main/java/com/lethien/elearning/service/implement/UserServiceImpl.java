@@ -193,6 +193,10 @@ public class UserServiceImpl implements UserService {
         return userDtoPage;
     }
 
+    public int getUserDtoCountByCourseId(int courseId){
+        return userRepository.getUserDtoCountByCourseId(courseId);
+    }
+
     @Override
     public Page<UserDto> getUserDtoPagingWithoutCourseId(Pageable pageable, int courseId) {
         int pageSize = pageable.getPageSize();

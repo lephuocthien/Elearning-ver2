@@ -13,6 +13,7 @@ import java.util.List;
 import com.lethien.elearning.dto.CategoryDto;
 import com.lethien.elearning.dto.VideoDto;
 import com.lethien.elearning.entity.Category;
+import com.lethien.elearning.repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -21,10 +22,6 @@ import org.springframework.stereotype.Service;
 
 import com.lethien.elearning.dto.CourseDto;
 import com.lethien.elearning.entity.Course;
-import com.lethien.elearning.repository.CategoryRepository;
-import com.lethien.elearning.repository.CourseRepository;
-import com.lethien.elearning.repository.TargetRepository;
-import com.lethien.elearning.repository.VideoRepository;
 import com.lethien.elearning.service.CourseService;
 
 @Service
@@ -33,6 +30,7 @@ public class CourseServiceImpl implements CourseService {
     private final VideoRepository videoRepository;
     private final TargetRepository targetRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     /**
      * @param courseRepository
@@ -44,13 +42,15 @@ public class CourseServiceImpl implements CourseService {
             CourseRepository courseRepository,
             VideoRepository videoRepository,
             TargetRepository targetRepository,
-            CategoryRepository categoryRepository
+            CategoryRepository categoryRepository,
+            UserRepository userRepository
     ) {
         super();
         this.courseRepository = courseRepository;
         this.videoRepository = videoRepository;
         this.targetRepository = targetRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -220,6 +220,7 @@ public class CourseServiceImpl implements CourseService {
             }
             course.setLeturesCount(videos.size());
             course.setHourCount(hourCount);
+            course.setViewCount(userRepository.getUserDtoCountByCourseId(dto.getId()));
             course.setViewCount(dto.getViewCount());
             course.setPrice(dto.getPrice());
             course.setDiscount(dto.getDiscount());
@@ -227,7 +228,7 @@ public class CourseServiceImpl implements CourseService {
             course.setDescription(dto.getDescription());
             course.setContent(dto.getContent());
             course.setCategoryId(dto.getCategoryId());
-            course.setLastUpdate(dto.getLastUpdate());
+            course.setLastUpdate(new java.util.Date());
             courseRepository.save(course);
         }
     }

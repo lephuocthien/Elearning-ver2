@@ -201,6 +201,8 @@ public class UserController {
             @RequestParam("courseId") int courseId
     ) {
         userCourseService.remove(userId, courseId);
+        CourseDto courseDto = courseService.getById(courseId);
+        courseService.edit(courseDto);
         return "redirect:/admin/user/edit?id=" + userId + "&tabIndex=3";
     }
 
@@ -257,6 +259,8 @@ public class UserController {
         userCourseDto.setUserId(userId);
         userCourseDto.setRoleId(userService.getById(userId).getRoleId());
         userCourseService.save(userCourseDto);
+        CourseDto courseDto = courseService.getById(courseId);
+        courseService.edit(courseDto);
         return "redirect:/admin/user/course/add?userId=" + userId;
     }
 }

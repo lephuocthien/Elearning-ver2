@@ -28,6 +28,8 @@ public interface UserService {
 	Page<UserDto> getUserDtoPaging(Pageable pageable);
 	Page<UserDto> getUserDtoResultPaging(Pageable pageable, String key);
 	Page<UserDto> getUserDtoPagingByCourseId(Pageable pageable, int countId);
+	int getUserDtoCountByCourseId(int countId);
 	Page<UserDto> getUserDtoPagingWithoutCourseId(Pageable pageable, int countId);
 	Page<UserDto> getUserDtoPagingWithoutCourseIdByKey(Pageable pageable, int countId, String key);
+
 }

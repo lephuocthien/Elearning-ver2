@@ -195,8 +195,7 @@ public class CourseController {
 
     @RequestMapping(value = {"edit"}, method = RequestMethod.POST)
     public String edit(@ModelAttribute("course") CourseDto course) {
-        //course.setImage("course.jpg");
-        course.setLastUpdate(new java.util.Date());
+        course.setViewCount(userService.getUserDtoCountByCourseId(course.getId()));
         courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + course.getId();
     }
@@ -236,18 +235,8 @@ public class CourseController {
     public String addVideoPost(@ModelAttribute("video") VideoDto video) {
         videoService.save(video);
         int courseId = video.getCourseId();
-        //Update hourCourse of course BEGIN
-        List<VideoDto> videos = videoService.getAllVideoByCourseId(courseId);
         CourseDto course = courseService.getById(courseId);
-        int hourCourse = 0;
-        for (VideoDto item : videos) {
-            hourCourse += item.getTimeCount();
-        }
-        course.setLeturesCount(videos.size());
-        course.setLastUpdate(new java.util.Date());
-        course.setHourCount(hourCourse);
         courseService.edit(course);
-        //Update hourCourse of course END
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
@@ -266,18 +255,8 @@ public class CourseController {
     public String editVideoPost(@ModelAttribute("video") VideoDto video) {
         videoService.edit(video);
         int courseId = video.getCourseId();
-        //Update hourCourse of course BEGIN
-        List<VideoDto> videos = videoService.getAllVideoByCourseId(courseId);
         CourseDto course = courseService.getById(courseId);
-        int hourCourse = 0;
-        for (VideoDto item : videos) {
-            hourCourse += item.getTimeCount();
-        }
-        course.setLeturesCount(videos.size());
-        course.setLastUpdate(new java.util.Date());
-        course.setHourCount(hourCourse);
         courseService.edit(course);
-        //Update hourCourse of course END
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
@@ -287,6 +266,8 @@ public class CourseController {
             @RequestParam("courseId") int courseId
     ) {
         videoService.remove(id);
+        CourseDto course = courseService.getById(courseId);
+        courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=3";
     }
 
@@ -306,6 +287,8 @@ public class CourseController {
     public String addTargetPost(@ModelAttribute("target") TargetDto target) {
         targetService.save(target);
         int courseId = target.getCourseId();
+        CourseDto course = courseService.getById(courseId);
+        courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
@@ -323,6 +306,8 @@ public class CourseController {
     public String editTargetPost(@ModelAttribute("target") TargetDto target) {
         targetService.edit(target);
         int courseId = target.getCourseId();
+        CourseDto course = courseService.getById(courseId);
+        courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
@@ -331,6 +316,8 @@ public class CourseController {
             @RequestParam("id") int id,
             @RequestParam("courseId") int courseId) {
         targetService.remove(id);
+        CourseDto course = courseService.getById(courseId);
+        courseService.edit(course);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=4";
     }
 
@@ -377,6 +364,8 @@ public class CourseController {
             @RequestParam("courseId") int courseId
     ) {
         userCourseService.remove(userId, courseId);
+        CourseDto courseDto = courseService.getById(courseId);
+        courseService.edit(courseDto);
         return "redirect:/admin/course/edit?id=" + courseId + "&tabIndex=5";
     }
 
@@ -433,6 +422,8 @@ public class CourseController {
         userCourseDto.setUserId(userId);
         userCourseDto.setRoleId(userService.getById(userId).getRoleId());
         userCourseService.save(userCourseDto);
+        CourseDto courseDto = courseService.getById(courseId);
+        courseService.edit(courseDto);
         return "redirect:/admin/course/member/add?courseId=" + courseId;
     }
 }
