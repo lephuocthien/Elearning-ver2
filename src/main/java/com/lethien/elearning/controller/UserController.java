@@ -149,7 +149,7 @@ public class UserController {
                 session.setAttribute("AUTH", user);
             }
         }
-        return "redirect:/admin/user/edit?id=" + id + "&tabIndex=3";
+        return "redirect:/admin/user/edit?id=" + id + "&tabIndex=2";
     }
 
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
