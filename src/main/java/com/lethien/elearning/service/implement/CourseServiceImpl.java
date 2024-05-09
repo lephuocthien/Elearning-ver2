@@ -221,7 +221,6 @@ public class CourseServiceImpl implements CourseService {
             course.setLeturesCount(videos.size());
             course.setHourCount(hourCount);
             course.setViewCount(userRepository.getUserDtoCountByCourseId(dto.getId()));
-            course.setViewCount(dto.getViewCount());
             course.setPrice(dto.getPrice());
             course.setDiscount(dto.getDiscount());
             course.setPromotionPrice(dto.getPromotionPrice());
